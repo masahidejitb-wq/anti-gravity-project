@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イングリード - あなたの英語を、3ヶ月で変える</title>
+
+    <!-- Google Fonts: Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* イングリード提供のブランドカラー */
+            --primary-blue: #004098;
+            --sub-blue: #00b0f0;
+            --accent-orange: #f39200;
+            --light-blue: #F4FAFE;
+
+            --text-main: #333333;
+            --text-muted: #666666;
+            --bg-gray: #F8F9FA;
+            --white: #FFFFFF;
+            --line-green: #06C755;
+            --chat-bg: #8EADC8;
+        }
+
+        /* -------------------------------------------
+           最優先：レスポンシブ修正 (box-sizing の徹底)
+           ------------------------------------------- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+            /* スマホで右側がはみ出るのを防ぐ最終防衛線 */
+            width: 100%;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-gray);
+            line-height: 1.8;
+            letter-spacing: 0.03em;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            vertical-align: bottom;
+            display: block;
+            /* 画像の下にできる不要な余白を消す */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* セクションの余白設定 */
+        section {
+            padding: 100px 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 60px 0;
+            }
+        }
+
+        section:nth-child(even) {
+            background-color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            color: var(--primary-blue);
+            margin-bottom: 60px;
+            font-weight: 900;
+            line-height: 1.3;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 26px;
+                margin-bottom: 40px;
+            }
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background-color: var(--sub-blue);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* -------------------------------------------
+           Header (Hero)
+           ------------------------------------------- */
+        header {
+            background: linear-gradient(145deg, var(--white) 0%, var(--light-blue) 100%);
+            padding: 140px 20px 120px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 176, 240, 0.1);
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 100px 20px 80px;
+            }
+        }
+
+        .hero-logo-wrapper {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-logo-img {
+            max-width: 250px;
+            /* ロゴの表示サイズ */
+            height: auto;
+        }
+
+        /* 画像が読み込めなかった時のフォールバックテキスト用 */
+        .hero-logo-text {
+            font-size: 42px;
+            color: var(--primary-blue);
+            font-weight: 900;
+            letter-spacing: 2px;
+            display: none;
+            /* 初期状態では隠す */
+        }
+
+        .hero-catchphrase {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 24px;
+            line-height: 1.4;
+        }
+
+        .hero-subtext {
+            color: var(--text-muted);
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .hero-logo-img {
+                max-width: 200px;
+            }
+
+            .hero-catchphrase {
+                font-size: 24px;
+            }
+
+            .hero-subtext {
+                font-size: 15px;
+            }
+        }
+
+        /* -------------------------------------------
+           Voice Before/After
+           ------------------------------------------- */
+        .voice-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .voice-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            border: 1px solid #f0f0f0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .voice-card {
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+            }
+        }
+
+        .voice-profile {
+            flex-shrink: 0;
+            text-align: center;
+            width: 120px;
+        }
+
+        @media (max-width: 768px) {
+            .voice-profile {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .voice-profile img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 2px solid var(--sub-blue);
+        }
+
+        .voice-profile p {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .voice-players {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .voice-players {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .player-box {
+            background: var(--bg-gray);
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+        }
+
+        .player-label {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        audio {
+            width: 100%;
+            height: 40px;
+            outline: none;
+        }
+
+        /* -------------------------------------------
+           LINE Support
+           ------------------------------------------- */
+        .chat-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .chat-phone {
+            width: 100%;
+            max-width: 340px;
+            /* スマホ枠の最大幅を制限 */
+            background-color: var(--chat-bg);
+            border-radius: 30px;
+            border: 10px solid var(--text-main);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 16px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-main);
+            flex-shrink: 0;
+        }
+
+        .chat-body {
+            /* スクロールLINE: 高さ400px指定 */
+            height: 400px;
+            padding: 20px 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Custom scrollbar for chat */
+        .chat-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-body::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-body::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-bubble.left {
+            align-self: flex-start;
+            background: var(--white);
+            border-top-left-radius: 2px;
+        }
+
+        .chat-bubble.right {
+            align-self: flex-end;
+            background: #85E249;
+            border-top-right-radius: 2px;
+        }
+
+        .chat-time {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.9);
+            align-self: flex-end;
+            margin: 0 6px;
+            margin-bottom: 2px;
+            flex-shrink: 0;
+        }
+
+        .chat-row {
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .chat-row.right {
+            flex-direction: row-reverse;
+        }
+
+        /* -------------------------------------------
+           Counseling Video
+           ------------------------------------------- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 64, 152, 0.1);
+            background-color: #000;
+            width: 100%;
+        }
+
+        .video-wrapper iframe,
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://via.placeholder.com/1200x675/004098/FFFFFF?text=Counseling+Video') center/cover;
+        }
+
+        .play-btn {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .play-btn {
+                width: 50px;
+                height: 50px;
+            }
+
+            .play-btn::after {
+                border-top: 10px solid transparent !important;
+                border-left: 15px solid var(--accent-orange) !important;
+                border-bottom: 10px solid transparent !important;
+                margin-left: 4px !important;
+            }
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            background: var(--white);
+        }
+
+        .play-btn::after {
+            content: '';
+            border-top: 14px solid transparent;
+            border-left: 20px solid var(--accent-orange);
+            border-bottom: 14px solid transparent;
+            margin-left: 6px;
+        }
+
+        /* -------------------------------------------
+           Features
+           ------------------------------------------- */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+        }
+
+        @media (max-width: 900px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .feature-item {
+            background: var(--white);
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            border-top: 4px solid var(--sub-blue);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--light-blue);
+            color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin: 0 auto 20px;
+            font-weight: 900;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary-blue);
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            color: var(--text-muted);
+            text-align: left;
+        }
+
+        /* -------------------------------------------
+           Coaches
+           ------------------------------------------- */
+        .coach-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        @media (max-width: 900px) {
+            .coach-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            /* スマホで1列 */
+            .coach-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .coach-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            border: 1px solid #eee;
+            width: 100%;
+        }
+
+        .coach-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0, 64, 152, 0.12);
+        }
+
+        /* 画像アスペクト比調整 */
+        .coach-img-wrapper {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background: var(--bg-gray);
+            /* 画像がない場合のプレースホルダー用の背景 */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 画像ファイルのフォールバック（ファイルがない場合でも枠を維持） */
+        .coach-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            /* 読み込めなかった際 Altテキストを目立たなくする */
+            color: transparent;
+        }
+
+        /* 画像がない場合のダミー要素 */
+        .coach-img::before {
+            content: "Image";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-gray);
+            color: #ccc;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .coach-info {
+            padding: 20px 15px;
+            text-align: center;
+            flex-grow: 1;
+            background: var(--white);
+        }
+
+        .coach-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--primary-blue);
+        }
+
+        .coach-spec {
+            font-size: 12px;
+            color: var(--white);
+            background: var(--accent-orange);
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        /* -------------------------------------------
+           Modal for Coach Pop-up
+           ------------------------------------------- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            /* iOS対応のためvhを使用 */
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 640px;
+            position: relative;
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+        }
+
+        @media (min-width: 600px) {
+            .modal-content {
+                flex-direction: row;
+            }
+
+            .modal-content {
+                max-height: 80vh;
+            }
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-main);
+            transition: background 0.2s, transform 0.2s;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: #fff;
+            transform: scale(1.1);
+        }
+
+        .modal-img-container {
+            width: 100%;
+            height: 250px;
+            background: var(--bg-gray);
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 600px) {
+            .modal-img-container {
+                width: 260px;
+                height: auto;
+            }
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            /* 読み込めない時対策 */
+            color: transparent;
+        }
+
+        .modal-info {
+            padding: 30px;
+            flex-grow: 1;
+            overflow-y: auto;
+            /* 詳細テキストが長い場合のスクロール */
+        }
+
+        .modal-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .modal-spec {
+            font-size: 13px;
+            color: var(--white);
+            background: var(--accent-orange);
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .modal-desc-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+            border-bottom: 2px solid var(--light-blue);
+            padding-bottom: 4px;
+        }
+
+        .modal-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* -------------------------------------------
+           FAQ
+           ------------------------------------------- */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        details {
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            border: 1px solid #eaeaea;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        summary {
+            padding: 20px 50px 20px 20px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            list-style: none;
+            position: relative;
+            color: var(--text-main);
+            transition: background 0.2s;
+        }
+
+        @media (max-width: 768px) {
+            summary {
+                font-size: 15px;
+                padding: 16px 45px 16px 16px;
+            }
+        }
+
+        summary:hover {
+            background: var(--light-blue);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--sub-blue);
+            font-weight: 400;
+        }
+
+        details[open] summary::after {
+            content: '−';
+        }
+
+        .faq-answer {
+            padding: 0 20px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.8;
+            border-top: 1px dashed #eee;
+            margin-top: 5px;
+            padding-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .faq-answer {
+                padding: 0 16px 16px;
+            }
+        }
+
+        /* -------------------------------------------
+           Footer & CTA
+           ------------------------------------------- */
+        footer {
+            background: var(--bg-gray);
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-top: 1px solid #EAEAEA;
+            width: 100%;
+        }
+
+        .cta-container {
+            background: var(--white);
+            padding: 50px 20px;
+            border-radius: 12px;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            box-shadow: 0 8px 30px rgba(0, 64, 152, 0.08);
+            border: 2px solid var(--primary-blue);
+            width: 100%;
+        }
+
+        .cta-text {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            color: var(--primary-blue);
+            line-height: 1.4;
+        }
+
+        .btn-line {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--line-green);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 900;
+            padding: 18px 40px;
+            border-radius: 40px;
+            transition: opacity 0.3s, transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 6px 15px rgba(6, 199, 85, 0.3);
+            letter-spacing: 1px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn-line:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(6, 199, 85, 0.4);
+        }
+
+        .btn-line::before {
+            content: 'LINE';
+            font-family: Arial, sans-serif;
+            font-weight: 900;
+            margin-right: 12px;
+            font-size: 26px;
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="hero-logo-wrapper">
+                <!-- logo.png がない場合はフォールバックテキストを表示するスクリプト付 -->
+                <img src="logo.png" alt="イングリード" class="hero-logo-img"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="hero-logo-text">イングリード</div>
+            </div>
+            <h1 class="hero-catchphrase">あなたの英語を、<br class="sp-only">3ヶ月で変える</h1>
+            <p class="hero-subtext">専属コーチによる圧倒的なサポートで、<br class="sp-only">本物の英語力を最短で。</p>
+        </div>
+    </header>
+
+    <!-- 劇的な変化 -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">劇的な変化を実感</h2>
+            <div class="voice-grid">
+                <!-- Person 1 -->
+                <div class="voice-card">
+                    <div class="voice-profile">
+                        <!-- 人物画像も一旦プレースホルダーだが、ファイルがあれば読み込む設定にもできる -->
+                        <img src="https://via.placeholder.com/160x160/004098/FFFFFF?text=A" alt="受講生A">
+                        <p>受講生Aさん</p>
+                    </div>
+                    <div class="voice-players">
+                        <div class="player-box">
+                            <div class="player-label">⏳ 1ヶ月目 (Before)</div>
+                            <audio controls src=""></audio>
+                        </div>
+                        <div class="player-box">
+                            <div class="player-label">✨ 3ヶ月目 (After)</div>
+                            <audio controls src=""></audio>
+                        </div>
+                    </div>
+                </div>
+                <!-- Person 2 -->
+                <div class="voice-card">
+                    <div class="voice-profile">
+                        <img src="https://via.placeholder.com/160x160/004098/FFFFFF?text=B" alt="受講生B">
+                        <p>受講生Bさん</p>
+                    </div>
+                    <div class="voice-players">
+                        <div class="player-box">
+                            <div class="player-label">⏳ 1ヶ月目 (Before)</div>
+                            <audio controls src=""></audio>
+                        </div>
+                        <div class="player-box">
+                            <div class="player-label">✨ 3ヶ月目 (After)</div>
+                            <audio controls src=""></audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LINEサポート -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">毎日コーチと繋がる安心感</h2>
+            <p
+                style="text-align: center; margin-bottom: 40px; color: var(--text-muted); font-size: 15px; line-height: 1.8;">
+                毎日の学習報告から細かな疑問まで、専属コーチが<br class="sp-only">チャットで丁寧にサポートします。<br>モチベーションを維持し、挫折させません。
+            </p>
+            <div class="chat-container">
+                <!-- Chat 1 -->
+                <div class="chat-phone">
+                    <div class="chat-header">専属コーチ・田中</div>
+                    <div class="chat-body">
+                        <!-- スクロール確認用のため少し多めに会話を入れる -->
+                        <div class="chat-row right">
+                            <div class="chat-bubble right">音読トレーニング、録音しました！確認お願いします。</div>
+                            <div class="chat-time">18:00</div>
+                        </div>
+                        <div class="chat-row right">
+                            <div class="chat-bubble right">（音声データ.m4a）</div>
+                            <div class="chat-time">18:01</div>
+                        </div>
+                        <div class="chat-row left">
+                            <div class="chat-bubble left">提出ありがとうございます！<br>先週より格段に良くなっていますね！✨<br>RとLの発音の使い分けがとても綺麗です。
+                            </div>
+                            <div class="chat-time">18:15</div>
+                        </div>
+                        <div class="chat-row left">
+                            <div class="chat-bubble left">ただ、「work」の母音が少し「walk」に聞こえるので、明日のセッションで一緒に練習しましょう😊</div>
+                            <div class="chat-time">18:16</div>
+                        </div>
+                        <div class="chat-row right">
+                            <div class="chat-bubble right">ありがとうございます！自分でも少し気になっていたところでした。</div>
+                            <div class="chat-time">18:20</div>
+                        </div>
+                        <div class="chat-row right">
+                            <div class="chat-bubble right">明日もよろしくお願いします！</div>
+                            <div class="chat-time">18:21</div>
+                        </div>
+                        <div class="chat-row left">
+                            <div class="chat-bubble left">こちらこそ！引き続き頑張りましょう！👍</div>
+                            <div class="chat-time">18:25</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chat 2 -->
+                <div class="chat-phone">
+                    <div class="chat-header">専属コーチ・佐藤</div>
+                    <div class="chat-body">
+                        <div class="chat-row right">
+                            <div class="chat-bubble right">今日は仕事が遅くなってしまって、予定していた学習時間を確保できなそうです…😭</div>
+                            <div class="chat-time">20:30</div>
+                        </div>
+                        <div class="chat-row left">
+                            <div class="chat-bubble left">お疲れ様です！お仕事大変でしたね。<br>そういう日もありますよ！大丈夫です。</div>
+                            <div class="chat-time">20:35</div>
+                        </div>
+                        <div class="chat-row left">
+                            <div class="chat-bubble left">今からだと寝る前の時間を確保するのも難しいと思うので、今日はシャドーイングを10分だけやって寝ましょう！</div>
+                            <div class="chat-time">20:36</div>
+                        </div>
+                        <div class="chat-row left">
+                            <div class="chat-bubble left">完璧主義にならず、少しでも触れる「継続」が一番大切です👍</div>
+                            <div class="chat-time">20:36</div>
+                        </div>
+                        <div class="chat-row right">
+                            <div class="chat-bubble right">ありがとうございます！気持ちが楽になりました😭<br>10分だけ集中してやります！🔥</div>
+                            <div class="chat-time">20:40</div>
+                        </div>
+                        <div class="chat-row left">
+                            <div class="chat-bubble left">素晴らしい切り替えです👏<br>明日また状況教えてくださいね。ゆっくり休んでください🌙</div>
+                            <div class="chat-time">20:45</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 動画 -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">実際のカウンセリング</h2>
+            <div class="video-wrapper">
+                <div class="video-placeholder">
+                    <div class="play-btn"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特徴 -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">イングリードの特徴</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">1</div>
+                    <h3 class="feature-title">科学的アプローチ</h3>
+                    <p class="feature-desc">第二言語習得論に基づく効率的なメソッドを取り入れ、無駄のない最短距離の学習を実現します。</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">2</div>
+                    <h3 class="feature-title">専属コーチの伴走</h3>
+                    <p class="feature-desc">あなた専用のカリキュラムを作成し、毎日のチャットサポートでモチベーションと進捗を徹底管理します。</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">3</div>
+                    <h3 class="feature-title">完全パーソナライズ</h3>
+                    <p class="feature-desc">独自の診断で弱点をピンポイントで分析し、限られた時間で最大の成果を出すための最適な指導を行います。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- コーチ紹介 -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">プロフェッショナル陣</h2>
+            <div class="coach-grid">
+                <!-- Coach 1 (coach1.jpg) -->
+                <div class="coach-card" data-name="田中 健太" data-spec="ビジネス英会話・発音"
+                    data-history="【経歴】外資系IT企業にて約8年勤務後、語学教育の世界へ。北米への留学経験と現場での叩き上げのビジネス英語を武器に、実践的な英語コミュニケーションを指導。"
+                    data-desc="「発音は筋肉のトレーニングと同じ」がモットー。どんなレベルの方でもネイティブに伝わるキレイな発音へ導きます。論理的かつ熱い指導に定評があります。"
+                    data-img="coach1.jpg">
+                    <div class="coach-img-wrapper">
+                        <!-- onerror で画像がない場合もデザインが崩れないように対応 -->
+                        <img src="coach1.jpg" alt="田中 健太" class="coach-img"
+                            onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/004098/FFFFFF?text=No+Image';">
+                    </div>
+                    <div class="coach-info">
+                        <div class="coach-name">田中 健太</div>
+                        <div class="coach-spec">ビジネス英会話・発音</div>
+                    </div>
+                </div>
+                <!-- Coach 2 (coach2.jpg) -->
+                <div class="coach-card" data-name="佐藤 理恵" data-spec="TOEIC®・文法基礎"
+                    data-history="【経歴】大手英会話スクールにて5年連続で指導実績トップ。その後、フリーランスの英語講師としてTOEICのスコアアップ請負人として活動。TOEIC 990点（満点）保持。"
+                    data-desc="日本人がなぜ特定の文法でつまずくのか、その「なぜ」を分かりやすく言語化します。スコアの壁にぶつかっている方のブレイクスルーを全面サポートします。"
+                    data-img="coach2.jpg">
+                    <div class="coach-img-wrapper">
+                        <img src="coach2.jpg" alt="佐藤 理恵" class="coach-img"
+                            onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/00b0f0/FFFFFF?text=No+Image';">
+                    </div>
+                    <div class="coach-info">
+                        <div class="coach-name">佐藤 理恵</div>
+                        <div class="coach-spec">TOEIC®・文法基礎</div>
+                    </div>
+                </div>
+                <!-- Coach 3 (coach3.jpg) -->
+                <div class="coach-card" data-name="Mike Smith" data-spec="ネイティブ表現・議論"
+                    data-history="【経歴】アメリカ・カリフォルニア州出身。日本の大学院で言語学を専攻し、バイリンガル教育の研究に従事。企業向けの異文化コミュニケーション研修講師の経験も多数。"
+                    data-desc="教科書には載っていない「自然な言い回し」や、ビジネス会議で相手を納得させる「ロジックの組み立て方」の指導を得意としています。" data-img="coach3.jpg">
+                    <div class="coach-img-wrapper">
+                        <img src="coach3.jpg" alt="Mike Smith" class="coach-img"
+                            onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/f39200/FFFFFF?text=No+Image';">
+                    </div>
+                    <div class="coach-info">
+                        <div class="coach-name">Mike Smith</div>
+                        <div class="coach-spec">ネイティブ表現・議論</div>
+                    </div>
+                </div>
+                <!-- Coach 4 (coach4.jpg) -->
+                <div class="coach-card" data-name="鈴木 ゆかり" data-spec="初心者脱却・マインド"
+                    data-history="【経歴】心理カウンセラーの資格を持ち、英語学習における「メンタルブロック」の解除に特化した独自メソッドを開発。初心者〜中級者へのステップアップ指導の実績多数。"
+                    data-desc="「どうしても英語に苦手意識がある」「いつも三日坊主で終わってしまう」という方の味方です。学習を歯磨きレベルの習慣に落とし込むコーチングを行います。"
+                    data-img="coach4.jpg">
+                    <div class="coach-img-wrapper">
+                        <img src="coach4.jpg" alt="鈴木 ゆかり" class="coach-img"
+                            onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/004098/FFFFFF?text=No+Image';">
+                    </div>
+                    <div class="coach-info">
+                        <div class="coach-name">鈴木 ゆかり</div>
+                        <div class="coach-spec">初心者脱却・マインド</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">よくあるご質問</h2>
+            <div class="faq-list">
+                <details>
+                    <summary>英語が全く話せない初心者でも大丈夫ですか？</summary>
+                    <div class="faq-answer">
+                        はい、全く問題ありません。現在のレベルに合わせて基礎の基礎からカリキュラムを構築し、専属コーチが丁寧に解説・サポートいたします。実際に受講生の多くが初心者からのスタートです。
+                    </div>
+                </details>
+                <details>
+                    <summary>毎日どれくらいの学習時間が必要ですか？</summary>
+                    <div class="faq-answer">
+                        基本的には1日1〜2時間を推奨していますが、お仕事の都合等に合わせて柔軟に調整可能です。通勤時間やスキマ時間の効果的な活用方法もコーチがアドバイスいたします。
+                    </div>
+                </details>
+                <details>
+                    <summary>パソコンを持っていないのですが受講できますか？</summary>
+                    <div class="faq-answer">
+                        スマートフォンのアプリだけでも受講および学習報告が可能ですが、一部の資料閲覧等でパソコンやタブレットがあった方が便利な場合がございます。
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / CTA -->
+    <footer>
+        <div class="container">
+            <div class="cta-container">
+                <p class="cta-text">まずは、あなたの今の<br class="sp-only">悩みを教えてください。</p>
+                <a href="#" class="btn-line">LINEでお気軽にご相談ください</a>
+            </div>
+            <p class="copyright">&copy; 2026 イングリード All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Coach Modal Template -->
+    <div class="modal-overlay" id="coachModal" aria-hidden="true" role="dialog">
+        <div class="modal-content">
+            <div class="modal-close" id="modalClose" aria-label="Close modal">&times;</div>
+            <div class="modal-img-container">
+                <img src="" alt="" class="modal-img" id="modalImg"
+                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/004098/FFFFFF?text=No+Image';">
+            </div>
+            <div class="modal-info">
+                <h3 class="modal-name" id="modalName">Name</h3>
+                <div class="modal-spec" id="modalSpec" style="background-color: var(--primary-blue);">Spec</div>
+
+                <div class="modal-desc-title">経歴・バックグラウンド</div>
+                <p class="modal-desc" id="modalHistory" style="margin-bottom: 20px;">History goes here.</p>
+
+                <div class="modal-desc-title">コーチからのメッセージ</div>
+                <p class="modal-desc" id="modalDesc">Description goes here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- スタイル補完：スマホ専用の改行対応 -->
+    <style>
+        .sp-only {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sp-only {
+                display: block;
+            }
+        }
+    </style>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.coach-card');
+            const modal = document.getElementById('coachModal');
+            const modalClose = document.getElementById('modalClose');
+
+            const modalImg = document.getElementById('modalImg');
+            const modalName = document.getElementById('modalName');
+            const modalSpec = document.getElementById('modalSpec');
+            const modalHistory = document.getElementById('modalHistory');
+            const modalDesc = document.getElementById('modalDesc');
+
+            // Open modal
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const name = card.getAttribute('data-name');
+                    const spec = card.getAttribute('data-spec');
+                    const history = card.getAttribute('data-history');
+                    const desc = card.getAttribute('data-desc');
+                    const img = card.getAttribute('data-img');
+
+                    modalName.textContent = name;
+                    modalSpec.textContent = spec;
+                    modalHistory.textContent = history;
+                    modalDesc.textContent = desc;
+
+                    // srcを入れ替える（onerrorが設定されているので画像がない場合はプレースホルダーになる）
+                    modalImg.src = img;
+                    modalImg.alt = name;
+
+                    modal.classList.add('active');
+                    modal.setAttribute('aria-hidden', 'false');
+
+                    // 背景のスクロールを固定し、ガタつき(iOS等)を防ぐ
+                    document.body.style.overflow = 'hidden';
+                    document.documentElement.style.overflow = 'hidden';
+                });
+            });
+
+            // Close modal
+            const closeModal = () => {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                document.documentElement.style.overflow = '';
+
+                // モーダルが閉じた後に表示位置をリセット
+                setTimeout(() => {
+                    document.querySelector('.modal-info').scrollTop = 0;
+                }, 300);
+            };
+
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // ESCキーでも閉じる
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
