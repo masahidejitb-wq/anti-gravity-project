@@ -252,7 +252,7 @@
         .voice-grid {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 40px;
             width: 100%;
         }
 
@@ -262,16 +262,35 @@
             padding: 30px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
             display: flex;
-            align-items: center;
-            gap: 30px;
+            flex-direction: column;
             border: 1px solid #f0f0f0;
             width: 100%;
         }
 
+        .voice-card-heading {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 900;
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+            border-bottom: 2px dashed #eee;
+            padding-bottom: 15px;
+        }
+
+        .voice-card-heading span {
+            color: var(--accent-orange);
+        }
+
+        .voice-card-body {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+        }
+
         @media (max-width: 768px) {
-            .voice-card {
+            .voice-card-body {
                 flex-direction: column;
-                padding: 20px;
                 gap: 20px;
             }
         }
@@ -1108,8 +1127,9 @@
 
             .schedule-item::after {
                 left: 15px;
-                top: 0;
-                transform: translate(-50%, 0);
+                top: 25px;
+                /* Adjusting the dot vertically for mobile text alignment */
+                transform: translate(-50%, -50%);
             }
 
             .schedule-item,
@@ -1176,36 +1196,41 @@
             <div class="voice-grid">
                 <!-- Person 1 -->
                 <div class="voice-card">
-                    <div class="voice-profile">
-                        <!-- 人物画像も一旦プレースホルダーだが、ファイルがあれば読み込む設定にもできる -->
-                        <img src="https://via.placeholder.com/160x160/004098/FFFFFF?text=A" alt="受講生A">
-                        <p>受講生Aさん</p>
-                    </div>
-                    <div class="voice-players">
-                        <div class="player-box">
-                            <div class="player-label">⏳ 1ヶ月目 (Before)</div>
-                            <audio controls src=""></audio>
+                    <div class="voice-card-heading">たった<span>3ヶ月</span>でこの変化！</div>
+                    <div class="voice-card-body">
+                        <div class="voice-profile">
+                            <img src="https://via.placeholder.com/160x160/004098/FFFFFF?text=A" alt="受講生A">
+                            <p>受講生Aさん</p>
                         </div>
-                        <div class="player-box">
-                            <div class="player-label">✨ 3ヶ月目 (After)</div>
-                            <audio controls src=""></audio>
+                        <div class="voice-players">
+                            <div class="player-box">
+                                <div class="player-label">⏳ 1ヶ月目 (Before)</div>
+                                <audio controls src="assets/audio/student-a-before.m4a"></audio>
+                            </div>
+                            <div class="player-box">
+                                <div class="player-label">✨ 3ヶ月目 (After)</div>
+                                <audio controls src="assets/audio/student-a-after.m4a"></audio>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- Person 2 -->
                 <div class="voice-card">
-                    <div class="voice-profile">
-                        <img src="https://via.placeholder.com/160x160/004098/FFFFFF?text=B" alt="受講生B">
-                        <p>受講生Bさん</p>
-                    </div>
-                    <div class="voice-players">
-                        <div class="player-box">
-                            <div class="player-label">⏳ 1ヶ月目 (Before)</div>
-                            <audio controls src=""></audio>
+                    <div class="voice-card-heading">たった<span>3ヶ月</span>でこの変化！</div>
+                    <div class="voice-card-body">
+                        <div class="voice-profile">
+                            <img src="https://via.placeholder.com/160x160/004098/FFFFFF?text=B" alt="受講生B">
+                            <p>受講生Bさん</p>
                         </div>
-                        <div class="player-box">
-                            <div class="player-label">✨ 3ヶ月目 (After)</div>
-                            <audio controls src=""></audio>
+                        <div class="voice-players">
+                            <div class="player-box">
+                                <div class="player-label">⏳ 1ヶ月目 (Before)</div>
+                                <audio controls src="assets/audio/student-b-before.m4a"></audio>
+                            </div>
+                            <div class="player-box">
+                                <div class="player-label">✨ 3ヶ月目 (After)</div>
+                                <audio controls src="assets/audio/student-b-after.m4a"></audio>
+                            </div>
                         </div>
                     </div>
                 </div>
