@@ -981,6 +981,26 @@
             font-weight: 500;
         }
 
+        /* Narrow mobile adjustments for footer */
+        @media (max-width: 375px) {
+            .cta-container {
+                padding: 30px 15px;
+            }
+
+            .cta-text {
+                font-size: 17px;
+            }
+
+            .btn-line {
+                font-size: 16px;
+                padding: 15px 20px;
+            }
+
+            .btn-line::before {
+                font-size: 22px;
+            }
+        }
+
         /* -------------------------------------------
            Comparison Table
            ------------------------------------------- */
@@ -1547,8 +1567,12 @@
         <div class="container">
             <div class="cta-container">
                 <p class="cta-text">
-                    本日はカウンセリングへのご参加ありがとうございました。<br>小さな疑問や、聞きそびれたことはございませんか？<br>あなたの英語学習が最高のスタートを切れるよう、何でもお答えします。</p>
-                <a href="#" class="btn-line">担当コンサルタントにメッセージを送る</a>
+                    本日はカウンセリングへのご参加ありがとうございました。<br><br>
+                    小さな疑問や、聞きそびれたことはございませんか？<br><br>
+                    あなたの英語学習が最高のスタートを切れるよう、<br><br>
+                    何でもお答えします。
+                </p>
+                <a href="#" class="btn-line">担当コンサルタントに<br>メッセージを送る</a>
                 <p style="margin-top: 15px; font-size: 13px; color: var(--text-muted);">
                     ※メッセージが埋もれてしまっている場合は、こちらから再度お送りいただければ即座に確認いたします。</p>
             </div>
