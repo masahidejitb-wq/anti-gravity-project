@@ -961,6 +961,170 @@
             font-size: 13px;
             font-weight: 500;
         }
+
+        /* -------------------------------------------
+           Comparison Table
+           ------------------------------------------- */
+        .comparison-table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+            text-align: center;
+            background: var(--white);
+            margin: 0 auto;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid #EAEAEA;
+            padding: 20px 15px;
+            font-size: 15px;
+        }
+
+        .comparison-table thead th {
+            background: var(--light-blue);
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .comparison-table tbody th {
+            background: var(--light-blue);
+            font-weight: 700;
+            text-align: left;
+            color: var(--primary-blue);
+        }
+
+        .comparison-table .highlight {
+            background: #eef7ff;
+            font-weight: 700;
+            border: 2px solid var(--primary-blue);
+        }
+
+        .comparison-table thead th.highlight {
+            background: var(--primary-blue);
+            color: var(--white);
+            font-size: 18px;
+        }
+
+        /* -------------------------------------------
+           Daily Schedule
+           ------------------------------------------- */
+        .schedule-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        .schedule-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background-color: var(--primary-blue);
+            transform: translateX(-50%);
+        }
+
+        .schedule-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .schedule-item.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .schedule-item::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background-color: var(--white);
+            border: 4px solid var(--accent-orange);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .schedule-img {
+            width: 45%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .schedule-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 3/2;
+            display: block;
+        }
+
+        .schedule-text {
+            width: 45%;
+        }
+
+        .schedule-time {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .schedule-text p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .schedule-container {
+                gap: 50px;
+            }
+
+            .schedule-container::before {
+                left: 15px;
+                transform: none;
+            }
+
+            .schedule-item::after {
+                left: 15px;
+                top: 0;
+                transform: translate(-50%, 0);
+            }
+
+            .schedule-item,
+            .schedule-item.reverse {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-left: 45px;
+                gap: 20px;
+            }
+
+            .schedule-img,
+            .schedule-text {
+                width: 100%;
+            }
+        }
     </style>
 
     <!-- Swiper CSS -->
@@ -1213,6 +1377,91 @@
                 </div>
                 <!-- Pagination -->
                 <div class="swiper-pagination" style="bottom: 0;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- なぜイングリードが選ばれるのか（他社比較） -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">なぜイングリードが選ばれるのか</h2>
+            <div class="comparison-table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="highlight">イングリード</th>
+                            <th>一般的なスクール</th>
+                            <th>アプリ学習</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>学習スタイル</th>
+                            <td class="highlight">専属コーチとの二人三脚</td>
+                            <td>週1〜2回の通学</td>
+                            <td>自己管理での独学</td>
+                        </tr>
+                        <tr>
+                            <th>カリキュラム</th>
+                            <td class="highlight">完全オーダーメイド</td>
+                            <td>決まった教材</td>
+                            <td>一律の内容</td>
+                        </tr>
+                        <tr>
+                            <th>サポート体制</th>
+                            <td class="highlight">毎日のチャットサポート</td>
+                            <td>レッスン時のみ</td>
+                            <td>基本的になし</td>
+                        </tr>
+                        <tr>
+                            <th>成果の出やすさ</th>
+                            <td class="highlight">◎ 全体的な底上げ</td>
+                            <td>△ 継続のハードルあり</td>
+                            <td>△ 疑問が解消しづらい</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 受講生の1日（学習スケジュール） -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">受講生の1日（学習イメージ）</h2>
+            <div class="schedule-container">
+                <!-- Morning -->
+                <div class="schedule-item">
+                    <div class="schedule-img">
+                        <img src="https://via.placeholder.com/600x400/004098/FFFFFF?text=Morning+Study" alt="朝の学習">
+                    </div>
+                    <div class="schedule-text">
+                        <h3 class="schedule-time">朝の学習</h3>
+                        <p>通勤の電車内や、少し早起きした朝の時間を活用して音声学習。毎日のインプットが英語脳を作ります。</p>
+                    </div>
+                </div>
+                <!-- Noon -->
+                <div class="schedule-item reverse">
+                    <div class="schedule-img">
+                        <img src="https://via.placeholder.com/600x400/00b0f0/FFFFFF?text=Lunch+Study" alt="昼の隙間時間">
+                    </div>
+                    <div class="schedule-text">
+                        <h3 class="schedule-time">昼の隙間時間</h3>
+                        <p>ランチタイムの15分間を利用して、単語の暗記や小テスト。短時間でも毎日英語に触れることが重要です。</p>
+                    </div>
+                </div>
+                <!-- Night -->
+                <div class="schedule-item">
+                    <div class="schedule-img">
+                        <img src="https://via.placeholder.com/600x400/f39200/FFFFFF?text=Night+Coaching"
+                            alt="夜のオンラインコーチング">
+                    </div>
+                    <div class="schedule-text">
+                        <h3 class="schedule-time">夜のオンラインコーチング</h3>
+                        <p>帰宅後は自宅でリラックスしながらオンラインコーチング。その日の疑問を解消し、次の目標を設定します。</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
