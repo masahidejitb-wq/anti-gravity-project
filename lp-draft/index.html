@@ -39,6 +39,10 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         html,
         body {
             overflow-x: hidden;
@@ -1165,6 +1169,114 @@
                 width: 100%;
             }
         }
+
+        /* -------------------------------------------
+           Floating TOC
+           ------------------------------------------- */
+        .toc-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 64, 152, 0.4);
+            z-index: 999;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .toc-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .toc-icon {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .toc-icon span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background-color: var(--white);
+            transition: 0.3s;
+        }
+
+        .toc-menu {
+            position: fixed;
+            top: 50%;
+            right: -100%;
+            transform: translateY(-50%);
+            width: 250px;
+            background: var(--white);
+            border-radius: 12px 0 0 12px;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+            z-index: 998;
+            transition: right 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 20px 0;
+            border-left: 3px solid var(--primary-blue);
+        }
+
+        .toc-menu.active {
+            right: 0;
+        }
+
+        .toc-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toc-list li {
+            border-bottom: 1px dashed #f0f0f0;
+        }
+
+        .toc-list li:last-child {
+            border-bottom: none;
+        }
+
+        .toc-list a {
+            display: block;
+            padding: 12px 20px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .toc-list a:hover {
+            background-color: var(--light-blue);
+            color: var(--primary-blue);
+        }
+
+        @media (max-width: 768px) {
+            .toc-btn {
+                bottom: 20px;
+                right: 15px;
+            }
+
+            .toc-menu {
+                width: 220px;
+            }
+        }
     </style>
 
     <!-- Swiper CSS -->
@@ -1210,7 +1322,7 @@
     </header>
 
     <!-- 劇的な変化 -->
-    <section>
+    <section id="sec-voice">
         <div class="container">
             <h2 class="section-title">劇的な変化を実感</h2>
             <div class="voice-grid">
@@ -1338,7 +1450,7 @@
     </section>
 
     <!-- 動画 -->
-    <section>
+    <section id="sec-video">
         <div class="container">
             <h2 class="section-title">実際のカウンセリング</h2>
             <div class="video-wrapper">
@@ -1349,7 +1461,7 @@
     </section>
 
     <!-- コーチ紹介 -->
-    <section>
+    <section id="sec-coach">
         <div class="container">
             <h2 class="section-title">プロフェッショナル陣</h2>
             <div class="swiper coach-swiper">
@@ -1427,7 +1539,7 @@
     </section>
 
     <!-- なぜイングリードが選ばれるのか（他社比較） -->
-    <section>
+    <section id="sec-compare">
         <div class="container">
             <h2 class="section-title">なぜイングリードが選ばれるのか</h2>
             <div class="comparison-table-wrapper">
@@ -1472,7 +1584,7 @@
     </section>
 
     <!-- 受講生の1日（学習スケジュール） -->
-    <section>
+    <section id="sec-schedule">
         <div class="container">
             <h2 class="section-title">受講生の1日（学習イメージ）</h2>
             <div class="schedule-container">
@@ -1536,7 +1648,7 @@
     </section>
 
     <!-- FAQ -->
-    <section>
+    <section id="sec-faq">
         <div class="container">
             <h2 class="section-title">よくあるご質問</h2>
             <div class="faq-list">
@@ -1599,6 +1711,26 @@
                 <p class="modal-desc" id="modalDesc">Description goes here.</p>
             </div>
         </div>
+    </div>
+
+    <!-- Floating TOC -->
+    <div class="toc-btn" id="tocBtn" aria-label="目次を開く">
+        <div class="toc-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <div class="toc-menu" id="tocMenu">
+        <div class="toc-title">目次</div>
+        <ul class="toc-list">
+            <li><a href="#sec-voice">実際の音声 (Before/After)</a></li>
+            <li><a href="#sec-video">カウンセリング映像</a></li>
+            <li><a href="#sec-coach">コーチ紹介</a></li>
+            <li><a href="#sec-compare">他社比較表</a></li>
+            <li><a href="#sec-schedule">受講生の1日</a></li>
+            <li><a href="#sec-faq">よくあるご質問</a></li>
+        </ul>
     </div>
 
     <!-- スタイル補完：スマホ専用の改行対応 -->
@@ -1708,6 +1840,32 @@
                     closeModal();
                 }
             });
+
+            // Floating TOC
+            const tocBtn = document.getElementById('tocBtn');
+            const tocMenu = document.getElementById('tocMenu');
+            const tocLinks = document.querySelectorAll('.toc-list a');
+
+            if (tocBtn && tocMenu) {
+                tocBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    tocMenu.classList.toggle('active');
+                });
+
+                // Close TOC when clicking a link
+                tocLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        tocMenu.classList.remove('active');
+                    });
+                });
+
+                // Close TOC when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!tocMenu.contains(e.target) && !tocBtn.contains(e.target)) {
+                        tocMenu.classList.remove('active');
+                    }
+                });
+            }
         });
     </script>
     <!-- Swiper JS -->
