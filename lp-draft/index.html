@@ -121,7 +121,7 @@
         header {
             background-color: var(--primary-blue);
             color: var(--white);
-            padding: 140px 20px 160px;
+            padding: 80px 20px 100px;
             /* 下部矢印のための余白 */
             text-align: center;
             width: 100%;
@@ -130,12 +130,12 @@
 
         @media (max-width: 768px) {
             header {
-                padding: 100px 20px 120px;
+                padding: 60px 15px 80px;
             }
         }
 
         .hero-logo-wrapper {
-            margin-bottom: 40px;
+            margin-bottom: 25px;
             display: flex;
             justify-content: center;
         }
@@ -169,14 +169,16 @@
             color: var(--white);
             font-size: 16px;
             font-weight: 500;
-            line-height: 2.0;
-            /* ゆったりとした行間 */
+            line-height: 1.8;
+            /* ややスッキリとした行間 */
             text-align: left;
             /* テキスト左揃え（中央配置だが文章は読みやすく） */
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 15px;
-            /* スマホ時の横揺れ・余白防止 */
+            padding: 0 10px;
+            /* スマホ時の横揺れ・余白防止。以前より広め */
+            word-break: keep-all;
+            overflow-wrap: anywhere;
         }
 
         .hero-message p {
@@ -930,7 +932,7 @@
 
         .cta-container {
             background: var(--white);
-            padding: 40px 20px;
+            padding: 35px 20px;
             border-radius: 12px;
             max-width: 800px;
             margin: 0 auto 40px;
@@ -995,7 +997,7 @@
             }
 
             .cta-container {
-                padding: 30px 15px;
+                padding: 25px 15px;
                 margin-bottom: 30px;
             }
 
@@ -1012,7 +1014,7 @@
         /* Narrow mobile adjustments for footer */
         @media (max-width: 375px) {
             .cta-container {
-                padding: 25px 15px;
+                padding: 20px 15px;
             }
 
             .cta-text {
@@ -1360,9 +1362,22 @@
             <h1 class="hero-catchphrase">無料カウンセリングを<br class="sp-only">ご受講いただいたあなたへ</h1>
             <div class="hero-message">
                 <p>「AI時代に、なぜ人から学ぶのか？」</p>
-                <p>イングリードの答えは、受講生以上に、あなたの英語学習を本気で考えるコーチ陣の存在にあります。<br>決まった道筋はありません。最新の第二言語習得論と、多彩なバックグラウンドを持つプロが、あなたの学習を最大化します。
+                <p>
+                    <span style="display: inline-block;">イングリードの答えは、受講生以上に、</span><span
+                        style="display: inline-block;">あなたの英語学習を本気で考える</span><span
+                        style="display: inline-block;">コーチ陣の存在にあります。</span>
+                    <span style="display: inline-block;">決まった道筋はありません。</span><span
+                        style="display: inline-block;">最新の第二言語習得論と、</span><span
+                        style="display: inline-block;">多彩なバックグラウンドを持つプロが、</span><span
+                        style="display: inline-block;">あなたの学習を最大化します。</span>
                 </p>
-                <p>あなたの英語力がどう変わるのか。コーチがどう寄り添うのか。<br>スクロールして、これからの「新しい学習の形」をご確認ください。</p>
+                <p>
+                    <span style="display: inline-block;">あなたの英語力がどう変わるのか。</span><span
+                        style="display: inline-block;">コーチがどう寄り添うのか。</span>
+                    <span style="display: inline-block;">スクロールして、</span><span
+                        style="display: inline-block;">これからの「新しい学習の形」を</span><span
+                        style="display: inline-block;">ご確認ください。</span>
+                </p>
             </div>
         </div>
         <div class="scroll-down">
@@ -1798,7 +1813,7 @@
                     <span style="display: inline-block;">小さな疑問や、</span><span
                         style="display: inline-block;">聞きそびれたことはございませんか？</span><br><br>
                     <span style="display: inline-block;">あなたの英語学習が</span><br>
-                    <span style="display: inline-block;">最高のスタートを切れるよう、</span><br><br>
+                    <span style="display: inline-block;">最高のスタートを切れるよう、</span><br>
                     <span style="display: inline-block;">何でもお答えします。</span>
                 </p>
                 <a href="#" class="btn-line">
@@ -1808,8 +1823,6 @@
                         <span>メッセージを送る</span>
                     </span>
                 </a>
-                <p style="margin-top: 15px; font-size: 13px; color: var(--text-muted);">
-                    ※メッセージが埋もれてしまっている場合は、こちらから再度お送りいただければ即座に確認いたします。</p>
             </div>
             <p class="copyright">&copy; 2026 イングリード All Rights Reserved.</p>
         </div>
