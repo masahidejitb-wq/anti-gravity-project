@@ -109,7 +109,7 @@
             }
 
             #sec-compare .section-title {
-                font-size: 22px;
+                font-size: min(20px, 5.5vw);
             }
         }
 
@@ -557,6 +557,7 @@
         @media (max-width: 900px) {
             .feature-grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
             }
         }
 
@@ -1011,7 +1012,8 @@
             }
 
             .cta-text {
-                font-size: 14.5px;
+                font-size: 13px;
+                /* Changed to ~0.85x */
                 margin-bottom: 20px;
             }
 
@@ -1027,7 +1029,7 @@
             }
 
             .cta-text {
-                font-size: 14.5px;
+                font-size: 12.5px;
             }
 
             .btn-line {
@@ -1076,6 +1078,8 @@
             text-align: left;
             color: var(--primary-blue);
             white-space: nowrap;
+            padding: 20px 8px;
+            /* Added left column padding adjustment */
         }
 
         .comparison-table .highlight {
@@ -1446,7 +1450,7 @@
     </section>
 
     <!-- LINEサポート -->
-    <section>
+    <section id="sec-line">
         <div class="container">
             <h2 class="section-title">毎日コーチと繋がる安心感</h2>
             <p
@@ -1538,7 +1542,7 @@
     <!-- コーチ紹介 -->
     <section id="sec-coach">
         <div class="container">
-            <h2 class="section-title">イングリッシュコーチ陣</h2>
+            <h2 class="section-title">イングリードコーチ陣</h2>
             <div class="swiper coach-swiper">
                 <div class="swiper-wrapper">
                     <!-- Coach 1 (coach1.jpg) -->
@@ -1870,6 +1874,7 @@
         <div class="toc-title">目次</div>
         <ul class="toc-list">
             <li><a href="#sec-voice">実際の音声 (Before/After)</a></li>
+            <li><a href="#sec-line">毎日のLINEサポート</a></li>
             <li><a href="#sec-video">カウンセリング映像</a></li>
             <li><a href="#sec-coach">コーチ紹介</a></li>
             <li><a href="#sec-compare">他社比較表</a></li>
