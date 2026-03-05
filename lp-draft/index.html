@@ -1318,11 +1318,30 @@
             background: var(--primary-blue);
         }
 
+        /* スマホ表示（基本） */
         .swiper-slide {
+            width: 80% !important;
+            /* これで端が少し見える状態（1.2枚）になる */
+            box-sizing: border-box;
             backface-visibility: hidden;
             transform: translateZ(0);
             -webkit-backface-visibility: hidden;
             -webkit-transform: translateZ(0);
+        }
+
+        .swiper-slide img {
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            -webkit-transform: translateZ(0);
+        }
+
+        /* PC表示（768px以上）の調整 */
+        @media (min-width: 768px) {
+            .swiper-slide {
+                width: 28% !important;
+                /* PCで約3.5〜4枚見えるように調整 */
+            }
         }
     </style>
 </head>
@@ -1856,31 +1875,16 @@
             // Initialize Swiper for Coaches Section
             const coachSwiper = new Swiper('.coach-swiper', {
                 loop: true,
-                loopedSlides: 8,
-                loopAdditionalSlides: 4,
-                slidesPerView: 1.2,
+                slidesPerView: 'auto',
                 centeredSlides: true,
                 spaceBetween: 16,
-                speed: 600,
+                speed: 500,
+                slidesPerGroup: 1,
                 watchSlidesProgress: true,
                 grabCursor: true,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
-                },
-                breakpoints: {
-                    // tablet
-                    768: {
-                        slidesPerView: 2.5,
-                        centeredSlides: false,
-                        spaceBetween: 20,
-                    },
-                    // pc
-                    1024: {
-                        slidesPerView: 4,
-                        centeredSlides: false,
-                        spaceBetween: 20,
-                    }
                 }
             });
 
