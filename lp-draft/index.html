@@ -937,6 +937,8 @@
             box-shadow: 0 8px 30px rgba(0, 64, 152, 0.08);
             border: 2px solid var(--primary-blue);
             width: 100%;
+            word-break: keep-all;
+            overflow-wrap: anywhere;
         }
 
         .cta-text {
@@ -983,6 +985,16 @@
             color: var(--text-muted);
             font-size: 13px;
             font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .cta-text {
+                font-size: 0.85em;
+            }
+
+            .btn-line {
+                font-size: 0.9rem;
+            }
         }
 
         /* Narrow mobile adjustments for footer */
@@ -1679,12 +1691,15 @@
         <div class="container">
             <div class="cta-container">
                 <p class="cta-text">
-                    本日はカウンセリングへのご参加ありがとうございました。<br><br>
-                    小さな疑問や、聞きそびれたことはございませんか？<br><br>
+                    <span style="display: inline-block;">本日はカウンセリングへの</span><span
+                        style="display: inline-block;">ご参加ありがとうございました。</span><br><br>
+                    <span style="display: inline-block;">小さな疑問や、</span><span
+                        style="display: inline-block;">聞きそびれたことはございませんか？</span><br><br>
                     あなたの英語学習が最高のスタートを切れるよう、<br><br>
                     何でもお答えします。
                 </p>
-                <a href="#" class="btn-line">担当コンサルタントに<br>メッセージを送る</a>
+                <a href="#" class="btn-line"><span
+                        style="display: inline-block; white-space: nowrap;">担当コンサルタントに</span><br>メッセージを送る</a>
                 <p style="margin-top: 15px; font-size: 13px; color: var(--text-muted);">
                     ※メッセージが埋もれてしまっている場合は、こちらから再度お送りいただければ即座に確認いたします。</p>
             </div>
