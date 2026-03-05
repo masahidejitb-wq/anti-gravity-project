@@ -1562,6 +1562,71 @@
                             </div>
                         </div>
                     </div>
+                    <!-- (Clone) Coach 1 (coach1.jpg) -->
+                    <div class="swiper-slide">
+                        <div class="coach-card" data-name="田中 健太" data-spec="ビジネス英会話・発音"
+                            data-history="【経歴】外資系IT企業にて約8年勤務後、語学教育の世界へ。北米への留学経験と現場での叩き上げのビジネス英語を武器に、実践的な英語コミュニケーションを指導。"
+                            data-desc="「発音は筋肉のトレーニングと同じ」がモットー。どんなレベルの方でもネイティブに伝わるキレイな発音へ導きます。論理的かつ熱い指導に定評があります。"
+                            data-img="coach1.jpg">
+                            <div class="coach-img-wrapper">
+                                <!-- onerror で画像がない場合もデザインが崩れないように対応 -->
+                                <img src="coach1.jpg" alt="田中 健太" class="coach-img"
+                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/004098/FFFFFF?text=No+Image';">
+                            </div>
+                            <div class="coach-info">
+                                <div class="coach-name">田中 健太</div>
+                                <div class="coach-spec">ビジネス英会話・発音</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- (Clone) Coach 2 (coach2.jpg) -->
+                    <div class="swiper-slide">
+                        <div class="coach-card" data-name="佐藤 理恵" data-spec="TOEIC®・文法基礎"
+                            data-history="【経歴】大手英会話スクールにて5年連続で指導実績トップ。その後、フリーランスの英語講師としてTOEICのスコアアップ請負人として活動。TOEIC 990点（満点）保持。"
+                            data-desc="日本人がなぜ特定の文法でつまずくのか、その「なぜ」を分かりやすく言語化します。スコアの壁にぶつかっている方のブレイクスルーを全面サポートします。"
+                            data-img="coach2.jpg">
+                            <div class="coach-img-wrapper">
+                                <img src="coach2.jpg" alt="佐藤 理恵" class="coach-img"
+                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/00b0f0/FFFFFF?text=No+Image';">
+                            </div>
+                            <div class="coach-info">
+                                <div class="coach-name">佐藤 理恵</div>
+                                <div class="coach-spec">TOEIC®・文法基礎</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- (Clone) Coach 3 (coach3.jpg) -->
+                    <div class="swiper-slide">
+                        <div class="coach-card" data-name="Mike Smith" data-spec="ネイティブ表現・議論"
+                            data-history="【経歴】アメリカ・カリフォルニア州出身。日本の大学院で言語学を専攻し、バイリンガル教育の研究に従事。企業向けの異文化コミュニケーション研修講師の経験も多数。"
+                            data-desc="教科書には載っていない「自然な言い回し」や、ビジネス会議で相手を納得させる「ロジックの組み立て方」の指導を得意としています。"
+                            data-img="coach3.jpg">
+                            <div class="coach-img-wrapper">
+                                <img src="coach3.jpg" alt="Mike Smith" class="coach-img"
+                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/f39200/FFFFFF?text=No+Image';">
+                            </div>
+                            <div class="coach-info">
+                                <div class="coach-name">Mike Smith</div>
+                                <div class="coach-spec">ネイティブ表現・議論</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- (Clone) Coach 4 (coach4.jpg) -->
+                    <div class="swiper-slide">
+                        <div class="coach-card" data-name="鈴木 ゆかり" data-spec="初心者脱却・マインド"
+                            data-history="【経歴】心理カウンセラーの資格を持ち、英語学習における「メンタルブロック」の解除に特化した独自メソッドを開発。初心者〜中級者へのステップアップ指導の実績多数。"
+                            data-desc="「どうしても英語に苦手意識がある」「いつも三日坊主で終わってしまう」という方の味方です。学習を歯磨きレベルの習慣に落とし込むコーチングを行います。"
+                            data-img="coach4.jpg">
+                            <div class="coach-img-wrapper">
+                                <img src="coach4.jpg" alt="鈴木 ゆかり" class="coach-img"
+                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/004098/FFFFFF?text=No+Image';">
+                            </div>
+                            <div class="coach-info">
+                                <div class="coach-name">鈴木 ゆかり</div>
+                                <div class="coach-spec">初心者脱却・マインド</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- Pagination -->
                 <div class="swiper-pagination" style="bottom: 0;"></div>
@@ -1791,10 +1856,11 @@
             // Initialize Swiper for Coaches Section
             const coachSwiper = new Swiper('.coach-swiper', {
                 loop: true,
-                loopedSlides: 4,
+                loopedSlides: 8,
+                loopAdditionalSlides: 4,
                 slidesPerView: 1.2,
                 centeredSlides: true,
-                spaceBetween: 20,
+                spaceBetween: 16,
                 speed: 600,
                 watchSlidesProgress: true,
                 grabCursor: true,
