@@ -1317,6 +1317,13 @@
         .swiper-pagination-bullet-active {
             background: var(--primary-blue);
         }
+
+        .swiper-slide {
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            -webkit-transform: translateZ(0);
+        }
     </style>
 </head>
 
@@ -1784,10 +1791,12 @@
             // Initialize Swiper for Coaches Section
             const coachSwiper = new Swiper('.coach-swiper', {
                 loop: true,
+                loopedSlides: 4,
                 slidesPerView: 1.2,
                 centeredSlides: true,
                 spaceBetween: 20,
                 speed: 600,
+                watchSlidesProgress: true,
                 grabCursor: true,
                 pagination: {
                     el: '.swiper-pagination',
