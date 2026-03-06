@@ -17,8 +17,13 @@
             /* イングリード提供のブランドカラー */
             --primary-blue: #004098;
             --sub-blue: #00b0f0;
-            --accent-orange: #f39200;
+            --accent-orange: #ee8800;
             --light-blue: #F4FAFE;
+
+            /* 追加ブランドカラー */
+            --color-p1: #e6f0fc;
+            --color-attention: #ee8800;
+            --color-primary-navy: #002b5c;
 
             --text-main: #333333;
             --text-muted: #666666;
@@ -127,8 +132,8 @@
            Header (Hero)
            ------------------------------------------- */
         header {
-            background-color: var(--primary-blue);
-            color: var(--white);
+            background-color: var(--color-p1);
+            color: var(--color-primary-navy);
             padding: 80px 20px 100px;
             /* 下部矢印のための余白 */
             text-align: center;
@@ -157,7 +162,7 @@
         /* 画像が読み込めなかった時のフォールバックテキスト用 */
         .hero-logo-text {
             font-size: 28px;
-            color: var(--white);
+            color: var(--color-primary-navy);
             font-weight: 900;
             letter-spacing: 2px;
             display: none;
@@ -167,14 +172,14 @@
         .hero-catchphrase {
             font-size: 28px;
             font-weight: 900;
-            color: var(--white);
+            color: var(--color-primary-navy);
             margin-bottom: 40px;
             line-height: 1.5;
             letter-spacing: 0.05em;
         }
 
         .hero-message {
-            color: var(--white);
+            color: var(--color-primary-navy);
             font-size: 16px;
             font-weight: 500;
             line-height: 1.8;
@@ -205,7 +210,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: var(--white);
+            color: var(--color-primary-navy);
             font-size: 13px;
             font-weight: 700;
             letter-spacing: 1px;
@@ -215,8 +220,8 @@
         .scroll-down-arrow {
             width: 16px;
             height: 16px;
-            border-right: 2px solid var(--white);
-            border-bottom: 2px solid var(--white);
+            border-right: 2px solid var(--color-primary-navy);
+            border-bottom: 2px solid var(--color-primary-navy);
             transform: rotate(45deg);
             margin-top: 10px;
         }
