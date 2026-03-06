@@ -2070,16 +2070,18 @@
                 });
             }
 
-            // --- Sticky LINE CTA: フッター到達時フェードアウト ---
+            // --- Sticky LINE CTA: CTAセクション到達時フェードアウト、FAQ以降で再表示 ---
             const stickyLineCta = document.getElementById('stickyLineCta');
-            const siteFooter = document.getElementById('site-footer');
+            const secCta = document.getElementById('sec-cta');
 
-            if (stickyLineCta && siteFooter) {
-                const footerObserver = new IntersectionObserver((entries) => {
+            if (stickyLineCta && secCta) {
+                const ctaObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
+                            // CTAセクションが見えたら帯を隠す
                             stickyLineCta.classList.add('is-hidden');
                         } else {
+                            // CTAセクションが画面外に出たら帯を再表示
                             stickyLineCta.classList.remove('is-hidden');
                         }
                     });
@@ -2087,7 +2089,7 @@
                     root: null,
                     threshold: 0.15
                 });
-                footerObserver.observe(siteFooter);
+                ctaObserver.observe(secCta);
             }
         });
     </script>
