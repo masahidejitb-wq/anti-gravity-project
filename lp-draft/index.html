@@ -1309,12 +1309,64 @@
 
         @media (max-width: 768px) {
             .toc-btn {
-                bottom: 20px;
+                bottom: 75px;
                 right: 15px;
             }
 
             .toc-menu {
                 width: 220px;
+            }
+        }
+
+        /* -------------------------------------------
+           Sticky LINE CTA Bar (Mobile Only)
+           ------------------------------------------- */
+        .sticky-line-cta {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .sticky-line-cta {
+                display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                z-index: 998;
+                background-color: #06C755;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+                transition: opacity 0.4s ease, visibility 0.4s ease;
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .sticky-line-cta.is-hidden {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .sticky-line-cta a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                width: 100%;
+                padding: 14px 16px;
+                color: #FFFFFF;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 700;
+                letter-spacing: 0.03em;
+                line-height: 1;
+            }
+
+            .sticky-line-cta a::before {
+                content: 'LINE';
+                font-family: Arial, sans-serif;
+                font-weight: 900;
+                font-size: 18px;
+                flex-shrink: 0;
             }
         }
     </style>
@@ -1817,8 +1869,15 @@
         </div>
     </section>
 
+    <!-- Sticky LINE CTA Bar (Mobile Only) -->
+    <div class="sticky-line-cta" id="stickyLineCta">
+        <a href="https://lin.ee/zgKxDmj">
+            LINEで担当コンサルタントに相談する
+        </a>
+    </div>
+
     <!-- Footer / CTA -->
-    <footer>
+    <footer id="site-footer">
         <div class="container">
             <div class="cta-container">
                 <p class="cta-text">
@@ -2003,6 +2062,26 @@
                         tocMenu.classList.remove('active');
                     }
                 });
+            }
+
+            // --- Sticky LINE CTA: フッター到達時フェードアウト ---
+            const stickyLineCta = document.getElementById('stickyLineCta');
+            const siteFooter = document.getElementById('site-footer');
+
+            if (stickyLineCta && siteFooter) {
+                const footerObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            stickyLineCta.classList.add('is-hidden');
+                        } else {
+                            stickyLineCta.classList.remove('is-hidden');
+                        }
+                    });
+                }, {
+                    root: null,
+                    threshold: 0.15
+                });
+                footerObserver.observe(siteFooter);
             }
         });
     </script>
