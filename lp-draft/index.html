@@ -2070,26 +2070,44 @@
                 });
             }
 
-            // --- Sticky LINE CTA: CTAセクション到達時フェードアウト、FAQ以降で再表示 ---
+            // --- Sticky LINE CTA: 表示/非表示ロジック（2 Observer方式） ---
+            // #sec-cta と #sec-faq の可視状態をそれぞれ管理する
             const stickyLineCta = document.getElementById('stickyLineCta');
             const secCta = document.getElementById('sec-cta');
+            const secFaq = document.getElementById('sec-faq');
 
-            if (stickyLineCta && secCta) {
+            if (stickyLineCta && secCta && secFaq) {
+                let ctaVisible = false;
+                let faqVisible = false;
+
+                function updateStickyBar() {
+                    // CTAが見えていて、かつFAQがまだ見えていない → 帯を隠す
+                    // それ以外（ページ上部 / FAQ以降） → 帯を表示
+                    if (ctaVisible && !faqVisible) {
+                        stickyLineCta.classList.add('is-hidden');
+                    } else {
+                        stickyLineCta.classList.remove('is-hidden');
+                    }
+                }
+
+                // Observer 1: #sec-cta の可視状態を監視
                 const ctaObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            // CTAセクションが見えたら帯を隠す
-                            stickyLineCta.classList.add('is-hidden');
-                        } else {
-                            // CTAセクションが画面外に出たら帯を再表示
-                            stickyLineCta.classList.remove('is-hidden');
-                        }
+                        ctaVisible = entry.isIntersecting;
+                        updateStickyBar();
                     });
-                }, {
-                    root: null,
-                    threshold: 0.15
-                });
+                }, { root: null, threshold: 0.1 });
+
+                // Observer 2: #sec-faq の可視状態を監視
+                const faqObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        faqVisible = entry.isIntersecting;
+                        updateStickyBar();
+                    });
+                }, { root: null, threshold: 0.1 });
+
                 ctaObserver.observe(secCta);
+                faqObserver.observe(secFaq);
             }
         });
     </script>
