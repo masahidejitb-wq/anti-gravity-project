@@ -1130,10 +1130,16 @@
             window.location.href = API_BASE_URL + '/api/auth';
         }
 
+        function logout() {
+            oauthAccessToken = null;
+            localStorage.removeItem('yt_access_token');
+            updateAuthUI();
+        }
+
         function updateAuthUI() {
             var area = document.getElementById('authArea');
             if (oauthAccessToken) {
-                area.innerHTML = '<div class="login-status"><div class="login-dot"></div>CONNECTED</div>';
+                area.innerHTML = '<div class="login-status" style="cursor:pointer;" onclick="logout()"><div class="login-dot"></div>CONNECTED</div>';
             } else {
                 area.innerHTML = '<button class="login-btn" id="loginBtn" onclick="startOAuth()">Googleでログイン</button>';
             }
