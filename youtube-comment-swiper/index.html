@@ -1748,12 +1748,43 @@
 
         function swipeUp() {
             if (!topCard) return;
+            var c = comments[currentIdx];
+            if (!c) return;
+
             topCard.style.transition = 'transform 0.32s ease-in, opacity 0.32s ease-in';
             topCard.style.transform = 'translate(-50%, -200%) scale(0.8)';
             topCard.style.opacity = '0';
+
             // ハートアニメーション
             showHeartBurst();
-            showToast('❤️ ハートを押してスキップ');
+
+            if (oauthAccessToken && c.videoId) {
+                showToast('👍 いいね送信中...');
+                fetch(API_BASE_URL + '/api/like', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        videoId: c.videoId,
+                        accessToken: oauthAccessToken
+                    })
+                })
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data.success) {
+                            showToast('❤️ 高評価しました！');
+                        } else {
+                            showToast('❌ いいね失敗: ' + (data.error || 'Unknown'));
+                            console.error('Like error:', data);
+                        }
+                    })
+                    .catch(function (err) {
+                        showToast('❌ ネットワークエラー');
+                        console.error('Like request failed:', err);
+                    });
+            } else {
+                showToast('❤️ ハートを押してスキップ（モック）');
+            }
+
             setTimeout(function () { currentIdx++; updateTopCard(); }, 340);
         }
 
