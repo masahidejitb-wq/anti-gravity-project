@@ -1101,7 +1101,7 @@
 
         // OAuth / API
         var API_BASE_URL = 'https://anti-gravity-project-iota.vercel.app';
-        var oauthAccessToken = null;
+        var oauthAccessToken = localStorage.getItem('yt_access_token') || null;
 
         // ページロード時にURLフラグメントからaccess_tokenを取得
         (function () {
@@ -1111,11 +1111,12 @@
                 var token = params.get('access_token');
                 if (token) {
                     oauthAccessToken = token;
+                    localStorage.setItem('yt_access_token', token);
                     // URLからハッシュを削除（トークン漏洩防止）
                     history.replaceState(null, '', window.location.pathname + window.location.search);
-                    updateAuthUI();
                 }
             }
+            updateAuthUI();
         })();
 
         function startOAuth() {
