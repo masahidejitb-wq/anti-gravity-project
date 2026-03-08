@@ -965,8 +965,10 @@
     <div class="header">
         <div class="logo">ACTUAL<span>.</span>JAPAN</div>
         <div class="stat-badge">未返信 <b id="count">—</b> 件</div>
-        <div id="authArea">
-            <button class="login-btn" id="loginBtn" onclick="startOAuth()">Googleでログイン</button>
+        <div id="authArea" style="display: flex; align-items: center;">
+            <span id="auth-status" class="login-status" onclick="logout()" style="cursor:pointer; display:none;">●
+                CONNECTED</span>
+            <button class="login-btn" id="login-btn" onclick="startOAuth()">Googleでログイン</button>
         </div>
     </div>
 
@@ -1131,17 +1133,19 @@
         }
 
         function logout() {
-            oauthAccessToken = null;
             localStorage.removeItem('yt_access_token');
-            updateAuthUI();
+            oauthAccessToken = null;
+            document.getElementById('auth-status').style.display = 'none';
+            document.getElementById('login-btn').style.display = 'block';
         }
 
         function updateAuthUI() {
-            var area = document.getElementById('authArea');
             if (oauthAccessToken) {
-                area.innerHTML = '<div class="login-status" style="cursor:pointer;" onclick="logout()"><div class="login-dot"></div>CONNECTED</div>';
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('auth-status').style.display = 'flex';
             } else {
-                area.innerHTML = '<button class="login-btn" id="loginBtn" onclick="startOAuth()">Googleでログイン</button>';
+                document.getElementById('auth-status').style.display = 'none';
+                document.getElementById('login-btn').style.display = 'block';
             }
         }
 
