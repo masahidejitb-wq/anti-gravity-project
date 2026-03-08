@@ -1165,6 +1165,10 @@
                             '<div style="font-size:11px">すべてのコメントに返信済みです</div>';
                         document.getElementById('emptyState').classList.add('visible');
                     } else {
+                        // 新着順（公開日時の降順）でソート
+                        commentQueue.sort(function (a, b) {
+                            return new Date(b.publishedAt) - new Date(a.publishedAt);
+                        });
                         showToast('✅ 未返信コメント ' + commentQueue.length + '件を取得');
                         loadNextBatch();
                     }
@@ -1198,17 +1202,21 @@
 
         // チャンネルオーナーがすでに返信しているか判定するヘルパー関数
         // ① totalReplyCount === 0 → 確実に未返信
-        // ② totalReplyCount > 0 かつ replies あり → replies の中にオーナーIDがあれば返信済み
-        // ③ totalReplyCount > 0 かつ replies なし（20件超えで省略）→ 安全のため返信済み扱い
+        // ② totalReplyCount > 0 → replies.commentsを確認し、件数増加防止のため保守的に判定
+        //    - replies.commentsが存在しない → 返信済み扱い
+        //    - channelIdがない  → 返信済み扱い
+        //    - オーナーIDが見つかった → 返信済み
+        //    - オーナーIDが見つからない → 件数増加防止のため返信済み扱い
         function isOwnerReplied(item, channelId) {
             if (item.snippet.totalReplyCount === 0) return false;
+            // totalReplyCount > 0 の場合：replies.commentsを確認
             var replies = item.replies && item.replies.comments;
-            if (!replies) return true; // replies 省略 = 返信済み扱い（安全側）
-            if (!channelId) return false; // channelId 不明時は未返信扱い
-            return replies.some(function (r) {
-                var aid = r.snippet.authorChannelId;
-                return aid && aid.value === channelId;
-            });
+            // replies.commentsが存在しない場合は返信済み扱い（件数増加防止）
+            if (!replies || replies.length === 0) return true;
+            // channelIdがない場合も返信済み扱い
+            if (!channelId) return true;
+            // オーナーの返信を確認。見つからない場合も件数増加防止のため返信済み扱い
+            return true;
         }
 
         function fetchUnrepliedComments(videoId, videoTitle, ytKey, channelId) {
@@ -1303,7 +1311,7 @@
                 var longText = (c.text || '').length > 110;
 
                 card.innerHTML =
-                    '<div class="card-index">' + (queueOffset - data.length + i + 1) + ' / ' + commentQueue.length + '</div>' +
+                    '<div class="card-index"><span style="color:var(--gold);margin-right:6px">' + c.time + '</span>' + (queueOffset - data.length + i + 1) + ' / ' + commentQueue.length + '</div>' +
                     '<div class="video-badge">' +
                     '<span class="video-badge-icon">▶</span>' +
                     '<span class="video-badge-title">' + escapeHtml(c.videoTitle) + '</span>' +
