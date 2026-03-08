@@ -79,17 +79,55 @@
             font-family: 'Syne', sans-serif;
         }
 
+        /* Login button & status */
+        .login-btn {
+            background: var(--red);
+            border: none;
+            color: var(--white);
+            border-radius: 16px;
+            padding: 4px 10px;
+            font-size: 10px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: opacity 0.15s;
+        }
+
+        .login-btn:active {
+            opacity: 0.8;
+        }
+
+        .login-status {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            color: var(--green);
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+        }
+
+        .login-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+
         /* ── Settings panel (collapsible) ── */
         .settings-panel {
             flex-shrink: 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.07);
             overflow: hidden;
-            max-height: 300px;
+            overflow-y: auto;
+            max-height: 40vh;
             transition: max-height 0.3s ease;
         }
 
         .settings-panel.collapsed {
             max-height: 0;
+            overflow: hidden;
         }
 
         .settings-inner {
@@ -357,7 +395,8 @@
 
         /* Hint */
         .hint-left,
-        .hint-right {
+        .hint-right,
+        .hint-up {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -377,6 +416,12 @@
 
         .hint-right {
             right: 18px;
+        }
+
+        .hint-up {
+            top: 28px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .hint-icon {
@@ -400,6 +445,11 @@
             background: rgba(6, 214, 160, 0.15);
         }
 
+        .hint-up .hint-icon {
+            border-color: var(--gold);
+            background: rgba(255, 209, 102, 0.15);
+        }
+
         .hint-label {
             font-size: 9px;
             font-weight: 700;
@@ -413,6 +463,39 @@
 
         .hint-right .hint-label {
             color: var(--green);
+        }
+
+        .hint-up .hint-label {
+            color: var(--gold);
+        }
+
+        /* Heart burst animation */
+        .heart-burst {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            z-index: 500;
+            pointer-events: none;
+            animation: heartPop 0.7s ease-out forwards;
+        }
+
+        @keyframes heartPop {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.3);
+            }
+
+            40% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.3);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -70%) scale(1.6);
+            }
         }
 
         /* Comment card */
@@ -700,12 +783,12 @@
             transform: scale(0.9);
         }
 
-        .btn-skip .btn-circle {
+        .btn-edit .btn-circle {
             border-color: var(--red);
             background: rgba(230, 57, 70, 0.1);
         }
 
-        .btn-voice .btn-circle {
+        .btn-heart .btn-circle {
             border-color: var(--gold);
             background: rgba(255, 209, 102, 0.1);
             width: 60px;
@@ -786,7 +869,21 @@
             font-size: 12px;
             color: var(--gray);
             text-align: center;
-            max-width: 200px;
+            max-width: 260px;
+        }
+
+        .voice-transcript {
+            font-size: 13px;
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 14px;
+            max-width: 280px;
+            min-height: 40px;
+            text-align: center;
+            line-height: 1.5;
+            word-break: break-word;
         }
 
         .modal-close {
@@ -861,6 +958,9 @@
     <div class="header">
         <div class="logo">ACTUAL<span>.</span>JAPAN</div>
         <div class="stat-badge">未返信 <b id="count">—</b> 件</div>
+        <div id="authArea">
+            <button class="login-btn" id="loginBtn" onclick="startOAuth()">Googleでログイン</button>
+        </div>
     </div>
 
     <!-- Settings panel toggle bar -->
@@ -871,11 +971,11 @@
         <div class="progress-bar-wrap" id="progressWrap" style="display:none">
             <div class="progress-bar-fill" id="progressFill"></div>
         </div>
-        <div class="panel-toggle-arrow open" id="panelArrow">▼</div>
+        <div class="panel-toggle-arrow" id="panelArrow">▼</div>
     </div>
 
     <!-- Settings panel -->
-    <div class="settings-panel" id="settingsPanel">
+    <div class="settings-panel collapsed" id="settingsPanel">
         <div class="settings-inner">
 
             <!-- API Keys -->
@@ -933,6 +1033,10 @@
             <div class="hint-icon">✓</div>
             <div class="hint-label">SEND</div>
         </div>
+        <div class="hint-up" id="hintUp">
+            <div class="hint-icon">❤️</div>
+            <div class="hint-label">HEART</div>
+        </div>
         <div class="empty-state visible" id="emptyState">
             <div class="empty-icon">📺</div>
             <div class="empty-text">READY</div>
@@ -942,13 +1046,13 @@
 
     <!-- Actions -->
     <div class="actions">
-        <button class="btn btn-skip" onclick="swipeLeft()">
+        <button class="btn btn-edit" onclick="swipeLeft()">
             <div class="btn-circle">✏️</div>
             <div class="btn-label">EDIT</div>
         </button>
-        <button class="btn btn-voice" onclick="openVoice()">
-            <div class="btn-circle">🎙️</div>
-            <div class="btn-label">VOICE</div>
+        <button class="btn btn-heart" onclick="swipeUp()">
+            <div class="btn-circle">❤️</div>
+            <div class="btn-label">HEART</div>
         </button>
         <button class="btn btn-send" onclick="swipeRight()">
             <div class="btn-circle">✓</div>
@@ -958,9 +1062,10 @@
 
     <!-- Voice Modal -->
     <div class="modal-overlay" id="voiceModal">
-        <div class="modal-title">音声で返信を修正</div>
+        <div class="modal-title">🎙️ 音声で返信を修正</div>
         <div class="voice-ring" id="voiceRing" onclick="toggleRecording()">🎙️</div>
         <div class="voice-instruction" id="voiceInstruction">タップして録音開始<br>どう修正したいかを話してください</div>
+        <div class="voice-transcript" id="voiceTranscript" style="display:none"></div>
         <button class="modal-close" onclick="closeVoice()">キャンセル</button>
     </div>
 
@@ -974,7 +1079,7 @@
         var activeChannelIdx = -1;  // index of active channel
         var currentMode = 'normal'; // 'normal' | 'bulk'
         var periodFilter = '1w';    // '1w' | '1m' | '3m' | 'all'
-        var panelOpen = true;
+        var panelOpen = false;
 
         // Comment queue (full unreplied list fetched from API)
         var commentQueue = [];   // all unreplied comments fetched so far
@@ -986,13 +1091,45 @@
         var cards = [];
         var currentIdx = 0;
         var topCard = null;
-        var startX = 0, currentX = 0;
+        var startX = 0, startY = 0, currentX = 0, currentY = 0;
         var isDragging = false;
 
         // Fetch state for background pagination
         var fetchState = null;  // { videoIds, videoIdIdx, nextPageToken, videoTitles }
 
         var COLORS = ['#e63946', '#ffd166', '#06d6a0', '#118ab2', '#9b5de5', '#f77f00', '#ef476f', '#26c485'];
+
+        // OAuth / API
+        var API_BASE_URL = 'https://anti-gravity-project-iota.vercel.app';
+        var oauthAccessToken = null;
+
+        // ページロード時にURLフラグメントからaccess_tokenを取得
+        (function () {
+            var hash = window.location.hash.substring(1);
+            if (hash) {
+                var params = new URLSearchParams(hash);
+                var token = params.get('access_token');
+                if (token) {
+                    oauthAccessToken = token;
+                    // URLからハッシュを削除（トークン漏洩防止）
+                    history.replaceState(null, '', window.location.pathname + window.location.search);
+                    updateAuthUI();
+                }
+            }
+        })();
+
+        function startOAuth() {
+            window.location.href = API_BASE_URL + '/api/auth';
+        }
+
+        function updateAuthUI() {
+            var area = document.getElementById('authArea');
+            if (oauthAccessToken) {
+                area.innerHTML = '<div class="login-status"><div class="login-dot"></div>CONNECTED</div>';
+            } else {
+                area.innerHTML = '<button class="login-btn" id="loginBtn" onclick="startOAuth()">Googleでログイン</button>';
+            }
+        }
 
 
         /* ═══════════════════════════════════════════
@@ -1286,7 +1423,7 @@
 
             function fetchPage(pageToken) {
                 var url = 'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=' + videoId +
-                    '&maxResults=100&order=time&key=' + ytKey;
+                    '&maxResults=100&order=time&textFormat=plainText&key=' + ytKey;
                 if (pageToken) url += '&pageToken=' + pageToken;
 
                 return fetch(url)
@@ -1311,6 +1448,8 @@
                             // totalReplyCount === 0 のみ未返信と判定（シンプル＆高速）
                             if (s.totalReplyCount === 0) {
                                 var authorName = top.authorDisplayName || '匿名';
+                                // textOriginalを優先、なければtextDisplayを使用
+                                var commentText = top.textOriginal || top.textDisplay || '';
                                 unreplied.push({
                                     videoId: videoId,
                                     videoTitle: videoTitle,
@@ -1319,7 +1458,7 @@
                                     handle: '@' + authorName.replace(/[^A-Za-z0-9]/g, '_').substring(0, 20).toLowerCase(),
                                     time: timeAgo(top.publishedAt),
                                     likes: top.likeCount || 0,
-                                    text: top.textDisplay.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, ''),
+                                    text: commentText,
                                     avatar: getInitials(authorName),
                                     color: COLORS[Math.abs(hashCode(authorName)) % COLORS.length],
                                     publishedAt: top.publishedAt,
@@ -1481,10 +1620,12 @@
         }
 
         function onStart(e) {
-            if (e.target.tagName === 'BUTTON') return;
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') return;
             isDragging = true;
             startX = e.touches ? e.touches[0].clientX : e.clientX;
+            startY = e.touches ? e.touches[0].clientY : e.clientY;
             currentX = 0;
+            currentY = 0;
             if (topCard) topCard.style.transition = 'none';
             document.addEventListener('touchmove', onMove, { passive: false });
             document.addEventListener('mousemove', onMove);
@@ -1495,13 +1636,26 @@
         function onMove(e) {
             if (!isDragging || !topCard) return;
             var x = (e.touches ? e.touches[0].clientX : e.clientX) - startX;
+            var y = (e.touches ? e.touches[0].clientY : e.clientY) - startY;
             if (e.cancelable) e.preventDefault();
             currentX = x;
-            var rotate = x * 0.06;
-            topCard.style.transform = 'translate(calc(-50% + ' + x + 'px), -50%) rotate(' + rotate + 'deg)';
-            var ratio = Math.min(Math.abs(x) / 80, 1);
-            document.getElementById('hintLeft').style.opacity = x < -20 ? ratio : 0;
-            document.getElementById('hintRight').style.opacity = x > 20 ? ratio : 0;
+            currentY = y;
+
+            // 上方向の動きが大きい場合は上スワイプとして処理
+            if (y < -30 && Math.abs(y) > Math.abs(x)) {
+                topCard.style.transform = 'translate(-50%, calc(-50% + ' + y + 'px)) scale(' + (1 + y * 0.001) + ')';
+                var upRatio = Math.min(Math.abs(y) / 80, 1);
+                document.getElementById('hintUp').style.opacity = upRatio;
+                document.getElementById('hintLeft').style.opacity = 0;
+                document.getElementById('hintRight').style.opacity = 0;
+            } else {
+                var rotate = x * 0.06;
+                topCard.style.transform = 'translate(calc(-50% + ' + x + 'px), -50%) rotate(' + rotate + 'deg)';
+                var ratio = Math.min(Math.abs(x) / 80, 1);
+                document.getElementById('hintLeft').style.opacity = x < -20 ? ratio : 0;
+                document.getElementById('hintRight').style.opacity = x > 20 ? ratio : 0;
+                document.getElementById('hintUp').style.opacity = 0;
+            }
         }
 
         function onEnd() {
@@ -1513,9 +1667,16 @@
             document.removeEventListener('mouseup', onEnd);
             document.getElementById('hintLeft').style.opacity = 0;
             document.getElementById('hintRight').style.opacity = 0;
-            if (currentX > 80) swipeRight();
-            else if (currentX < -80) swipeLeft();
-            else {
+            document.getElementById('hintUp').style.opacity = 0;
+
+            // 上スワイプ判定（上方向に十分動いた＆横方向より大きい）
+            if (currentY < -80 && Math.abs(currentY) > Math.abs(currentX)) {
+                swipeUp();
+            } else if (currentX > 80) {
+                swipeRight();
+            } else if (currentX < -80) {
+                swipeLeft();
+            } else {
                 if (topCard) {
                     topCard.classList.add('snap-back');
                     topCard.style.transform = '';
@@ -1526,19 +1687,81 @@
 
         function swipeRight() {
             if (!topCard) return;
+            var c = comments[currentIdx];
+            if (!c) return;
+
             topCard.style.transition = 'transform 0.32s ease-in, opacity 0.32s ease-in';
             topCard.style.transform = 'translateX(150%) rotate(20deg)';
             topCard.style.opacity = '0';
-            showToast('✅ 返信しました！');
+
+            if (oauthAccessToken && c.commentId) {
+                // 実際に YouTube API で返信投稿
+                var replyEl = topCard.querySelector('.ai-reply-text');
+                var replyText = replyEl ? replyEl.textContent : '';
+
+                if (!replyText || replyText.indexOf('生成します') !== -1 || replyText.indexOf('生成中') !== -1) {
+                    showToast('⚠️ AI返信がまだ生成されていません');
+                    // カードを元に戻す
+                    topCard.style.transition = 'transform 0.3s ease';
+                    topCard.style.transform = '';
+                    topCard.style.opacity = '';
+                    return;
+                }
+
+                showToast('✅ 送信中...');
+
+                fetch(API_BASE_URL + '/api/comment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        parentId: c.commentId,
+                        replyText: replyText,
+                        accessToken: oauthAccessToken
+                    })
+                })
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data.success) {
+                            showToast('✅ 返信を投稿しました！');
+                        } else {
+                            showToast('❌ 投稿失敗: ' + (data.error || 'Unknown'));
+                            console.error('Post error:', data);
+                        }
+                    })
+                    .catch(function (err) {
+                        showToast('❌ ネットワークエラー');
+                        console.error(err);
+                    });
+            } else {
+                showToast('✅ 返信しました！（モック）');
+            }
+
             setTimeout(function () { currentIdx++; updateTopCard(); }, 340);
         }
 
         function swipeLeft() {
             if (!topCard) return;
-            topCard.style.transition = 'transform 0.32s ease-in, opacity 0.32s ease-in';
-            topCard.style.transform = 'translateX(-150%) rotate(-20deg)';
-            topCard.style.opacity = '0';
+            // 左スワイプ：カードを戻してから音声モーダルを開く
             openVoice();
+        }
+
+        function swipeUp() {
+            if (!topCard) return;
+            topCard.style.transition = 'transform 0.32s ease-in, opacity 0.32s ease-in';
+            topCard.style.transform = 'translate(-50%, -200%) scale(0.8)';
+            topCard.style.opacity = '0';
+            // ハートアニメーション
+            showHeartBurst();
+            showToast('❤️ ハートを押してスキップ');
+            setTimeout(function () { currentIdx++; updateTopCard(); }, 340);
+        }
+
+        function showHeartBurst() {
+            var heart = document.createElement('div');
+            heart.className = 'heart-burst';
+            heart.textContent = '❤️';
+            document.body.appendChild(heart);
+            setTimeout(function () { heart.remove(); }, 800);
         }
 
 
@@ -1618,43 +1841,202 @@
         /* ═══════════════════════════════════════════
            VOICE MODAL
         ═══════════════════════════════════════════ */
-        var recording = false, recordTimer = null;
+        var recording = false;
+        var recognition = null;
+        var voiceTranscriptText = '';
+
+        // Web Speech API セットアップ
+        function getSpeechRecognition() {
+            var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SR) return null;
+            var rec = new SR();
+            rec.continuous = false;
+            rec.interimResults = true;
+            rec.maxAlternatives = 1;
+            // 日本語＋英語の自動判定用に日本語をデフォルトに設定
+            rec.lang = 'ja-JP';
+            return rec;
+        }
 
         function openVoice() {
             document.getElementById('voiceModal').classList.add('active');
             recording = false;
+            voiceTranscriptText = '';
             document.getElementById('voiceRing').classList.remove('recording');
-            document.getElementById('voiceInstruction').innerHTML = 'タップして録音開始<br>どう修正したいかを話してください';
             document.getElementById('voiceRing').textContent = '🎙️';
+            document.getElementById('voiceInstruction').innerHTML = 'タップして録音開始<br>どう修正したいかを話してください';
+            document.getElementById('voiceTranscript').style.display = 'none';
+            document.getElementById('voiceTranscript').textContent = '';
+            // カードを元の位置に戻す
+            if (topCard) { topCard.style.transform = ''; topCard.style.transition = ''; topCard.style.opacity = ''; }
         }
+
         function toggleRecording() {
-            recording = !recording;
+            if (recording) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        }
+
+        function startRecording() {
+            recognition = getSpeechRecognition();
+            if (!recognition) {
+                showToast('⚠️ お使いのブラウザは音声入力に対応していません');
+                return;
+            }
+
+            recording = true;
+            voiceTranscriptText = '';
             var ring = document.getElementById('voiceRing');
             var inst = document.getElementById('voiceInstruction');
-            if (recording) {
-                ring.classList.add('recording'); ring.textContent = '⏹️';
-                inst.innerHTML = '<span style="color:#e63946">録音中...</span><br>話し終わったらタップ';
-                recordTimer = setTimeout(stopRecordingAndApply, 5000);
-            } else { clearTimeout(recordTimer); stopRecordingAndApply(); }
+            var transcript = document.getElementById('voiceTranscript');
+
+            ring.classList.add('recording');
+            ring.textContent = '⏹️';
+            inst.innerHTML = '<span style="color:#e63946">🔴 録音中...</span><br>話し終わったらタップ';
+            transcript.style.display = 'block';
+            transcript.textContent = '音声を待っています...';
+            transcript.style.color = 'var(--gray)';
+
+            recognition.onresult = function (event) {
+                var finalText = '';
+                var interimText = '';
+                for (var i = 0; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) {
+                        finalText += event.results[i][0].transcript;
+                    } else {
+                        interimText += event.results[i][0].transcript;
+                    }
+                }
+                voiceTranscriptText = finalText || interimText;
+                transcript.textContent = voiceTranscriptText || '音声を待っています...';
+                transcript.style.color = finalText ? 'var(--white)' : 'var(--gray)';
+            };
+
+            recognition.onerror = function (event) {
+                console.warn('Speech recognition error:', event.error);
+                if (event.error === 'no-speech') {
+                    inst.innerHTML = '<span style="color:var(--gold)">音声が検出されませんでした</span><br>もう一度タップしてください';
+                } else {
+                    inst.innerHTML = '<span style="color:var(--red)">エラー: ' + event.error + '</span>';
+                }
+                recording = false;
+                ring.classList.remove('recording');
+                ring.textContent = '🎙️';
+            };
+
+            recognition.onend = function () {
+                if (recording) {
+                    // 自動停止時の処理
+                    stopRecording();
+                }
+            };
+
+            try {
+                recognition.start();
+            } catch (e) {
+                showToast('⚠️ 音声入力を開始できませんでした');
+                recording = false;
+                ring.classList.remove('recording');
+                ring.textContent = '🎙️';
+            }
         }
-        function stopRecordingAndApply() {
+
+        function stopRecording() {
             recording = false;
             var ring = document.getElementById('voiceRing');
-            ring.classList.remove('recording'); ring.textContent = '⚡';
-            document.getElementById('voiceInstruction').innerHTML = '<span style="color:#ffd166">AIが修正中...</span>';
-            setTimeout(function () {
-                closeVoice();
-                if (topCard) {
-                    topCard.style.transform = ''; topCard.style.transition = ''; topCard.style.opacity = '';
-                    var replyEl = topCard.querySelector('.ai-reply-text');
-                    if (replyEl) { replyEl.style.borderLeftColor = '#ffd166'; replyEl.textContent = '（音声で修正された返信がここに表示されます）'; }
-                    showToast('✏️ 返信を修正しました');
-                }
-            }, 1200);
+            ring.classList.remove('recording');
+
+            if (recognition) {
+                try { recognition.stop(); } catch (e) { }
+                recognition = null;
+            }
+
+            if (!voiceTranscriptText || !voiceTranscriptText.trim()) {
+                ring.textContent = '🎙️';
+                document.getElementById('voiceInstruction').innerHTML = '音声が入力されませんでした<br>もう一度タップしてください';
+                return;
+            }
+
+            // 音声テキストが取得できた → AIで返信再生成
+            ring.textContent = '⚡';
+            document.getElementById('voiceInstruction').innerHTML = '<span style="color:#ffd166">AIが返信を再生成中...</span>';
+            regenerateReplyWithVoice(voiceTranscriptText);
         }
+
+        function regenerateReplyWithVoice(voiceText) {
+            var c = comments[currentIdx];
+            if (!c) { closeVoice(); return; }
+
+            var apiKey = document.getElementById('claudeApiKey').value.trim();
+            var replyEl = topCard ? topCard.querySelector('.ai-reply-text') : null;
+            var labelEl = topCard ? topCard.querySelector('.ai-reply-label') : null;
+
+            if (!apiKey) {
+                // モック: 音声内容を反映した返信
+                setTimeout(function () {
+                    closeVoice();
+                    if (replyEl) {
+                        replyEl.textContent = '（音声指示: 「' + voiceText + '」を反映して修正した返信）';
+                        replyEl.style.borderLeftColor = 'var(--gold)';
+                    }
+                    if (labelEl) labelEl.textContent = '音声修正済み';
+                    showToast('✏️ 返信を修正しました');
+                }, 600);
+                return;
+            }
+
+            var currentReply = replyEl ? replyEl.textContent : '';
+
+            fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey,
+                    'anthropic-version': '2023-06-01',
+                    'anthropic-dangerous-direct-browser-access': 'true'
+                },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 200,
+                    system: 'あなたはYouTubeチャンネル運営者です。以下の元コメントとAI返信案、そして音声による修正指示を受けて、修正版の返信を生成してください。日本語コメントには日本語で、英語コメントには英語で。150文字以内で。',
+                    messages: [{
+                        role: 'user',
+                        content: '【元コメント】\n' + c.text + '\n\n【現在の返信案】\n' + currentReply + '\n\n【音声による修正指示】\n' + voiceText + '\n\n上記を踏まえて修正した返信を生成してください。返信文のみ出力。'
+                    }]
+                })
+            })
+                .then(function (r) {
+                    if (!r.ok) return r.json().then(function (e) { throw new Error(e.error && e.error.message || 'API Error'); });
+                    return r.json();
+                })
+                .then(function (data) {
+                    closeVoice();
+                    if (replyEl) {
+                        replyEl.textContent = data.content[0].text;
+                        replyEl.style.color = 'rgba(248,249,250,0.85)';
+                        replyEl.style.borderLeftColor = 'var(--gold)';
+                    }
+                    if (labelEl) {
+                        labelEl.textContent = '音声修正済み';
+                        labelEl.classList.remove('loading');
+                    }
+                    showToast('✏️ 返信を修正しました');
+                })
+                .catch(function (err) {
+                    closeVoice();
+                    showToast('❌ 再生成エラー: ' + err.message);
+                });
+        }
+
         function closeVoice() {
             document.getElementById('voiceModal').classList.remove('active');
-            recording = false; clearTimeout(recordTimer);
+            recording = false;
+            if (recognition) {
+                try { recognition.stop(); } catch (e) { }
+                recognition = null;
+            }
             if (topCard) { topCard.style.transform = ''; topCard.style.transition = ''; topCard.style.opacity = ''; }
         }
 
@@ -1667,7 +2049,7 @@
             var btn = document.getElementById('expand-' + idx);
             if (!el) return;
             if (el.classList.contains('expanded')) {
-                el.classList.remove('expanded'); btn.textContent = '続きを読む ▾';
+                el.classList.remove('expanded'); btn.textContent = 'もっと見る ▾';
             } else {
                 el.classList.add('expanded'); btn.textContent = '折りたたむ ▴';
             }
