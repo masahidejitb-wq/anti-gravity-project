@@ -529,13 +529,66 @@
             margin-bottom: 11px;
             word-break: break-word;
             display: -webkit-box;
-            -webkit-line-clamp: 5;
+            -webkit-line-clamp: 8;
+            line-clamp: 8;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
         .comment-text.expanded {
             -webkit-line-clamp: unset;
+            line-clamp: unset;
+        }
+
+        /* Period filter */
+        .period-toggle {
+            flex: 1;
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 7px;
+            overflow: hidden;
+        }
+
+        .period-btn {
+            flex: 1;
+            border: none;
+            background: none;
+            color: var(--gray);
+            font-size: 9px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 7px 2px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .period-btn.active {
+            background: var(--navy-light);
+            color: var(--white);
+        }
+
+        /* Studio link */
+        .studio-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            padding: 4px 9px;
+            font-size: 10px;
+            color: var(--gray);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: border-color 0.15s, color 0.15s;
+            cursor: pointer;
+        }
+
+        .studio-link:hover {
+            border-color: var(--gold);
+            color: var(--gold);
         }
 
         .expand-btn {
@@ -843,6 +896,15 @@
                 <!-- Channel chips will be added here -->
             </div>
 
+            <!-- Period filter -->
+            <div class="section-label" style="margin-top:4px">対象期間</div>
+            <div class="period-toggle">
+                <button class="period-btn active" id="period1w" onclick="setPeriod('1w')">1週間</button>
+                <button class="period-btn" id="period1m" onclick="setPeriod('1m')">1ヶ月</button>
+                <button class="period-btn" id="period3m" onclick="setPeriod('3m')">3ヶ月</button>
+                <button class="period-btn" id="periodAll" onclick="setPeriod('all')">全期間</button>
+            </div>
+
             <!-- Mode + Fetch -->
             <div class="mode-row">
                 <div class="mode-toggle">
@@ -911,6 +973,7 @@
         var channels = [];          // { id, name, handle }
         var activeChannelIdx = -1;  // index of active channel
         var currentMode = 'normal'; // 'normal' | 'bulk'
+        var periodFilter = '1w';    // '1w' | '1m' | '3m' | 'all'
         var panelOpen = true;
 
         // Comment queue (full unreplied list fetched from API)
@@ -946,6 +1009,14 @@
         /* ═══════════════════════════════════════════
            MODE TOGGLE
         ═══════════════════════════════════════════ */
+        function setPeriod(p) {
+            periodFilter = p;
+            document.getElementById('period1w').classList.toggle('active', p === '1w');
+            document.getElementById('period1m').classList.toggle('active', p === '1m');
+            document.getElementById('period3m').classList.toggle('active', p === '3m');
+            document.getElementById('periodAll').classList.toggle('active', p === 'all');
+        }
+
         function setMode(mode) {
             currentMode = mode;
             document.getElementById('modeNormal').classList.toggle('active', mode === 'normal');
@@ -1181,8 +1252,7 @@
                 document.getElementById('progressFill').style.width = progress + '%';
                 setLoading(true, '動画 ' + (fs.videoIdIdx + 1) + ' / ' + fs.videoIds.length + ' を処理中...\n' + videoTitle.substring(0, 30));
 
-                var channelId = channels[activeChannelIdx] ? channels[activeChannelIdx].id : null;
-                return fetchUnrepliedComments(videoId, videoTitle, ytKey, channelId)
+                return fetchUnrepliedComments(videoId, videoTitle, ytKey)
                     .then(function (newComments) {
                         commentQueue = commentQueue.concat(newComments);
                         document.getElementById('count').textContent = commentQueue.length + (fs.videoIdIdx < fs.videoIds.length - 1 ? '+' : '');
@@ -1200,30 +1270,22 @@
             return processVideo();
         }
 
-        // チャンネルオーナーがすでに返信しているか判定するヘルパー関数
-        // ① totalReplyCount === 0 → 確実に未返信
-        // ② totalReplyCount > 0 → replies.commentsを確認し、件数増加防止のため保守的に判定
-        //    - replies.commentsが存在しない → 返信済み扱い
-        //    - channelIdがない  → 返信済み扱い
-        //    - オーナーIDが見つかった → 返信済み
-        //    - オーナーIDが見つからない → 件数増加防止のため返信済み扱い
-        function isOwnerReplied(item, channelId) {
-            if (item.snippet.totalReplyCount === 0) return false;
-            // totalReplyCount > 0 の場合：replies.commentsを確認
-            var replies = item.replies && item.replies.comments;
-            // replies.commentsが存在しない場合は返信済み扱い（件数増加防止）
-            if (!replies || replies.length === 0) return true;
-            // channelIdがない場合も返信済み扱い
-            if (!channelId) return true;
-            // オーナーの返信を確認。見つからない場合も件数増加防止のため返信済み扱い
-            return true;
+        // 期間フィルターの基準日を取得
+        function getPeriodCutoff() {
+            if (periodFilter === 'all') return null;
+            var now = new Date();
+            if (periodFilter === '1w') now.setDate(now.getDate() - 7);
+            else if (periodFilter === '1m') now.setMonth(now.getMonth() - 1);
+            else if (periodFilter === '3m') now.setMonth(now.getMonth() - 3);
+            return now;
         }
 
-        function fetchUnrepliedComments(videoId, videoTitle, ytKey, channelId) {
+        function fetchUnrepliedComments(videoId, videoTitle, ytKey) {
             var unreplied = [];
+            var cutoff = getPeriodCutoff();
 
             function fetchPage(pageToken) {
-                var url = 'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&videoId=' + videoId +
+                var url = 'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=' + videoId +
                     '&maxResults=100&order=time&key=' + ytKey;
                 if (pageToken) url += '&pageToken=' + pageToken;
 
@@ -1234,14 +1296,25 @@
                             if (data.error.code === 403 || data.error.code === 404) return [];
                             throw new Error(data.error.message);
                         }
+                        var shouldContinue = true;
                         (data.items || []).forEach(function (item) {
-                            // チャンネルオーナーがまだ返信していない場合のみ「未返信」として追加
-                            if (!isOwnerReplied(item, channelId)) {
-                                var top = item.snippet.topLevelComment.snippet;
+                            var s = item.snippet;
+                            var top = s.topLevelComment.snippet;
+                            var publishedDate = new Date(top.publishedAt);
+
+                            // 期間フィルター: cutoffより古いコメントはスキップ（order=time なので以降も古い）
+                            if (cutoff && publishedDate < cutoff) {
+                                shouldContinue = false;
+                                return;
+                            }
+
+                            // totalReplyCount === 0 のみ未返信と判定（シンプル＆高速）
+                            if (s.totalReplyCount === 0) {
                                 var authorName = top.authorDisplayName || '匿名';
                                 unreplied.push({
                                     videoId: videoId,
                                     videoTitle: videoTitle,
+                                    commentId: s.topLevelComment.id,
                                     name: authorName,
                                     handle: '@' + authorName.replace(/[^A-Za-z0-9]/g, '_').substring(0, 20).toLowerCase(),
                                     time: timeAgo(top.publishedAt),
@@ -1255,7 +1328,7 @@
                             }
                         });
 
-                        if (data.nextPageToken) return fetchPage(data.nextPageToken);
+                        if (shouldContinue && data.nextPageToken) return fetchPage(data.nextPageToken);
                         return unreplied;
                     });
             }
@@ -1310,6 +1383,8 @@
 
                 var longText = (c.text || '').length > 110;
 
+                var studioUrl = 'https://studio.youtube.com/video/' + c.videoId + '/comments';
+
                 card.innerHTML =
                     '<div class="card-index"><span style="color:var(--gold);margin-right:6px">' + c.time + '</span>' + (queueOffset - data.length + i + 1) + ' / ' + commentQueue.length + '</div>' +
                     '<div class="video-badge">' +
@@ -1325,7 +1400,8 @@
                     '<div class="like-count">👍 ' + c.likes + '</div>' +
                     '</div>' +
                     '<div class="comment-text" id="ctext-' + i + '">' + escapeHtml(c.text) + '</div>' +
-                    (longText ? '<button class="expand-btn" id="expand-' + i + '" onclick="toggleExpand(' + i + ')">続きを読む ▾</button>' : '') +
+                    (longText ? '<button class="expand-btn" id="expand-' + i + '" onclick="toggleExpand(' + i + ')">もっと見る ▾</button>' : '') +
+                    '<a class="studio-link" href="' + studioUrl + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">🎬 Studioで確認</a>' +
                     '<div class="divider"></div>' +
                     '<div class="ai-reply-label" id="replyLabel-' + i + '">AI返信案</div>' +
                     '<div class="ai-reply-text" id="replyText-' + i + '" style="color:var(--gray)">カードを表示したら生成します...</div>';
