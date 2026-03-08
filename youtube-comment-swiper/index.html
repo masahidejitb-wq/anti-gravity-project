@@ -1177,7 +1177,8 @@
                 document.getElementById('progressFill').style.width = progress + '%';
                 setLoading(true, '動画 ' + (fs.videoIdIdx + 1) + ' / ' + fs.videoIds.length + ' を処理中...\n' + videoTitle.substring(0, 30));
 
-                return fetchUnrepliedComments(videoId, videoTitle, ytKey)
+                var channelId = channels[activeChannelIdx] ? channels[activeChannelIdx].id : null;
+                return fetchUnrepliedComments(videoId, videoTitle, ytKey, channelId)
                     .then(function (newComments) {
                         commentQueue = commentQueue.concat(newComments);
                         document.getElementById('count').textContent = commentQueue.length + (fs.videoIdIdx < fs.videoIds.length - 1 ? '+' : '');
@@ -1195,11 +1196,26 @@
             return processVideo();
         }
 
-        function fetchUnrepliedComments(videoId, videoTitle, ytKey) {
+        // チャンネルオーナーがすでに返信しているか判定するヘルパー関数
+        // ① totalReplyCount === 0 → 確実に未返信
+        // ② totalReplyCount > 0 かつ replies あり → replies の中にオーナーIDがあれば返信済み
+        // ③ totalReplyCount > 0 かつ replies なし（20件超えで省略）→ 安全のため返信済み扱い
+        function isOwnerReplied(item, channelId) {
+            if (item.snippet.totalReplyCount === 0) return false;
+            var replies = item.replies && item.replies.comments;
+            if (!replies) return true; // replies 省略 = 返信済み扱い（安全側）
+            if (!channelId) return false; // channelId 不明時は未返信扱い
+            return replies.some(function (r) {
+                var aid = r.snippet.authorChannelId;
+                return aid && aid.value === channelId;
+            });
+        }
+
+        function fetchUnrepliedComments(videoId, videoTitle, ytKey, channelId) {
             var unreplied = [];
 
             function fetchPage(pageToken) {
-                var url = 'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=' + videoId +
+                var url = 'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet,replies&videoId=' + videoId +
                     '&maxResults=100&order=time&key=' + ytKey;
                 if (pageToken) url += '&pageToken=' + pageToken;
 
@@ -1211,9 +1227,9 @@
                             throw new Error(data.error.message);
                         }
                         (data.items || []).forEach(function (item) {
-                            var s = item.snippet;
-                            if (s.totalReplyCount === 0) {
-                                var top = s.topLevelComment.snippet;
+                            // チャンネルオーナーがまだ返信していない場合のみ「未返信」として追加
+                            if (!isOwnerReplied(item, channelId)) {
+                                var top = item.snippet.topLevelComment.snippet;
                                 var authorName = top.authorDisplayName || '匿名';
                                 unreplied.push({
                                     videoId: videoId,
