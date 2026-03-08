@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ACTUAL JAPAN — Comment Swiper</title>
+
+    <!-- PWA settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#e63946">
+    <link rel="apple-touch-icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap');
 
@@ -2124,6 +2131,17 @@
             var h = 0;
             for (var i = 0; i < str.length; i++) { h = Math.imul(31, h) + str.charCodeAt(i) | 0; }
             return h;
+        }
+
+        // Service Worker registration for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('service-worker.js').then(function (registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function (err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
         }
     </script>
 </body>
