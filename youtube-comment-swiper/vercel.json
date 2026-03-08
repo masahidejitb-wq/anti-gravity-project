@@ -1,14 +1,8 @@
 {
   "version": 2,
   "functions": {
-    "youtube-comment-swiper/api/*.js": {
+    "api/*.js": {
       "runtime": "nodejs18.x"
     }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/youtube-comment-swiper/api/$1"
-    }
-  ]
+  }
 }
