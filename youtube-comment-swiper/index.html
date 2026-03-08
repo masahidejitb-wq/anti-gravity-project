@@ -44,21 +44,21 @@
             position: relative;
         }
 
-        /* Header */
+        /* ── Header ── */
         .header {
-            padding: 16px 20px 12px;
+            padding: 12px 16px 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-shrink: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .logo {
             font-family: 'Syne', sans-serif;
             font-weight: 800;
-            font-size: 15px;
+            font-size: 14px;
             letter-spacing: 0.05em;
-            color: var(--white);
         }
 
         .logo span {
@@ -66,11 +66,11 @@
         }
 
         .stat-badge {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 12px;
+            padding: 3px 10px;
+            font-size: 11px;
             color: var(--gray);
         }
 
@@ -79,21 +79,43 @@
             font-family: 'Syne', sans-serif;
         }
 
-        /* Config Bar */
-        .config-bar {
-            padding: 0 20px 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        /* ── Settings panel (collapsible) ── */
+        .settings-panel {
             flex-shrink: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            overflow: hidden;
+            max-height: 300px;
+            transition: max-height 0.3s ease;
+        }
+
+        .settings-panel.collapsed {
+            max-height: 0;
+        }
+
+        .settings-inner {
+            padding: 10px 14px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* API Keys */
+        .section-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            color: var(--gray);
+            margin-bottom: 2px;
         }
 
         .config-input {
             width: 100%;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 8px;
-            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 7px;
+            padding: 8px 11px;
             color: var(--white);
-            font-size: 12px;
+            font-size: 11px;
             outline: none;
             font-family: inherit;
             transition: border-color 0.2s;
@@ -107,61 +129,233 @@
             border-color: var(--gold);
         }
 
-        /* Video context bar */
-        .video-bar {
-            margin: 12px 20px;
-            background: var(--navy-mid);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 10px 14px;
+        /* Channel row */
+        .channel-row {
             display: flex;
+            gap: 7px;
             align-items: center;
-            gap: 10px;
-            flex-shrink: 0;
         }
 
-        .video-thumb {
-            width: 44px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--red), #c1121f);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-
-        .video-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .video-title {
+        .btn-sm {
+            background: var(--navy-light);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--white);
+            border-radius: 7px;
+            padding: 8px 11px;
             font-size: 11px;
-            font-weight: 700;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
             white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.15s;
+        }
+
+        .btn-sm:active {
+            background: var(--navy-mid);
+        }
+
+        /* Channel chips */
+        .channel-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .chip {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3px 8px 3px 10px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: border-color 0.15s;
+        }
+
+        .chip.active {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .chip-del {
+            font-size: 13px;
+            color: var(--gray);
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 1px;
+        }
+
+        .chip-del:hover {
+            color: var(--red);
+        }
+
+        /* Mode toggle + fetch */
+        .mode-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .mode-toggle {
+            flex: 1;
+            display: flex;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 7px;
             overflow: hidden;
-            text-overflow: ellipsis;
+        }
+
+        .mode-btn {
+            flex: 1;
+            border: none;
+            background: none;
+            color: var(--gray);
+            font-size: 10px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            padding: 8px 4px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .mode-btn.active {
+            background: var(--navy-light);
             color: var(--white);
         }
 
-        .video-sub {
-            font-size: 10px;
-            color: var(--gray);
-            margin-top: 2px;
+        .fetch-btn {
+            background: var(--red);
+            border: none;
+            color: var(--white);
+            border-radius: 7px;
+            padding: 8px 14px;
+            font-size: 11px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: opacity 0.15s;
         }
 
-        /* Card stack area */
+        .fetch-btn:active {
+            opacity: 0.8;
+        }
+
+        .fetch-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ── Toggle panel button ── */
+        .panel-toggle-bar {
+            flex-shrink: 0;
+            padding: 6px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+        }
+
+        .panel-toggle-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .panel-toggle-arrow {
+            font-size: 10px;
+            color: var(--gray);
+            transition: transform 0.2s;
+        }
+
+        .panel-toggle-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .progress-bar-wrap {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.07);
+            border-radius: 4px;
+            height: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        /* ── Card stack area ── */
         .stack-area {
             flex: 1;
             position: relative;
-            padding: 8px 20px;
+            padding: 8px 14px;
             overflow: hidden;
             min-height: 0;
         }
 
-        /* Hint overlays */
+        /* Loading overlay */
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 22, 40, 0.88);
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            border-radius: 8px;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .spinner {
+            width: 34px;
+            height: 34px;
+            border: 3px solid rgba(255, 255, 255, 0.08);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.75s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            font-size: 11px;
+            color: var(--gray);
+            font-family: 'Syne', sans-serif;
+            letter-spacing: 0.1em;
+            text-align: center;
+            max-width: 240px;
+        }
+
+        /* Hint */
         .hint-left,
         .hint-right {
             position: absolute;
@@ -178,22 +372,22 @@
         }
 
         .hint-left {
-            left: 24px;
+            left: 18px;
         }
 
         .hint-right {
-            right: 24px;
+            right: 18px;
         }
 
         .hint-icon {
-            width: 52px;
-            height: 52px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             border: 3px solid;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
         }
 
         .hint-left .hint-icon {
@@ -207,7 +401,7 @@
         }
 
         .hint-label {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
             letter-spacing: 0.1em;
             font-family: 'Syne', sans-serif;
@@ -227,12 +421,12 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: calc(100% - 56px);
+            width: calc(100% - 44px);
             max-width: 370px;
             background: var(--navy-mid);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 18px;
+            padding: 16px;
             cursor: grab;
             user-select: none;
             will-change: transform;
@@ -242,7 +436,7 @@
         }
 
         .comment-card.is-next {
-            transform: translate(-50%, calc(-50% + 16px)) scale(0.94);
+            transform: translate(-50%, calc(-50% + 14px)) scale(0.94);
             z-index: 1;
             pointer-events: none;
         }
@@ -255,82 +449,118 @@
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .comment-card.fly-right {
-            transition: transform 0.35s ease-in, opacity 0.35s ease-in;
-            transform: translateX(150%) rotate(20deg) !important;
-            opacity: 0;
+        /* Video source badge on card */
+        .video-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            padding: 5px 8px;
+            margin-bottom: 12px;
+            font-size: 10px;
+            color: var(--gray);
         }
 
-        .comment-card.fly-left {
-            transition: transform 0.35s ease-in, opacity 0.35s ease-in;
-            transform: translateX(-150%) rotate(-20deg) !important;
-            opacity: 0;
+        .video-badge-icon {
+            color: var(--red);
+            font-size: 11px;
+            flex-shrink: 0;
         }
 
-        /* Card internals */
+        .video-badge-title {
+            flex: 1;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .commenter-row {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
+            gap: 9px;
+            margin-bottom: 11px;
         }
 
         .avatar {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 12px;
             flex-shrink: 0;
         }
 
         .commenter-info {
             flex: 1;
+            min-width: 0;
         }
 
         .commenter-name {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .comment-time {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--gray);
         }
 
         .like-count {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--gray);
             display: flex;
             align-items: center;
-            gap: 3px;
+            gap: 2px;
             flex-shrink: 0;
         }
 
         .comment-text {
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.65;
             color: var(--white);
-            margin-bottom: 14px;
+            margin-bottom: 11px;
             word-break: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .comment-text.expanded {
+            -webkit-line-clamp: unset;
+        }
+
+        .expand-btn {
+            font-size: 10px;
+            color: var(--gold);
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            margin-bottom: 9px;
         }
 
         .divider {
             height: 1px;
-            background: rgba(255, 255, 255, 0.08);
-            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            margin-bottom: 11px;
         }
 
         .ai-reply-label {
-            font-size: 10px;
+            font-size: 9px;
             font-family: 'Syne', sans-serif;
             font-weight: 600;
             letter-spacing: 0.12em;
             color: var(--gold);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -339,8 +569,8 @@
         .ai-reply-label.loading::before {
             content: '';
             display: inline-block;
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
             background: var(--gold);
             animation: pulse 1.5s infinite;
@@ -356,38 +586,38 @@
             }
 
             50% {
-                opacity: 0.5;
-                transform: scale(0.7);
+                opacity: 0.4;
+                transform: scale(0.6);
             }
         }
 
         .ai-reply-text {
-            font-size: 13px;
+            font-size: 12px;
             line-height: 1.6;
             color: rgba(248, 249, 250, 0.85);
             background: rgba(255, 255, 255, 0.05);
             border-left: 2px solid var(--gray);
-            padding: 10px 12px;
-            border-radius: 0 8px 8px 0;
+            padding: 9px 11px;
+            border-radius: 0 7px 7px 0;
             transition: border-color 0.3s;
         }
 
         .card-index {
             position: absolute;
-            top: 16px;
-            right: 18px;
+            top: 13px;
+            right: 15px;
             font-family: 'Syne', sans-serif;
-            font-size: 11px;
+            font-size: 10px;
             color: var(--gray);
         }
 
-        /* Action buttons */
+        /* ── Actions ── */
         .actions {
-            padding: 12px 20px 24px;
+            padding: 8px 20px 18px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 18px;
             flex-shrink: 0;
         }
 
@@ -395,22 +625,22 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             cursor: pointer;
             background: none;
             border: none;
         }
 
         .btn-circle {
-            width: 56px;
-            height: 56px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
             border: 2px solid;
-            transition: transform 0.15s, background 0.15s;
+            transition: transform 0.15s;
         }
 
         .btn:active .btn-circle {
@@ -425,9 +655,9 @@
         .btn-voice .btn-circle {
             border-color: var(--gold);
             background: rgba(255, 209, 102, 0.1);
-            width: 64px;
-            height: 64px;
-            font-size: 26px;
+            width: 60px;
+            height: 60px;
+            font-size: 23px;
         }
 
         .btn-send .btn-circle {
@@ -443,7 +673,7 @@
             color: var(--gray);
         }
 
-        /* Voice modal */
+        /* ── Voice modal ── */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -467,21 +697,20 @@
 
         .modal-title {
             font-family: 'Syne', sans-serif;
-            font-size: 13px;
+            font-size: 12px;
             letter-spacing: 0.15em;
             color: var(--gray);
-            text-align: center;
         }
 
         .voice-ring {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             border: 3px solid var(--gold);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 36px;
             cursor: pointer;
         }
 
@@ -496,40 +725,40 @@
             }
 
             to {
-                box-shadow: 0 0 0 20px rgba(230, 57, 70, 0);
+                box-shadow: 0 0 0 18px rgba(230, 57, 70, 0);
             }
         }
 
         .voice-instruction {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--gray);
             text-align: center;
-            max-width: 220px;
+            max-width: 200px;
         }
 
         .modal-close {
             background: rgba(255, 255, 255, 0.08);
             border: none;
             color: var(--white);
-            padding: 10px 28px;
+            padding: 9px 26px;
             border-radius: 20px;
             font-family: 'Syne', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             letter-spacing: 0.1em;
             cursor: pointer;
         }
 
-        /* Toast */
+        /* ── Toast ── */
         .toast {
             position: fixed;
-            bottom: 100px;
+            bottom: 90px;
             left: 50%;
             transform: translateX(-50%) translateY(20px);
             background: var(--navy-mid);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 30px;
-            padding: 10px 22px;
-            font-size: 13px;
+            border-radius: 28px;
+            padding: 9px 20px;
+            font-size: 12px;
             font-weight: 500;
             opacity: 0;
             transition: all 0.3s;
@@ -542,7 +771,7 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Empty state */
+        /* ── Empty state ── */
         .empty-state {
             display: none;
             position: absolute;
@@ -551,7 +780,7 @@
             transform: translate(-50%, -50%);
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             color: var(--gray);
             text-align: center;
         }
@@ -561,13 +790,13 @@
         }
 
         .empty-icon {
-            font-size: 48px;
+            font-size: 40px;
             opacity: 0.4;
         }
 
         .empty-text {
             font-family: 'Syne', sans-serif;
-            font-size: 13px;
+            font-size: 12px;
             letter-spacing: 0.1em;
         }
     </style>
@@ -575,25 +804,65 @@
 
 <body>
 
+    <!-- Header -->
     <div class="header">
         <div class="logo">ACTUAL<span>.</span>JAPAN</div>
-        <div class="stat-badge">残り <b id="count">5</b> 件</div>
+        <div class="stat-badge">未返信 <b id="count">—</b> 件</div>
     </div>
 
-    <div class="config-bar">
-        <input type="password" id="apiKeyInput" class="config-input" placeholder="Claude APIキーを入力（未入力時はモック返信）"
-            autocomplete="off" />
+    <!-- Settings panel toggle bar -->
+    <div class="panel-toggle-bar" id="panelToggleBar" onclick="togglePanel()">
+        <div class="panel-toggle-title">
+            ⚙ <span id="panelToggleLabel">設定</span>
+        </div>
+        <div class="progress-bar-wrap" id="progressWrap" style="display:none">
+            <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <div class="panel-toggle-arrow open" id="panelArrow">▼</div>
     </div>
 
-    <div class="video-bar">
-        <div class="video-thumb">▶</div>
-        <div class="video-info">
-            <div class="video-title">【古民家DIY】千葉の空き家をインバウンド向け宿泊施設に改造してみた</div>
-            <div class="video-sub">1.2万回視聴 · コメント 23件</div>
+    <!-- Settings panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-inner">
+
+            <!-- API Keys -->
+            <div class="section-label">API KEYS</div>
+            <input type="password" id="ytApiKey" class="config-input" placeholder="YouTube Data API キー（必須）"
+                autocomplete="off" />
+            <input type="password" id="claudeApiKey" class="config-input" placeholder="Claude APIキー（未入力: モック返信）"
+                autocomplete="off" />
+
+            <!-- Channel input -->
+            <div class="section-label" style="margin-top:4px">チャンネル登録</div>
+            <div class="channel-row">
+                <input type="text" id="channelInput" class="config-input" placeholder="チャンネルURL または @handle または チャンネルID"
+                    autocomplete="off" />
+                <button class="btn-sm" onclick="addChannel()">追加</button>
+            </div>
+            <div class="channel-chips" id="channelChips">
+                <!-- Channel chips will be added here -->
+            </div>
+
+            <!-- Mode + Fetch -->
+            <div class="mode-row">
+                <div class="mode-toggle">
+                    <button class="mode-btn active" id="modeNormal" onclick="setMode('normal')">通常<br><span
+                            style="font-size:9px;opacity:0.7">直近20本</span></button>
+                    <button class="mode-btn" id="modeBulk" onclick="setMode('bulk')">一括<br><span
+                            style="font-size:9px;opacity:0.7">全動画</span></button>
+                </div>
+                <button class="fetch-btn" id="fetchBtn" onclick="handleFetch()">取得開始</button>
+            </div>
+
         </div>
     </div>
 
+    <!-- Card stack -->
     <div class="stack-area" id="stackArea">
+        <div class="loading-overlay" id="loadingOverlay">
+            <div class="spinner"></div>
+            <div class="loading-text" id="loadingText">取得中...</div>
+        </div>
         <div class="hint-left" id="hintLeft">
             <div class="hint-icon">✏️</div>
             <div class="hint-label">EDIT</div>
@@ -602,13 +871,14 @@
             <div class="hint-icon">✓</div>
             <div class="hint-label">SEND</div>
         </div>
-        <div class="empty-state" id="emptyState">
-            <div class="empty-icon">🎉</div>
-            <div class="empty-text">ALL DONE!</div>
-            <div style="font-size:12px">全コメントに返信しました</div>
+        <div class="empty-state visible" id="emptyState">
+            <div class="empty-icon">📺</div>
+            <div class="empty-text">READY</div>
+            <div style="font-size:11px;margin-top:2px">チャンネルを登録して「取得開始」を押してください</div>
         </div>
     </div>
 
+    <!-- Actions -->
     <div class="actions">
         <button class="btn btn-skip" onclick="swipeLeft()">
             <div class="btn-circle">✏️</div>
@@ -635,72 +905,546 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        const comments = [
-            {
-                name: "Sarah M.", handle: "@sarah_travels", time: "2日前", likes: 34,
-                text: "This is absolutely stunning! I've been dreaming of staying in a real Japanese farmhouse. How much does a night cost? And do you accept guests who don't speak Japanese?",
-                avatar: "S", color: "#e63946",
-                aiReplyFallback: "Thank you so much! A fully English-speaking experience is guaranteed 🙌 Pricing info coming soon — stay tuned on our official site!"
-            },
-            {
-                name: "Thomas K.", handle: "@tk_explore", time: "3日前", likes: 21,
-                text: "The renovation work looks incredible. What was the biggest challenge in the whole process? Also, did you need any special permits for this?",
-                avatar: "T", color: "#118ab2",
-                aiReplyFallback: "Great question! Reinforcing the old wooden pillars was the hardest part. Permits were complex too, but local government was super helpful 🏛️"
-            },
-            {
-                name: "田中 花子", handle: "@hanako_t", time: "1日前", likes: 8,
-                text: "すごい！千葉にこんな素敵な場所があるんですね。友達と行ってみたいです。外国人の方も来やすい環境ですか？",
-                avatar: "花", color: "#9b5de5",
-                aiReplyFallback: "ありがとうございます！外国人の方も大歓迎です🏡 英語でのご案内も完備しています。ぜひお友達と遊びに来てください！"
-            },
-            {
-                name: "Alex R.", handle: "@alexr_nomad", time: "5時間前", likes: 45,
-                text: "As someone who lived in Japan for 3 years, this is EXACTLY what foreign visitors want. The authentic experience vs touristy hotels. Please keep making content like this!",
-                avatar: "A", color: "#f77f00",
-                aiReplyFallback: "That means the world! You totally get it — authenticity is everything 🎌 More content on the way, stay tuned!"
-            },
-            {
-                name: "Marie D.", handle: "@marie_japan", time: "1時間前", likes: 12,
-                text: "C'est magnifique! J'adore ce concept. Est-ce que vous avez un site web en anglais ou en français?",
-                avatar: "M", color: "#06d6a0",
-                aiReplyFallback: "Merci beaucoup! 😊 Our site is in English and a French version is in the works. Stay connected!"
+        /* ═══════════════════════════════════════════
+           STATE
+        ═══════════════════════════════════════════ */
+        var channels = [];          // { id, name, handle }
+        var activeChannelIdx = -1;  // index of active channel
+        var currentMode = 'normal'; // 'normal' | 'bulk'
+        var panelOpen = true;
+
+        // Comment queue (full unreplied list fetched from API)
+        var commentQueue = [];   // all unreplied comments fetched so far
+        var queueOffset = 0;     // how many have been loaded into cards
+        var BATCH_SIZE = 25;
+
+        // Card state
+        var comments = [];       // currently-loaded batch in cards
+        var cards = [];
+        var currentIdx = 0;
+        var topCard = null;
+        var startX = 0, currentX = 0;
+        var isDragging = false;
+
+        // Fetch state for background pagination
+        var fetchState = null;  // { videoIds, videoIdIdx, nextPageToken, videoTitles }
+
+        var COLORS = ['#e63946', '#ffd166', '#06d6a0', '#118ab2', '#9b5de5', '#f77f00', '#ef476f', '#26c485'];
+
+
+        /* ═══════════════════════════════════════════
+           PANEL TOGGLE
+        ═══════════════════════════════════════════ */
+        function togglePanel() {
+            panelOpen = !panelOpen;
+            document.getElementById('settingsPanel').classList.toggle('collapsed', !panelOpen);
+            var arrow = document.getElementById('panelArrow');
+            arrow.classList.toggle('open', panelOpen);
+        }
+
+
+        /* ═══════════════════════════════════════════
+           MODE TOGGLE
+        ═══════════════════════════════════════════ */
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('modeNormal').classList.toggle('active', mode === 'normal');
+            document.getElementById('modeBulk').classList.toggle('active', mode === 'bulk');
+        }
+
+
+        /* ═══════════════════════════════════════════
+           CHANNEL MANAGEMENT
+        ═══════════════════════════════════════════ */
+        function addChannel() {
+            var input = document.getElementById('channelInput').value.trim();
+            if (!input) return;
+
+            var ytKey = document.getElementById('ytApiKey').value.trim();
+            if (!ytKey) { showToast('⚠️ YouTube APIキーを入力してください'); return; }
+
+            setLoading(true, 'チャンネル情報を取得中...');
+
+            resolveChannelId(input, ytKey)
+                .then(function (ch) {
+                    // Avoid duplicates
+                    for (var i = 0; i < channels.length; i++) {
+                        if (channels[i].id === ch.id) {
+                            showToast('⚠️ このチャンネルは既に登録されています');
+                            setLoading(false);
+                            return;
+                        }
+                    }
+                    channels.push(ch);
+                    renderChips();
+                    setActiveChannel(channels.length - 1);
+                    document.getElementById('channelInput').value = '';
+                    setLoading(false);
+                    showToast('✅ 登録: ' + ch.name);
+                })
+                .catch(function (err) {
+                    setLoading(false);
+                    showToast('❌ ' + err.message);
+                });
+        }
+
+        function resolveChannelId(input, ytKey) {
+            // Try to extract channel ID
+            var chId = null;
+
+            // Direct UCxxx ID
+            if (/^UC[A-Za-z0-9_-]{22}$/.test(input)) {
+                chId = input;
             }
-        ];
+            // URL: /channel/UCxxx
+            var m = input.match(/\/channel\/(UC[A-Za-z0-9_-]{22})/);
+            if (m) chId = m[1];
 
-        let currentIdx = 0;
-        let cards = [];
-        let startX = 0, currentX = 0;
-        let isDragging = false;
-        let topCard = null;
+            if (chId) {
+                // Fetch channel info by ID
+                return fetch('https://www.googleapis.com/youtube/v3/channels?part=snippet&id=' + chId + '&key=' + ytKey)
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (!data.items || !data.items.length) throw new Error('チャンネルが見つかりません');
+                        var s = data.items[0].snippet;
+                        return { id: chId, name: s.title, handle: s.customUrl || chId };
+                    });
+            }
 
-        function buildCards() {
-            const area = document.getElementById('stackArea');
+            // Handle: @username or youtube.com/@username
+            var handle = input;
+            m = input.match(/@([A-Za-z0-9_.-]+)/);
+            if (m) handle = '@' + m[1];
+            else if (!handle.startsWith('@')) handle = '@' + handle;
+
+            return fetch('https://www.googleapis.com/youtube/v3/channels?part=snippet&forHandle=' + encodeURIComponent(handle) + '&key=' + ytKey)
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (!data.items || !data.items.length) throw new Error('チャンネルが見つかりません: ' + handle);
+                    var item = data.items[0];
+                    return { id: item.id, name: item.snippet.title, handle: item.snippet.customUrl || handle };
+                });
+        }
+
+        function setActiveChannel(idx) {
+            activeChannelIdx = idx;
+            renderChips();
+        }
+
+        function removeChannel(idx) {
+            channels.splice(idx, 1);
+            if (activeChannelIdx >= channels.length) activeChannelIdx = channels.length - 1;
+            renderChips();
+        }
+
+        function renderChips() {
+            var wrap = document.getElementById('channelChips');
+            wrap.innerHTML = '';
+            channels.forEach(function (ch, i) {
+                var chip = document.createElement('div');
+                chip.className = 'chip' + (i === activeChannelIdx ? ' active' : '');
+                chip.innerHTML = escapeHtml(ch.name) +
+                    '<span class="chip-del" onclick="event.stopPropagation();removeChannel(' + i + ')">×</span>';
+                chip.addEventListener('click', function () { setActiveChannel(i); });
+                wrap.appendChild(chip);
+            });
+        }
+
+
+        /* ═══════════════════════════════════════════
+           MAIN FETCH FLOW
+        ═══════════════════════════════════════════ */
+        function handleFetch() {
+            var ytKey = document.getElementById('ytApiKey').value.trim();
+            if (!ytKey) { showToast('⚠️ YouTube APIキーを入力してください'); return; }
+            if (activeChannelIdx < 0 || !channels[activeChannelIdx]) {
+                showToast('⚠️ チャンネルを登録・選択してください'); return;
+            }
+
+            var ch = channels[activeChannelIdx];
+            var btn = document.getElementById('fetchBtn');
+            btn.disabled = true;
+
+            // Reset state
+            commentQueue = [];
+            queueOffset = 0;
+            clearCards();
+            document.getElementById('emptyState').classList.remove('visible');
+            document.getElementById('progressWrap').style.display = 'flex';
+            document.getElementById('progressFill').style.width = '0%';
+
+            // Collapse panel
+            if (panelOpen) togglePanel();
+
+            setLoading(true, 'アップロードリストを取得中...');
+
+            // Step 1: Get uploads playlist ID
+            fetch('https://www.googleapis.com/youtube/v3/channels?part=contentDetails,snippet&id=' + ch.id + '&key=' + ytKey)
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (!data.items || !data.items.length) throw new Error('チャンネル情報が取得できません');
+                    var uploadsId = data.items[0].contentDetails.relatedPlaylists.uploads;
+
+                    // Step 2: Get video IDs from uploads playlist
+                    var maxVideos = currentMode === 'normal' ? 20 : 999999;
+                    return fetchVideoIds(uploadsId, ytKey, maxVideos);
+                })
+                .then(function (result) {
+                    var videoIds = result.ids;
+                    var videoTitles = result.titles; // { [videoId]: title }
+
+                    if (videoIds.length === 0) throw new Error('動画が見つかりませんでした');
+
+                    setLoading(true, '動画 0 / ' + videoIds.length + ' を処理中...');
+                    fetchState = {
+                        videoIds: videoIds,
+                        videoIdIdx: 0,
+                        videoTitles: videoTitles,
+                        ytKey: ytKey
+                    };
+
+                    return fetchNextVideoBatch();
+                })
+                .then(function () {
+                    btn.disabled = false;
+                })
+                .catch(function (err) {
+                    setLoading(false);
+                    btn.disabled = false;
+                    showToast('❌ ' + err.message);
+                    console.error(err);
+                });
+        }
+
+        function fetchVideoIds(uploadsId, ytKey, maxVideos) {
+            var ids = [];
+            var titles = {};
+            var pageToken = '';
+
+            function fetchPage() {
+                var url = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=' + uploadsId +
+                    '&maxResults=50&key=' + ytKey;
+                if (pageToken) url += '&pageToken=' + pageToken;
+
+                return fetch(url)
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data.error) throw new Error(data.error.message);
+                        (data.items || []).forEach(function (item) {
+                            var vid = item.snippet.resourceId.videoId;
+                            ids.push(vid);
+                            titles[vid] = item.snippet.title;
+                        });
+                        pageToken = data.nextPageToken || '';
+                        if (pageToken && ids.length < maxVideos) return fetchPage();
+                        return { ids: ids.slice(0, maxVideos), titles: titles };
+                    });
+            }
+
+            return fetchPage();
+        }
+
+        // Fetch unreplied comments for videos one by one
+        function fetchNextVideoBatch() {
+            if (!fetchState) return Promise.resolve();
+
+            var fs = fetchState;
+            var ytKey = fs.ytKey;
+
+            function processVideo() {
+                if (fs.videoIdIdx >= fs.videoIds.length) {
+                    // Done with all videos
+                    setLoading(false);
+                    document.getElementById('progressFill').style.width = '100%';
+
+                    if (commentQueue.length === 0) {
+                        showToast('✅ 未返信コメントは0件です');
+                        document.getElementById('emptyState').innerHTML =
+                            '<div class="empty-icon">🎉</div>' +
+                            '<div class="empty-text">未返信なし</div>' +
+                            '<div style="font-size:11px">すべてのコメントに返信済みです</div>';
+                        document.getElementById('emptyState').classList.add('visible');
+                    } else {
+                        showToast('✅ 未返信コメント ' + commentQueue.length + '件を取得');
+                        loadNextBatch();
+                    }
+                    return Promise.resolve();
+                }
+
+                var videoId = fs.videoIds[fs.videoIdIdx];
+                var videoTitle = fs.videoTitles[videoId] || '不明な動画';
+                var progress = Math.round((fs.videoIdIdx / fs.videoIds.length) * 100);
+                document.getElementById('progressFill').style.width = progress + '%';
+                setLoading(true, '動画 ' + (fs.videoIdIdx + 1) + ' / ' + fs.videoIds.length + ' を処理中...\n' + videoTitle.substring(0, 30));
+
+                return fetchUnrepliedComments(videoId, videoTitle, ytKey)
+                    .then(function (newComments) {
+                        commentQueue = commentQueue.concat(newComments);
+                        document.getElementById('count').textContent = commentQueue.length + (fs.videoIdIdx < fs.videoIds.length - 1 ? '+' : '');
+                        fs.videoIdIdx++;
+                        return processVideo();
+                    })
+                    .catch(function (err) {
+                        // Some videos have comments disabled — skip them
+                        console.warn('Skipping video', videoId, err.message);
+                        fs.videoIdIdx++;
+                        return processVideo();
+                    });
+            }
+
+            return processVideo();
+        }
+
+        function fetchUnrepliedComments(videoId, videoTitle, ytKey) {
+            var unreplied = [];
+
+            function fetchPage(pageToken) {
+                var url = 'https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId=' + videoId +
+                    '&maxResults=100&order=time&key=' + ytKey;
+                if (pageToken) url += '&pageToken=' + pageToken;
+
+                return fetch(url)
+                    .then(function (r) { return r.json(); })
+                    .then(function (data) {
+                        if (data.error) {
+                            if (data.error.code === 403 || data.error.code === 404) return [];
+                            throw new Error(data.error.message);
+                        }
+                        (data.items || []).forEach(function (item) {
+                            var s = item.snippet;
+                            if (s.totalReplyCount === 0) {
+                                var top = s.topLevelComment.snippet;
+                                var authorName = top.authorDisplayName || '匿名';
+                                unreplied.push({
+                                    videoId: videoId,
+                                    videoTitle: videoTitle,
+                                    name: authorName,
+                                    handle: '@' + authorName.replace(/[^A-Za-z0-9]/g, '_').substring(0, 20).toLowerCase(),
+                                    time: timeAgo(top.publishedAt),
+                                    likes: top.likeCount || 0,
+                                    text: top.textDisplay.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>/g, ''),
+                                    avatar: getInitials(authorName),
+                                    color: COLORS[Math.abs(hashCode(authorName)) % COLORS.length],
+                                    publishedAt: top.publishedAt,
+                                    apiFetched: false
+                                });
+                            }
+                        });
+
+                        if (data.nextPageToken) return fetchPage(data.nextPageToken);
+                        return unreplied;
+                    });
+            }
+
+            return fetchPage('');
+        }
+
+
+        /* ═══════════════════════════════════════════
+           BATCH LOADING INTO CARDS
+        ═══════════════════════════════════════════ */
+        function loadNextBatch() {
+            var batch = commentQueue.slice(queueOffset, queueOffset + BATCH_SIZE);
+            if (batch.length === 0) {
+                // No more comments
+                document.getElementById('emptyState').innerHTML =
+                    '<div class="empty-icon">🎉</div>' +
+                    '<div class="empty-text">ALL DONE!</div>' +
+                    '<div style="font-size:11px">全未返信コメントに返信しました</div>';
+                document.getElementById('emptyState').classList.add('visible');
+                return;
+            }
+            queueOffset += batch.length;
+            loadComments(batch, false);
+        }
+
+        function loadComments(data, reset) {
+            var area = document.getElementById('stackArea');
+            if (reset) {
+                cards.forEach(function (c) { if (c.parentNode) c.parentNode.removeChild(c); });
+                cards = [];
+                currentIdx = 0;
+                topCard = null;
+            }
+
+            comments = data;
+            currentIdx = 0;
+
+            // Remove old cards (keep hints + overlay + empty state)
+            var old = area.querySelectorAll('.comment-card');
+            old.forEach(function (c) { c.parentNode.removeChild(c); });
+            cards = [];
+
+            var totalRemaining = commentQueue.length - queueOffset + data.length;
+            document.getElementById('count').textContent = totalRemaining;
+
             comments.forEach(function (c, i) {
-                c.apiFetched = false;
-                const card = document.createElement('div');
-                card.className = 'comment-card ' + (i === 0 ? 'is-top' : 'is-next');
+                var card = document.createElement('div');
+                card.className = 'comment-card ' + (i === 0 ? 'is-top' : (i === 1 ? 'is-next' : ''));
+                if (i > 1) card.style.display = 'none';
                 card.dataset.idx = i;
+
+                var longText = (c.text || '').length > 110;
+
                 card.innerHTML =
-                    '<div class="card-index">' + (i + 1) + ' / ' + comments.length + '</div>' +
+                    '<div class="card-index">' + (queueOffset - data.length + i + 1) + ' / ' + commentQueue.length + '</div>' +
+                    '<div class="video-badge">' +
+                    '<span class="video-badge-icon">▶</span>' +
+                    '<span class="video-badge-title">' + escapeHtml(c.videoTitle) + '</span>' +
+                    '</div>' +
                     '<div class="commenter-row">' +
                     '<div class="avatar" style="background:' + c.color + '22;color:' + c.color + ';border:1.5px solid ' + c.color + '40">' + c.avatar + '</div>' +
                     '<div class="commenter-info">' +
-                    '<div class="commenter-name">' + c.name + '</div>' +
-                    '<div class="comment-time">' + c.handle + ' · ' + c.time + '</div>' +
+                    '<div class="commenter-name">' + escapeHtml(c.name) + '</div>' +
+                    '<div class="comment-time">' + c.time + '</div>' +
                     '</div>' +
                     '<div class="like-count">👍 ' + c.likes + '</div>' +
                     '</div>' +
-                    '<div class="comment-text">' + c.text + '</div>' +
+                    '<div class="comment-text" id="ctext-' + i + '">' + escapeHtml(c.text) + '</div>' +
+                    (longText ? '<button class="expand-btn" id="expand-' + i + '" onclick="toggleExpand(' + i + ')">続きを読む ▾</button>' : '') +
                     '<div class="divider"></div>' +
                     '<div class="ai-reply-label" id="replyLabel-' + i + '">AI返信案</div>' +
-                    '<div class="ai-reply-text" id="replyText-' + i + '" style="color:var(--gray)">カードが表示されたら生成します...</div>';
+                    '<div class="ai-reply-text" id="replyText-' + i + '" style="color:var(--gray)">カードを表示したら生成します...</div>';
+
                 area.appendChild(card);
                 cards.push(card);
             });
+
+            document.getElementById('emptyState').classList.remove('visible');
             updateTopCard();
         }
 
+
+        /* ═══════════════════════════════════════════
+           CARD MANAGEMENT
+        ═══════════════════════════════════════════ */
+        function updateTopCard() {
+            var remaining = Math.max(0, commentQueue.length - (queueOffset - comments.length + currentIdx));
+            document.getElementById('count').textContent = remaining > 0 ? remaining : '0';
+
+            cards.forEach(function (card, i) {
+                card.classList.remove('is-top', 'is-next', 'snap-back');
+                card.style.transform = '';
+                card.style.transition = '';
+                card.style.opacity = '';
+
+                if (i === currentIdx) {
+                    card.style.display = '';
+                    card.classList.add('is-top');
+                    attachDrag(card);
+                    topCard = card;
+                    fetchAiReply(i);
+                } else if (i === currentIdx + 1) {
+                    card.style.display = '';
+                    card.classList.add('is-next');
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Batch exhausted → auto load next
+            if (currentIdx >= comments.length) {
+                var more = commentQueue.length - queueOffset;
+                if (more > 0) {
+                    setLoading(true, '次の' + Math.min(BATCH_SIZE, more) + '件を読み込み中...');
+                    setTimeout(function () {
+                        setLoading(false);
+                        loadNextBatch();
+                    }, 600);
+                } else if (queueOffset > 0) {
+                    // All done
+                    document.getElementById('emptyState').innerHTML =
+                        '<div class="empty-icon">🎉</div>' +
+                        '<div class="empty-text">ALL DONE!</div>' +
+                        '<div style="font-size:11px">全未返信コメントに返信しました</div>';
+                    document.getElementById('emptyState').classList.add('visible');
+                    topCard = null;
+                }
+            }
+        }
+
+        function clearCards() {
+            var area = document.getElementById('stackArea');
+            var old = area.querySelectorAll('.comment-card');
+            old.forEach(function (c) { c.parentNode.removeChild(c); });
+            cards = [];
+            comments = [];
+            currentIdx = 0;
+            topCard = null;
+        }
+
+        function attachDrag(card) {
+            card.removeEventListener('touchstart', onStart);
+            card.removeEventListener('mousedown', onStart);
+            card.addEventListener('touchstart', onStart, { passive: true });
+            card.addEventListener('mousedown', onStart);
+        }
+
+        function onStart(e) {
+            if (e.target.tagName === 'BUTTON') return;
+            isDragging = true;
+            startX = e.touches ? e.touches[0].clientX : e.clientX;
+            currentX = 0;
+            if (topCard) topCard.style.transition = 'none';
+            document.addEventListener('touchmove', onMove, { passive: false });
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('touchend', onEnd);
+            document.addEventListener('mouseup', onEnd);
+        }
+
+        function onMove(e) {
+            if (!isDragging || !topCard) return;
+            var x = (e.touches ? e.touches[0].clientX : e.clientX) - startX;
+            if (e.cancelable) e.preventDefault();
+            currentX = x;
+            var rotate = x * 0.06;
+            topCard.style.transform = 'translate(calc(-50% + ' + x + 'px), -50%) rotate(' + rotate + 'deg)';
+            var ratio = Math.min(Math.abs(x) / 80, 1);
+            document.getElementById('hintLeft').style.opacity = x < -20 ? ratio : 0;
+            document.getElementById('hintRight').style.opacity = x > 20 ? ratio : 0;
+        }
+
+        function onEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            document.removeEventListener('touchmove', onMove);
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('touchend', onEnd);
+            document.removeEventListener('mouseup', onEnd);
+            document.getElementById('hintLeft').style.opacity = 0;
+            document.getElementById('hintRight').style.opacity = 0;
+            if (currentX > 80) swipeRight();
+            else if (currentX < -80) swipeLeft();
+            else {
+                if (topCard) {
+                    topCard.classList.add('snap-back');
+                    topCard.style.transform = '';
+                    setTimeout(function () { if (topCard) topCard.classList.remove('snap-back'); }, 400);
+                }
+            }
+        }
+
+        function swipeRight() {
+            if (!topCard) return;
+            topCard.style.transition = 'transform 0.32s ease-in, opacity 0.32s ease-in';
+            topCard.style.transform = 'translateX(150%) rotate(20deg)';
+            topCard.style.opacity = '0';
+            showToast('✅ 返信しました！');
+            setTimeout(function () { currentIdx++; updateTopCard(); }, 340);
+        }
+
+        function swipeLeft() {
+            if (!topCard) return;
+            topCard.style.transition = 'transform 0.32s ease-in, opacity 0.32s ease-in';
+            topCard.style.transform = 'translateX(-150%) rotate(-20deg)';
+            topCard.style.opacity = '0';
+            openVoice();
+        }
+
+
+        /* ═══════════════════════════════════════════
+           CLAUDE AI REPLY
+        ═══════════════════════════════════════════ */
         function fetchAiReply(idx) {
             var c = comments[idx];
             if (!c || c.apiFetched) return;
@@ -708,21 +1452,28 @@
 
             var labelEl = document.getElementById('replyLabel-' + idx);
             var textEl = document.getElementById('replyText-' + idx);
-            var apiKey = document.getElementById('apiKeyInput').value.trim();
+            var apiKey = document.getElementById('claudeApiKey').value.trim();
 
-            labelEl.textContent = 'AI返信生成中...';
+            if (!labelEl || !textEl) return;
+
             labelEl.classList.add('loading');
+            labelEl.textContent = 'AI返信生成中...';
+            textEl.style.color = 'var(--gray)';
             textEl.textContent = '生成中...';
-            textEl.style.borderLeftColor = 'var(--gray)';
 
             if (!apiKey) {
+                var hasJapanese = /[\u3040-\u30ff\u4e00-\u9fff]/.test(c.text || '');
+                var mock = hasJapanese
+                    ? 'コメントありがとうございます！ぜひまたお越しください😊'
+                    : 'Thank you so much for your comment! Really appreciate the support 🙌';
                 setTimeout(function () {
+                    if (!labelEl) return;
                     labelEl.textContent = 'モック返信案';
                     labelEl.classList.remove('loading');
-                    textEl.innerHTML = c.aiReplyFallback;
+                    textEl.innerHTML = mock;
                     textEl.style.color = 'rgba(248,249,250,0.85)';
                     textEl.style.borderLeftColor = 'var(--gold)';
-                }, 600);
+                }, 400);
                 return;
             }
 
@@ -741,126 +1492,33 @@
                     messages: [{ role: 'user', content: c.text }]
                 })
             })
-                .then(function (res) {
-                    if (!res.ok) return res.json().then(function (e) { throw new Error(e.error && e.error.message ? e.error.message : 'API Error'); });
-                    return res.json();
+                .then(function (r) {
+                    if (!r.ok) return r.json().then(function (e) { throw new Error(e.error && e.error.message || 'API Error'); });
+                    return r.json();
                 })
                 .then(function (data) {
+                    if (!labelEl) return;
                     labelEl.textContent = 'AI返信案';
                     labelEl.classList.remove('loading');
                     textEl.innerHTML = data.content[0].text;
                     textEl.style.color = 'rgba(248,249,250,0.85)';
                     textEl.style.borderLeftColor = 'var(--gold)';
                 })
-                .catch(function (error) {
-                    console.error('Claude API Error:', error);
+                .catch(function (err) {
+                    if (!labelEl) return;
                     labelEl.textContent = 'エラー';
                     labelEl.classList.remove('loading');
-                    textEl.innerHTML = '<span style="color:var(--red);font-size:12px;">' + error.message + '</span>';
+                    textEl.innerHTML = '<span style="color:var(--red);font-size:11px;">' + err.message + '</span>';
                     textEl.style.borderLeftColor = 'var(--red)';
                     c.apiFetched = false;
                 });
         }
 
-        function updateTopCard() {
-            document.getElementById('count').textContent = Math.max(0, comments.length - currentIdx);
-            cards.forEach(function (card, i) {
-                card.classList.remove('is-top', 'is-next', 'fly-right', 'fly-left', 'snap-back');
-                card.style.display = '';
-                if (i === currentIdx) {
-                    card.classList.add('is-top');
-                    card.style.transform = '';
-                    attachDrag(card);
-                    topCard = card;
-                    fetchAiReply(i);
-                } else if (i === currentIdx + 1) {
-                    card.classList.add('is-next');
-                    card.style.transform = '';
-                } else if (i < currentIdx) {
-                    card.style.display = 'none';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-            if (currentIdx >= comments.length) {
-                document.getElementById('emptyState').classList.add('visible');
-                topCard = null;
-            }
-        }
 
-        function attachDrag(card) {
-            card.removeEventListener('touchstart', onStart);
-            card.removeEventListener('mousedown', onStart);
-            card.addEventListener('touchstart', onStart, { passive: true });
-            card.addEventListener('mousedown', onStart);
-        }
-
-        function onStart(e) {
-            if (e.target.closest('.ai-reply-text')) return; // allow text scroll
-            isDragging = true;
-            startX = e.touches ? e.touches[0].clientX : e.clientX;
-            currentX = 0;
-            topCard.style.transition = 'none';
-            document.addEventListener('touchmove', onMove, { passive: false });
-            document.addEventListener('mousemove', onMove);
-            document.addEventListener('touchend', onEnd);
-            document.addEventListener('mouseup', onEnd);
-        }
-
-        function onMove(e) {
-            if (!isDragging) return;
-            var x = (e.touches ? e.touches[0].clientX : e.clientX) - startX;
-            if (e.cancelable) e.preventDefault();
-            currentX = x;
-            var rotate = x * 0.07;
-            topCard.style.transform = 'translate(calc(-50% + ' + x + 'px), -50%) rotate(' + rotate + 'deg)';
-
-            var ratio = Math.min(Math.abs(x) / 80, 1);
-            var hL = document.getElementById('hintLeft');
-            var hR = document.getElementById('hintRight');
-            if (x < -20) { hL.style.opacity = ratio; hR.style.opacity = 0; }
-            else if (x > 20) { hR.style.opacity = ratio; hL.style.opacity = 0; }
-            else { hL.style.opacity = 0; hR.style.opacity = 0; }
-        }
-
-        function onEnd() {
-            if (!isDragging) return;
-            isDragging = false;
-            document.removeEventListener('touchmove', onMove);
-            document.removeEventListener('mousemove', onMove);
-            document.removeEventListener('touchend', onEnd);
-            document.removeEventListener('mouseup', onEnd);
-            document.getElementById('hintLeft').style.opacity = 0;
-            document.getElementById('hintRight').style.opacity = 0;
-
-            if (currentX > 80) { swipeRight(); }
-            else if (currentX < -80) { swipeLeft(); }
-            else {
-                topCard.classList.add('snap-back');
-                topCard.style.transform = '';
-                setTimeout(function () { if (topCard) topCard.classList.remove('snap-back'); }, 400);
-            }
-        }
-
-        function swipeRight() {
-            if (!topCard) return;
-            topCard.style.transition = 'transform 0.35s ease-in, opacity 0.35s ease-in';
-            topCard.style.transform = 'translateX(150%) rotate(20deg)';
-            topCard.style.opacity = '0';
-            showToast('✅ 返信しました！');
-            setTimeout(function () { currentIdx++; updateTopCard(); }, 360);
-        }
-
-        function swipeLeft() {
-            if (!topCard) return;
-            topCard.style.transition = 'transform 0.35s ease-in, opacity 0.35s ease-in';
-            topCard.style.transform = 'translateX(-150%) rotate(-20deg)';
-            topCard.style.opacity = '0';
-            openVoice();
-        }
-
-        var recording = false;
-        var recordTimer = null;
+        /* ═══════════════════════════════════════════
+           VOICE MODAL
+        ═══════════════════════════════════════════ */
+        var recording = false, recordTimer = null;
 
         function openVoice() {
             document.getElementById('voiceModal').classList.add('active');
@@ -869,64 +1527,90 @@
             document.getElementById('voiceInstruction').innerHTML = 'タップして録音開始<br>どう修正したいかを話してください';
             document.getElementById('voiceRing').textContent = '🎙️';
         }
-
         function toggleRecording() {
             recording = !recording;
             var ring = document.getElementById('voiceRing');
             var inst = document.getElementById('voiceInstruction');
             if (recording) {
-                ring.classList.add('recording');
-                ring.textContent = '⏹️';
+                ring.classList.add('recording'); ring.textContent = '⏹️';
                 inst.innerHTML = '<span style="color:#e63946">録音中...</span><br>話し終わったらタップ';
                 recordTimer = setTimeout(stopRecordingAndApply, 5000);
-            } else {
-                clearTimeout(recordTimer);
-                stopRecordingAndApply();
-            }
+            } else { clearTimeout(recordTimer); stopRecordingAndApply(); }
         }
-
         function stopRecordingAndApply() {
             recording = false;
             var ring = document.getElementById('voiceRing');
-            var inst = document.getElementById('voiceInstruction');
-            ring.classList.remove('recording');
-            ring.textContent = '⚡';
-            inst.innerHTML = '<span style="color:#ffd166">AIが修正中...</span>';
+            ring.classList.remove('recording'); ring.textContent = '⚡';
+            document.getElementById('voiceInstruction').innerHTML = '<span style="color:#ffd166">AIが修正中...</span>';
             setTimeout(function () {
                 closeVoice();
                 if (topCard) {
-                    topCard.style.transform = '';
-                    topCard.style.transition = '';
-                    topCard.style.opacity = '';
+                    topCard.style.transform = ''; topCard.style.transition = ''; topCard.style.opacity = '';
                     var replyEl = topCard.querySelector('.ai-reply-text');
-                    if (replyEl) {
-                        replyEl.style.borderLeftColor = '#ffd166';
-                        replyEl.textContent = '（音声を元に修正された返信がここに表示されます）';
-                    }
+                    if (replyEl) { replyEl.style.borderLeftColor = '#ffd166'; replyEl.textContent = '（音声で修正された返信がここに表示されます）'; }
                     showToast('✏️ 返信を修正しました');
                 }
             }, 1200);
         }
-
         function closeVoice() {
             document.getElementById('voiceModal').classList.remove('active');
-            recording = false;
-            clearTimeout(recordTimer);
-            if (topCard) {
-                topCard.style.transform = '';
-                topCard.style.transition = '';
-                topCard.style.opacity = '';
+            recording = false; clearTimeout(recordTimer);
+            if (topCard) { topCard.style.transform = ''; topCard.style.transition = ''; topCard.style.opacity = ''; }
+        }
+
+
+        /* ═══════════════════════════════════════════
+           UTILITIES
+        ═══════════════════════════════════════════ */
+        function toggleExpand(idx) {
+            var el = document.getElementById('ctext-' + idx);
+            var btn = document.getElementById('expand-' + idx);
+            if (!el) return;
+            if (el.classList.contains('expanded')) {
+                el.classList.remove('expanded'); btn.textContent = '続きを読む ▾';
+            } else {
+                el.classList.add('expanded'); btn.textContent = '折りたたむ ▴';
             }
+        }
+
+        function setLoading(active, text) {
+            var overlay = document.getElementById('loadingOverlay');
+            if (text) document.getElementById('loadingText').textContent = text;
+            overlay.classList.toggle('active', !!active);
         }
 
         function showToast(msg) {
             var t = document.getElementById('toast');
-            t.textContent = msg;
-            t.classList.add('show');
-            setTimeout(function () { t.classList.remove('show'); }, 2200);
+            t.textContent = msg; t.classList.add('show');
+            setTimeout(function () { t.classList.remove('show'); }, 2600);
         }
 
-        buildCards();
+        function escapeHtml(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/\n/g, '<br>');
+        }
+
+        function timeAgo(publishedAt) {
+            var diff = (Date.now() - new Date(publishedAt).getTime()) / 1000;
+            if (diff < 3600) return Math.floor(diff / 60) + '分前';
+            if (diff < 86400) return Math.floor(diff / 3600) + '時間前';
+            if (diff < 86400 * 30) return Math.floor(diff / 86400) + '日前';
+            if (diff < 86400 * 365) return Math.floor(diff / (86400 * 30)) + 'ヶ月前';
+            return Math.floor(diff / (86400 * 365)) + '年前';
+        }
+
+        function getInitials(name) {
+            var parts = name.trim().split(/\s+/);
+            if (parts.length >= 2 && /^[A-Za-z]/.test(name)) return (parts[0][0] + parts[1][0]).toUpperCase();
+            return (name[0] || '?');
+        }
+
+        function hashCode(str) {
+            var h = 0;
+            for (var i = 0; i < str.length; i++) { h = Math.imul(31, h) + str.charCodeAt(i) | 0; }
+            return h;
+        }
     </script>
 </body>
 
