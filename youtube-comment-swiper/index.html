@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ACTUAL JAPAN — Comment Swiper</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+        :root {
+            --navy: #0a1628;
+            --navy-mid: #112240;
+            --navy-light: #1e3a5f;
+            --red: #e63946;
+            --white: #f8f9fa;
+            --gray: #8892a4;
+            --gold: #ffd166;
+            --green: #06d6a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-width: 430px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            padding: 16px 20px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 15px;
+            letter-spacing: 0.05em;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--red);
+        }
+
+        .stat-badge {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .stat-badge b {
+            color: var(--gold);
+            font-family: 'Syne', sans-serif;
+        }
+
+        /* Config Bar */
+        .config-bar {
+            padding: 0 20px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+        }
+
+        .config-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: var(--white);
+            font-size: 12px;
+            outline: none;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .config-input::placeholder {
+            color: var(--gray);
+        }
+
+        .config-input:focus {
+            border-color: var(--gold);
+        }
+
+        /* Video context bar */
+        .video-bar {
+            margin: 12px 20px;
+            background: var(--navy-mid);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .video-thumb {
+            width: 44px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--red), #c1121f);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .video-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .video-title {
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--white);
+        }
+
+        .video-sub {
+            font-size: 10px;
+            color: var(--gray);
+            margin-top: 2px;
+        }
+
+        /* Card stack area */
+        .stack-area {
+            flex: 1;
+            position: relative;
+            padding: 8px 20px;
+            overflow: hidden;
+            min-height: 0;
+        }
+
+        /* Hint overlays */
+        .hint-left,
+        .hint-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.1s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .hint-left {
+            left: 24px;
+        }
+
+        .hint-right {
+            right: 24px;
+        }
+
+        .hint-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 3px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .hint-left .hint-icon {
+            border-color: var(--red);
+            background: rgba(230, 57, 70, 0.15);
+        }
+
+        .hint-right .hint-icon {
+            border-color: var(--green);
+            background: rgba(6, 214, 160, 0.15);
+        }
+
+        .hint-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            font-family: 'Syne', sans-serif;
+        }
+
+        .hint-left .hint-label {
+            color: var(--red);
+        }
+
+        .hint-right .hint-label {
+            color: var(--green);
+        }
+
+        /* Comment card */
+        .comment-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: calc(100% - 56px);
+            max-width: 370px;
+            background: var(--navy-mid);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            cursor: grab;
+            user-select: none;
+            will-change: transform;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+            max-height: calc(100% - 16px);
+        }
+
+        .comment-card.is-next {
+            transform: translate(-50%, calc(-50% + 16px)) scale(0.94);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .comment-card.is-top {
+            z-index: 10;
+        }
+
+        .comment-card.snap-back {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .comment-card.fly-right {
+            transition: transform 0.35s ease-in, opacity 0.35s ease-in;
+            transform: translateX(150%) rotate(20deg) !important;
+            opacity: 0;
+        }
+
+        .comment-card.fly-left {
+            transition: transform 0.35s ease-in, opacity 0.35s ease-in;
+            transform: translateX(-150%) rotate(-20deg) !important;
+            opacity: 0;
+        }
+
+        /* Card internals */
+        .commenter-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .commenter-info {
+            flex: 1;
+        }
+
+        .commenter-name {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .comment-time {
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        .like-count {
+            font-size: 11px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex-shrink: 0;
+        }
+
+        .comment-text {
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--white);
+            margin-bottom: 14px;
+            word-break: break-word;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin-bottom: 12px;
+        }
+
+        .ai-reply-label {
+            font-size: 10px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            color: var(--gold);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .ai-reply-label.loading::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: pulse 1.5s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.7);
+            }
+        }
+
+        .ai-reply-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(248, 249, 250, 0.85);
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 2px solid var(--gray);
+            padding: 10px 12px;
+            border-radius: 0 8px 8px 0;
+            transition: border-color 0.3s;
+        }
+
+        .card-index {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            font-family: 'Syne', sans-serif;
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        /* Action buttons */
+        .actions {
+            padding: 12px 20px 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+
+        .btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .btn-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            border: 2px solid;
+            transition: transform 0.15s, background 0.15s;
+        }
+
+        .btn:active .btn-circle {
+            transform: scale(0.9);
+        }
+
+        .btn-skip .btn-circle {
+            border-color: var(--red);
+            background: rgba(230, 57, 70, 0.1);
+        }
+
+        .btn-voice .btn-circle {
+            border-color: var(--gold);
+            background: rgba(255, 209, 102, 0.1);
+            width: 64px;
+            height: 64px;
+            font-size: 26px;
+        }
+
+        .btn-send .btn-circle {
+            border-color: var(--green);
+            background: rgba(6, 214, 160, 0.1);
+        }
+
+        .btn-label {
+            font-size: 9px;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: var(--gray);
+        }
+
+        /* Voice modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 22, 40, 0.95);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.15em;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        .voice-ring {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            cursor: pointer;
+        }
+
+        .voice-ring.recording {
+            animation: ring-pulse 0.8s ease-in-out infinite alternate;
+            border-color: var(--red);
+        }
+
+        @keyframes ring-pulse {
+            from {
+                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4);
+            }
+
+            to {
+                box-shadow: 0 0 0 20px rgba(230, 57, 70, 0);
+            }
+        }
+
+        .voice-instruction {
+            font-size: 13px;
+            color: var(--gray);
+            text-align: center;
+            max-width: 220px;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: var(--white);
+            padding: 10px 28px;
+            border-radius: 20px;
+            font-family: 'Syne', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--navy-mid);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 30px;
+            padding: 10px 22px;
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 300;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Empty state */
+        .empty-state {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: var(--gray);
+            text-align: center;
+        }
+
+        .empty-state.visible {
+            display: flex;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            opacity: 0.4;
+        }
+
+        .empty-text {
+            font-family: 'Syne', sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="logo">ACTUAL<span>.</span>JAPAN</div>
+        <div class="stat-badge">残り <b id="count">5</b> 件</div>
+    </div>
+
+    <div class="config-bar">
+        <input type="password" id="apiKeyInput" class="config-input" placeholder="Claude APIキーを入力（未入力時はモック返信）"
+            autocomplete="off" />
+    </div>
+
+    <div class="video-bar">
+        <div class="video-thumb">▶</div>
+        <div class="video-info">
+            <div class="video-title">【古民家DIY】千葉の空き家をインバウンド向け宿泊施設に改造してみた</div>
+            <div class="video-sub">1.2万回視聴 · コメント 23件</div>
+        </div>
+    </div>
+
+    <div class="stack-area" id="stackArea">
+        <div class="hint-left" id="hintLeft">
+            <div class="hint-icon">✏️</div>
+            <div class="hint-label">EDIT</div>
+        </div>
+        <div class="hint-right" id="hintRight">
+            <div class="hint-icon">✓</div>
+            <div class="hint-label">SEND</div>
+        </div>
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">🎉</div>
+            <div class="empty-text">ALL DONE!</div>
+            <div style="font-size:12px">全コメントに返信しました</div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn btn-skip" onclick="swipeLeft()">
+            <div class="btn-circle">✏️</div>
+            <div class="btn-label">EDIT</div>
+        </button>
+        <button class="btn btn-voice" onclick="openVoice()">
+            <div class="btn-circle">🎙️</div>
+            <div class="btn-label">VOICE</div>
+        </button>
+        <button class="btn btn-send" onclick="swipeRight()">
+            <div class="btn-circle">✓</div>
+            <div class="btn-label">SEND</div>
+        </button>
+    </div>
+
+    <!-- Voice Modal -->
+    <div class="modal-overlay" id="voiceModal">
+        <div class="modal-title">音声で返信を修正</div>
+        <div class="voice-ring" id="voiceRing" onclick="toggleRecording()">🎙️</div>
+        <div class="voice-instruction" id="voiceInstruction">タップして録音開始<br>どう修正したいかを話してください</div>
+        <button class="modal-close" onclick="closeVoice()">キャンセル</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const comments = [
+            {
+                name: "Sarah M.", handle: "@sarah_travels", time: "2日前", likes: 34,
+                text: "This is absolutely stunning! I've been dreaming of staying in a real Japanese farmhouse. How much does a night cost? And do you accept guests who don't speak Japanese?",
+                avatar: "S", color: "#e63946",
+                aiReplyFallback: "Thank you so much! A fully English-speaking experience is guaranteed 🙌 Pricing info coming soon — stay tuned on our official site!"
+            },
+            {
+                name: "Thomas K.", handle: "@tk_explore", time: "3日前", likes: 21,
+                text: "The renovation work looks incredible. What was the biggest challenge in the whole process? Also, did you need any special permits for this?",
+                avatar: "T", color: "#118ab2",
+                aiReplyFallback: "Great question! Reinforcing the old wooden pillars was the hardest part. Permits were complex too, but local government was super helpful 🏛️"
+            },
+            {
+                name: "田中 花子", handle: "@hanako_t", time: "1日前", likes: 8,
+                text: "すごい！千葉にこんな素敵な場所があるんですね。友達と行ってみたいです。外国人の方も来やすい環境ですか？",
+                avatar: "花", color: "#9b5de5",
+                aiReplyFallback: "ありがとうございます！外国人の方も大歓迎です🏡 英語でのご案内も完備しています。ぜひお友達と遊びに来てください！"
+            },
+            {
+                name: "Alex R.", handle: "@alexr_nomad", time: "5時間前", likes: 45,
+                text: "As someone who lived in Japan for 3 years, this is EXACTLY what foreign visitors want. The authentic experience vs touristy hotels. Please keep making content like this!",
+                avatar: "A", color: "#f77f00",
+                aiReplyFallback: "That means the world! You totally get it — authenticity is everything 🎌 More content on the way, stay tuned!"
+            },
+            {
+                name: "Marie D.", handle: "@marie_japan", time: "1時間前", likes: 12,
+                text: "C'est magnifique! J'adore ce concept. Est-ce que vous avez un site web en anglais ou en français?",
+                avatar: "M", color: "#06d6a0",
+                aiReplyFallback: "Merci beaucoup! 😊 Our site is in English and a French version is in the works. Stay connected!"
+            }
+        ];
+
+        let currentIdx = 0;
+        let cards = [];
+        let startX = 0, currentX = 0;
+        let isDragging = false;
+        let topCard = null;
+
+        function buildCards() {
+            const area = document.getElementById('stackArea');
+            comments.forEach(function (c, i) {
+                c.apiFetched = false;
+                const card = document.createElement('div');
+                card.className = 'comment-card ' + (i === 0 ? 'is-top' : 'is-next');
+                card.dataset.idx = i;
+                card.innerHTML =
+                    '<div class="card-index">' + (i + 1) + ' / ' + comments.length + '</div>' +
+                    '<div class="commenter-row">' +
+                    '<div class="avatar" style="background:' + c.color + '22;color:' + c.color + ';border:1.5px solid ' + c.color + '40">' + c.avatar + '</div>' +
+                    '<div class="commenter-info">' +
+                    '<div class="commenter-name">' + c.name + '</div>' +
+                    '<div class="comment-time">' + c.handle + ' · ' + c.time + '</div>' +
+                    '</div>' +
+                    '<div class="like-count">👍 ' + c.likes + '</div>' +
+                    '</div>' +
+                    '<div class="comment-text">' + c.text + '</div>' +
+                    '<div class="divider"></div>' +
+                    '<div class="ai-reply-label" id="replyLabel-' + i + '">AI返信案</div>' +
+                    '<div class="ai-reply-text" id="replyText-' + i + '" style="color:var(--gray)">カードが表示されたら生成します...</div>';
+                area.appendChild(card);
+                cards.push(card);
+            });
+            updateTopCard();
+        }
+
+        function fetchAiReply(idx) {
+            var c = comments[idx];
+            if (!c || c.apiFetched) return;
+            c.apiFetched = true;
+
+            var labelEl = document.getElementById('replyLabel-' + idx);
+            var textEl = document.getElementById('replyText-' + idx);
+            var apiKey = document.getElementById('apiKeyInput').value.trim();
+
+            labelEl.textContent = 'AI返信生成中...';
+            labelEl.classList.add('loading');
+            textEl.textContent = '生成中...';
+            textEl.style.borderLeftColor = 'var(--gray)';
+
+            if (!apiKey) {
+                setTimeout(function () {
+                    labelEl.textContent = 'モック返信案';
+                    labelEl.classList.remove('loading');
+                    textEl.innerHTML = c.aiReplyFallback;
+                    textEl.style.color = 'rgba(248,249,250,0.85)';
+                    textEl.style.borderLeftColor = 'var(--gold)';
+                }, 600);
+                return;
+            }
+
+            fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey,
+                    'anthropic-version': '2023-06-01',
+                    'anthropic-dangerous-direct-browser-access': 'true'
+                },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 150,
+                    system: 'あなたはYouTubeチャンネル運営者です。視聴者のコメントに対して、日本語コメントには日本語で、英語コメントには英語で、温かく親しみやすいトーンで返信を生成してください。100文字以内で簡潔に。',
+                    messages: [{ role: 'user', content: c.text }]
+                })
+            })
+                .then(function (res) {
+                    if (!res.ok) return res.json().then(function (e) { throw new Error(e.error && e.error.message ? e.error.message : 'API Error'); });
+                    return res.json();
+                })
+                .then(function (data) {
+                    labelEl.textContent = 'AI返信案';
+                    labelEl.classList.remove('loading');
+                    textEl.innerHTML = data.content[0].text;
+                    textEl.style.color = 'rgba(248,249,250,0.85)';
+                    textEl.style.borderLeftColor = 'var(--gold)';
+                })
+                .catch(function (error) {
+                    console.error('Claude API Error:', error);
+                    labelEl.textContent = 'エラー';
+                    labelEl.classList.remove('loading');
+                    textEl.innerHTML = '<span style="color:var(--red);font-size:12px;">' + error.message + '</span>';
+                    textEl.style.borderLeftColor = 'var(--red)';
+                    c.apiFetched = false;
+                });
+        }
+
+        function updateTopCard() {
+            document.getElementById('count').textContent = Math.max(0, comments.length - currentIdx);
+            cards.forEach(function (card, i) {
+                card.classList.remove('is-top', 'is-next', 'fly-right', 'fly-left', 'snap-back');
+                card.style.display = '';
+                if (i === currentIdx) {
+                    card.classList.add('is-top');
+                    card.style.transform = '';
+                    attachDrag(card);
+                    topCard = card;
+                    fetchAiReply(i);
+                } else if (i === currentIdx + 1) {
+                    card.classList.add('is-next');
+                    card.style.transform = '';
+                } else if (i < currentIdx) {
+                    card.style.display = 'none';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            if (currentIdx >= comments.length) {
+                document.getElementById('emptyState').classList.add('visible');
+                topCard = null;
+            }
+        }
+
+        function attachDrag(card) {
+            card.removeEventListener('touchstart', onStart);
+            card.removeEventListener('mousedown', onStart);
+            card.addEventListener('touchstart', onStart, { passive: true });
+            card.addEventListener('mousedown', onStart);
+        }
+
+        function onStart(e) {
+            if (e.target.closest('.ai-reply-text')) return; // allow text scroll
+            isDragging = true;
+            startX = e.touches ? e.touches[0].clientX : e.clientX;
+            currentX = 0;
+            topCard.style.transition = 'none';
+            document.addEventListener('touchmove', onMove, { passive: false });
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('touchend', onEnd);
+            document.addEventListener('mouseup', onEnd);
+        }
+
+        function onMove(e) {
+            if (!isDragging) return;
+            var x = (e.touches ? e.touches[0].clientX : e.clientX) - startX;
+            if (e.cancelable) e.preventDefault();
+            currentX = x;
+            var rotate = x * 0.07;
+            topCard.style.transform = 'translate(calc(-50% + ' + x + 'px), -50%) rotate(' + rotate + 'deg)';
+
+            var ratio = Math.min(Math.abs(x) / 80, 1);
+            var hL = document.getElementById('hintLeft');
+            var hR = document.getElementById('hintRight');
+            if (x < -20) { hL.style.opacity = ratio; hR.style.opacity = 0; }
+            else if (x > 20) { hR.style.opacity = ratio; hL.style.opacity = 0; }
+            else { hL.style.opacity = 0; hR.style.opacity = 0; }
+        }
+
+        function onEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            document.removeEventListener('touchmove', onMove);
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('touchend', onEnd);
+            document.removeEventListener('mouseup', onEnd);
+            document.getElementById('hintLeft').style.opacity = 0;
+            document.getElementById('hintRight').style.opacity = 0;
+
+            if (currentX > 80) { swipeRight(); }
+            else if (currentX < -80) { swipeLeft(); }
+            else {
+                topCard.classList.add('snap-back');
+                topCard.style.transform = '';
+                setTimeout(function () { if (topCard) topCard.classList.remove('snap-back'); }, 400);
+            }
+        }
+
+        function swipeRight() {
+            if (!topCard) return;
+            topCard.style.transition = 'transform 0.35s ease-in, opacity 0.35s ease-in';
+            topCard.style.transform = 'translateX(150%) rotate(20deg)';
+            topCard.style.opacity = '0';
+            showToast('✅ 返信しました！');
+            setTimeout(function () { currentIdx++; updateTopCard(); }, 360);
+        }
+
+        function swipeLeft() {
+            if (!topCard) return;
+            topCard.style.transition = 'transform 0.35s ease-in, opacity 0.35s ease-in';
+            topCard.style.transform = 'translateX(-150%) rotate(-20deg)';
+            topCard.style.opacity = '0';
+            openVoice();
+        }
+
+        var recording = false;
+        var recordTimer = null;
+
+        function openVoice() {
+            document.getElementById('voiceModal').classList.add('active');
+            recording = false;
+            document.getElementById('voiceRing').classList.remove('recording');
+            document.getElementById('voiceInstruction').innerHTML = 'タップして録音開始<br>どう修正したいかを話してください';
+            document.getElementById('voiceRing').textContent = '🎙️';
+        }
+
+        function toggleRecording() {
+            recording = !recording;
+            var ring = document.getElementById('voiceRing');
+            var inst = document.getElementById('voiceInstruction');
+            if (recording) {
+                ring.classList.add('recording');
+                ring.textContent = '⏹️';
+                inst.innerHTML = '<span style="color:#e63946">録音中...</span><br>話し終わったらタップ';
+                recordTimer = setTimeout(stopRecordingAndApply, 5000);
+            } else {
+                clearTimeout(recordTimer);
+                stopRecordingAndApply();
+            }
+        }
+
+        function stopRecordingAndApply() {
+            recording = false;
+            var ring = document.getElementById('voiceRing');
+            var inst = document.getElementById('voiceInstruction');
+            ring.classList.remove('recording');
+            ring.textContent = '⚡';
+            inst.innerHTML = '<span style="color:#ffd166">AIが修正中...</span>';
+            setTimeout(function () {
+                closeVoice();
+                if (topCard) {
+                    topCard.style.transform = '';
+                    topCard.style.transition = '';
+                    topCard.style.opacity = '';
+                    var replyEl = topCard.querySelector('.ai-reply-text');
+                    if (replyEl) {
+                        replyEl.style.borderLeftColor = '#ffd166';
+                        replyEl.textContent = '（音声を元に修正された返信がここに表示されます）';
+                    }
+                    showToast('✏️ 返信を修正しました');
+                }
+            }, 1200);
+        }
+
+        function closeVoice() {
+            document.getElementById('voiceModal').classList.remove('active');
+            recording = false;
+            clearTimeout(recordTimer);
+            if (topCard) {
+                topCard.style.transform = '';
+                topCard.style.transition = '';
+                topCard.style.opacity = '';
+            }
+        }
+
+        function showToast(msg) {
+            var t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(function () { t.classList.remove('show'); }, 2200);
+        }
+
+        buildCards();
+    </script>
+</body>
+
+</html>
