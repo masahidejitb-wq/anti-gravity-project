@@ -1768,6 +1768,12 @@
             var c = comments[currentIdx];
             if (!c) return;
 
+            console.log('HEART DEBUG:', {
+                videoId: c.videoId,
+                commentId: c.id,
+                accessToken: oauthAccessToken ? oauthAccessToken.substring(0, 20) + '...' : 'null'
+            });
+
             topCard.style.transition = 'transform 0.32s ease-in, opacity 0.32s ease-in';
             topCard.style.transform = 'translate(-50%, -200%) scale(0.8)';
             topCard.style.opacity = '0';
