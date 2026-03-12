@@ -1338,7 +1338,14 @@
         @media (max-width: 768px) {
             .service-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                gap: 10px;
+            }
+            .service-title {
+                font-size: 13px;
+                word-break: keep-all;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
 
