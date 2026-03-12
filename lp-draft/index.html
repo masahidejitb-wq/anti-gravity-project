@@ -186,12 +186,10 @@
             font-weight: 500;
             line-height: 1.8;
             /* ややスッキリとした行間 */
-            text-align: left;
-            /* テキスト左揃え（中央配置だが文章は読みやすく） */
-            max-width: 800px;
+            text-align: center;
+            max-width: 640px;
             margin: 0 auto;
-            padding: 0 10px;
-            /* スマホ時の横揺れ・余白防止。以前より広め */
+            padding: 0 20px;
             word-break: keep-all;
             overflow-wrap: anywhere;
         }
@@ -1330,8 +1328,8 @@
            ------------------------------------------- */
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             width: 100%;
         }
 
@@ -1358,6 +1356,12 @@
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 1px solid #eee;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
         }
 
         .service-item:hover {
@@ -1596,8 +1600,8 @@
             <h1 class="hero-catchphrase">無料カウンセリングを<br class="sp-only">ご受講いただいたあなたへ</h1>
             <div class="hero-message">
                 <p>本日はカウンセリングにご参加いただき、ありがとうございます。</p>
-                <p>今の英語力と、これからの課題・目標が明確になったと思います。</p>
-                <p>このページでは、イングリードのサービス内容や実際の受講者の声をまとめています。<br class="sp-only">ぜひじっくりご覧ください。</p>
+                <p>今の英語力と、これからの課題・目標が<br>より明確になりましたでしょうか。</p>
+                <p>このページでは、イングリードのサービス内容や<br>実際の受講生の成長をまとめています。<br>受講をご検討中の方は、ぜひご覧いただけますと幸いです。</p>
             </div>
         </div>
         <div class="scroll-down">
@@ -1620,7 +1624,7 @@
                 <div class="feature-item">
                     <div class="feature-icon">2</div>
                     <h3 class="feature-title">優秀なコーチ</h3>
-                    <p class="feature-desc">採用率0.3%の厳選されたコーチのみが担当。英語を話せるだけでなく、第二言語習得論を熟知したプロフェッショナルがあなたの学習を支えます。</p>
+                    <p class="feature-desc">採用率0.3%の厳選されたコーチのみが担当。ただ英語を話せるだけでなく、第二言語習得論を熟知したプロフェッショナルがあなたの学習に伴走します。</p>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">3</div>
@@ -1630,7 +1634,7 @@
                 <div class="feature-item">
                     <div class="feature-icon">4</div>
                     <h3 class="feature-title">応用言語学の活用</h3>
-                    <p class="feature-desc">第二言語習得論に基づく、日本人に最適なカリキュラムと科学的なトレーニングメソッドを提供します。</p>
+                    <p class="feature-desc">人間が第二言語を習得するために踏むべきステップが、第二言語習得論として体系化されています。イングリードはこの理論に基づいた、日本人に最適なカリキュラムと科学的なトレーニングメソッドを提供します。</p>
                 </div>
             </div>
         </div>
@@ -1639,7 +1643,9 @@
 <!-- サービス内容 -->
     <section id="sec-service">
         <div class="container">
-            <h2 class="section-title">あなたの英語力を伸ばす、イングリードの中身</h2>
+            <h2 class="section-title">
+  あなたの英語力を伸ばす<br>イングリードの中身
+</h2>
             <div class="service-grid">
                 <div class="service-item" data-title="カリキュラム作成">
                     <div class="service-icon">📋</div>
@@ -1686,7 +1692,7 @@
                     <div class="flow-step start">
                         <div class="flow-icon-box">⭐</div>
                         <div class="flow-label">カウンセリング完了</div>
-                        <div class="flow-sub">今ここ！</div>
+                        <div class="flow-sub">英語力診断テストの結果をもとに、あなたが目指すべき目標が明確になったと思います。</div>
                     </div>
                 </div>
                 <div class="flow-arrow">→</div>
@@ -1694,7 +1700,7 @@
                     <div class="flow-step step1">
                         <div class="flow-icon-box">📋</div>
                         <div class="flow-label">ご入会手続き</div>
-                        <div class="flow-sub">入会フォームに入力</div>
+                        <div class="flow-sub">オンラインで入会フォームに入力するだけ。5分で完了します。</div>
                     </div>
                 </div>
                 <div class="flow-arrow">→</div>
@@ -1702,15 +1708,15 @@
                     <div class="flow-step step2">
                         <div class="flow-icon-box">🎯</div>
                         <div class="flow-label">オリエンテーション</div>
-                        <div class="flow-sub">コーチとの顔合わせ・方針確認</div>
+                        <div class="flow-sub">カスタマーサポートから今後の流れについて丁寧にご説明します。30分程度で終了します。</div>
                     </div>
                 </div>
                 <div class="flow-arrow">→</div>
                 <div class="flow-step-wrapper">
                     <div class="flow-step step3">
                         <div class="flow-icon-box">📅</div>
-                        <div class="flow-label">日程調整</div>
-                        <div class="flow-sub">初回カウンセリング日を決める</div>
+                        <div class="flow-label">日程調整・準備</div>
+                        <div class="flow-sub">初回カウンセリングに向けて、教材の選定など、しっかりと準備を進めていきます。</div>
                     </div>
                 </div>
                 <div class="flow-arrow">→</div>
@@ -1718,7 +1724,7 @@
                     <div class="flow-step step4">
                         <div class="flow-icon-box">🎤</div>
                         <div class="flow-label">初回カウンセリング</div>
-                        <div class="flow-sub">コーチング開始！</div>
+                        <div class="flow-sub">これからあなたの英語学習に伴走するコーチと初めましての、記念すべき日です。ここからイングリードと一緒に、目標へ向かって歩み始めましょう。</div>
                     </div>
                 </div>
             </div>
