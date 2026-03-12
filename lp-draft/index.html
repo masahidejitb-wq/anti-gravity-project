@@ -554,14 +554,14 @@
            ------------------------------------------- */
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 30px;
             width: 100%;
         }
 
         @media (max-width: 900px) {
             .feature-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
                 gap: 16px;
             }
         }
@@ -1324,6 +1324,89 @@
         }
 
         /* -------------------------------------------
+           Service
+           ------------------------------------------- */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .service-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+        }
+
+        .service-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #eee;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 64, 152, 0.1);
+        }
+
+        .service-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .service-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        /* -------------------------------------------
+           Flow
+           ------------------------------------------- */
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 15px;
+        }
+
+        .flow-step {
+            flex: 1;
+            background: var(--white);
+            border: 2px solid var(--primary-blue);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--primary-blue);
+            position: relative;
+        }
+
+        .flow-arrow {
+            color: var(--accent-orange);
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        @media (max-width: 768px) {
+            .flow-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+
+        /* -------------------------------------------
            Sticky LINE CTA Bar (Mobile Only)
            ------------------------------------------- */
         .sticky-line-cta {
@@ -1432,16 +1515,9 @@
             </div>
             <h1 class="hero-catchphrase">無料カウンセリングを<br class="sp-only">ご受講いただいたあなたへ</h1>
             <div class="hero-message">
-                <p>「AI時代に、なぜ人から学ぶのか？」</p>
-                <p>
-                    <span style="display: inline-block;">AIは効率化できても、あなたの英語力そのものは変えてくれません。</span>
-                </p>
-                <p>
-                    <span style="display: inline-block;">学習を変え、確かな結果を出すのは、</span><br><span style="display: inline-block;">一人ひとりに伴走する「人」の存在です。</span>
-                </p>
-                <p>
-                    <span style="display: inline-block;">採用率0.3%のプロフェッショナルが、</span><br><span style="display: inline-block;">あなたの学習を最大化します。</span>
-                </p>
+                <p>本日はカウンセリングにご参加いただき、ありがとうございます。</p>
+                <p>今の英語力と、これからの課題・目標が明確になったと思います。</p>
+                <p>このページでは、イングリードのサービス内容や実際の受講者の声をまとめています。<br class="sp-only">ぜひじっくりご覧ください。</p>
             </div>
         </div>
         <div class="scroll-down">
@@ -1458,424 +1534,85 @@
             <div class="feature-grid">
                 <div class="feature-item">
                     <div class="feature-icon">1</div>
-                    <h3 class="feature-title">科学的アプローチ</h3>
-                    <p class="feature-desc">第二言語習得論に基づく効率的なメソッドを取り入れ、無駄のない最短距離の学習を実現します。</p>
+                    <h3 class="feature-title">オンライン特化型</h3>
+                    <p class="feature-desc">オンライン完結だから校舎の固定費がかからず、質の高いサービスをリーズナブルな価格で提供できます。日本だけでなく海外からの受講生も多数在籍しています。</p>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">2</div>
-                    <h3 class="feature-title">専属コーチの伴走</h3>
-                    <p class="feature-desc">あなた専用のカリキュラムを作成し、毎日のチャットサポートでモチベーションと進捗を徹底管理します。</p>
+                    <h3 class="feature-title">優秀なコーチ</h3>
+                    <p class="feature-desc">採用率0.3%の厳選されたコーチのみが担当。英語を話せるだけでなく、第二言語習得論を熟知したプロフェッショナルがあなたの学習を支えます。</p>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">3</div>
-                    <h3 class="feature-title">完全パーソナライズ</h3>
-                    <p class="feature-desc">独自の診断で弱点をピンポイントで分析し、限られた時間で最大の成果を出すための最適な指導を行います。</p>
+                    <h3 class="feature-title">月額定額制</h3>
+                    <p class="feature-desc">必要な期間だけ受講できる安心のサブスクリプション制度。最短2ヶ月から始められるので、まずは気軽にスタートできます。</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">4</div>
+                    <h3 class="feature-title">応用言語学の活用</h3>
+                    <p class="feature-desc">第二言語習得論に基づく、日本人に最適なカリキュラムと科学的なトレーニングメソッドを提供します。</p>
                 </div>
             </div>
         </div>
     </section>
 
-<!-- 実際のサービス内容（受講生の1日〜音声Before/After） -->
-<!-- 受講生の1日（学習スケジュール） -->
-    <section id="sec-schedule">
+<!-- サービス内容 -->
+    <section id="sec-service">
         <div class="container">
-            <h2 class="section-title">受講生の1日（学習イメージ）</h2>
-            <div class="schedule-container">
-                <!-- Morning -->
-                <div class="schedule-item">
-                    <div class="schedule-img">
-                        <img src="schedule-morning.png" alt="朝の学習">
-                    </div>
-                    <div class="schedule-text">
-                        <h3 class="schedule-time">朝の学習</h3>
-                        <p>通勤の電車内や、少し早起きした朝の時間を活用して音声学習。毎日のインプットが英語脳を作ります。</p>
-                    </div>
+            <h2 class="section-title">イングリードのサービス内容</h2>
+            <div class="service-grid">
+                <div class="service-item" data-title="カリキュラム作成">
+                    <div class="service-icon">📋</div>
+                    <h3 class="service-title">カリキュラム作成</h3>
                 </div>
-                <!-- Noon -->
-                <div class="schedule-item reverse">
-                    <div class="schedule-img">
-                        <img src="schedule-noon.png" alt="昼の隙間時間">
-                    </div>
-                    <div class="schedule-text">
-                        <h3 class="schedule-time">昼の隙間時間</h3>
-                        <p>ランチタイムの15分間を利用して、単語の暗記や小テスト。短時間でも毎日英語に触れることが重要です。</p>
-                    </div>
+                <div class="service-item" data-title="デイリーコーチング">
+                    <div class="service-icon">💬</div>
+                    <h3 class="service-title">デイリーコーチング</h3>
                 </div>
-                <!-- Night -->
-                <div class="schedule-item">
-                    <div class="schedule-img">
-                        <img src="schedule-night.png" alt="夜のオンラインコーチング">
-                    </div>
-                    <div class="schedule-text">
-                        <h3 class="schedule-time">夜のオンラインコーチング</h3>
-                        <p>帰宅後は自宅でリラックスしながらオンラインコーチング。その日の疑問を解消し、次の目標を設定します。</p>
-                    </div>
+                <div class="service-item" data-title="カウンセリング">
+                    <div class="service-icon">🎥</div>
+                    <h3 class="service-title">カウンセリング</h3>
+                </div>
+                <div class="service-item" data-title="学習素材・シャドーイング">
+                    <div class="service-icon">🎧</div>
+                    <h3 class="service-title">学習素材・シャドーイング</h3>
+                </div>
+                <div class="service-item" data-title="週ごとの振り返り">
+                    <div class="service-icon">🔄</div>
+                    <h3 class="service-title">週ごとの振り返り</h3>
+                </div>
+                <div class="service-item" data-title="1日の流れ">
+                    <div class="service-icon">🕐</div>
+                    <h3 class="service-title">1日の流れ</h3>
+                </div>
+                <div class="service-item" data-title="コーチ紹介">
+                    <div class="service-icon">👨‍🏫</div>
+                    <h3 class="service-title">コーチ紹介</h3>
+                </div>
+                <div class="service-item" data-title="コンサルタント紹介">
+                    <div class="service-icon">🤝</div>
+                    <h3 class="service-title">コンサルタント紹介</h3>
+                </div>
+                <div class="service-item" data-title="受講生の声">
+                    <div class="service-icon">⭐</div>
+                    <h3 class="service-title">受講生の声</h3>
                 </div>
             </div>
         </div>
     </section>
 
-<!-- LINEサポート -->
-    <section id="sec-line">
+<!-- 入会までの流れ -->
+    <section id="sec-flow">
         <div class="container">
-            <h2 class="section-title">毎日コーチと繋がる安心感</h2>
-            <p
-                style="text-align: center; margin-bottom: 40px; color: var(--text-muted); font-size: 15px; line-height: 1.8;">
-                毎日の学習報告から細かな疑問まで、専属コーチが<br class="sp-only">チャットで丁寧にサポートします。<br>日々の学習進捗を管理し、モチベーションの波に寄り添いながら、挫折しそうな時こそ強力に伴走します。
-            </p>
-            <div class="chat-container">
-                <!-- Chat 1 -->
-                                <!-- 【画像差し替えプレースホルダー】 -->
-                <!-- 後日、実際のLINE添削スクショ画像（例：real-line-chat.png）に差し替える場合は、以下の <div class="chat-phone">...</div> を削除し、 -->
-                <!-- <img src="real-line-chat.png" alt="LINE添削スクショ" style="width:100%; max-width:340px; border-radius: 30px;"> のように配置してください -->
-                <div class="chat-phone">
-                    <div class="chat-header">専属コーチ・田中</div>
-                    <div class="chat-body">
-                        <!-- スクロール確認用のため少し多めに会話を入れる -->
-                        <div class="chat-row right">
-                            <div class="chat-bubble right">音読トレーニング、録音しました！確認お願いします。</div>
-                            <div class="chat-time">18:00</div>
-                        </div>
-                        <div class="chat-row right">
-                            <div class="chat-bubble right">（音声データ.m4a）</div>
-                            <div class="chat-time">18:01</div>
-                        </div>
-                        <div class="chat-row left">
-                            <div class="chat-bubble left">提出ありがとうございます！<br>先週より格段に良くなっていますね！✨<br>RとLの発音の使い分けがとても綺麗です。
-                            </div>
-                            <div class="chat-time">18:15</div>
-                        </div>
-                        <div class="chat-row left">
-                            <div class="chat-bubble left">ただ、「work」の母音が少し「walk」に聞こえるので、明日のセッションで一緒に練習しましょう😊</div>
-                            <div class="chat-time">18:16</div>
-                        </div>
-                        <div class="chat-row right">
-                            <div class="chat-bubble right">ありがとうございます！自分でも少し気になっていたところでした。</div>
-                            <div class="chat-time">18:20</div>
-                        </div>
-                        <div class="chat-row right">
-                            <div class="chat-bubble right">明日もよろしくお願いします！</div>
-                            <div class="chat-time">18:21</div>
-                        </div>
-                        <div class="chat-row left">
-                            <div class="chat-bubble left">こちらこそ！引き続き頑張りましょう！👍</div>
-                            <div class="chat-time">18:25</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Chat 2 -->
-                                <!-- 【画像差し替えプレースホルダー】 -->
-                <!-- 後日、実際のLINE添削スクショ画像（例：real-line-chat.png）に差し替える場合は、以下の <div class="chat-phone">...</div> を削除し、 -->
-                <!-- <img src="real-line-chat.png" alt="LINE添削スクショ" style="width:100%; max-width:340px; border-radius: 30px;"> のように配置してください -->
-                <div class="chat-phone">
-                    <div class="chat-header">専属コーチ・佐藤</div>
-                    <div class="chat-body">
-                        <div class="chat-row right">
-                            <div class="chat-bubble right">今日は仕事が遅くなってしまって、予定していた学習時間を確保できなそうです…😭</div>
-                            <div class="chat-time">20:30</div>
-                        </div>
-                        <div class="chat-row left">
-                            <div class="chat-bubble left">お疲れ様です！お仕事大変でしたね。<br>そういう日もありますよ！大丈夫です。</div>
-                            <div class="chat-time">20:35</div>
-                        </div>
-                        <div class="chat-row left">
-                            <div class="chat-bubble left">今からだと寝る前の時間を確保するのも難しいと思うので、今日はシャドーイングを10分だけやって寝ましょう！</div>
-                            <div class="chat-time">20:36</div>
-                        </div>
-                        <div class="chat-row left">
-                            <div class="chat-bubble left">完璧主義にならず、少しでも触れる「継続」が一番大切です👍</div>
-                            <div class="chat-time">20:36</div>
-                        </div>
-                        <div class="chat-row right">
-                            <div class="chat-bubble right">ありがとうございます！気持ちが楽になりました😭<br>10分だけ集中してやります！🔥</div>
-                            <div class="chat-time">20:40</div>
-                        </div>
-                        <div class="chat-row left">
-                            <div class="chat-bubble left">素晴らしい切り替えです👏<br>明日また状況教えてくださいね。ゆっくり休んでください🌙</div>
-                            <div class="chat-time">20:45</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<!-- 動画 -->
-    <section id="sec-video">
-        <div class="container">
-            <h2 class="section-title">実際のカウンセリング</h2>
-            <div class="video-wrapper">
-                <iframe width="100%" style="aspect-ratio: 16/9;" src="https://www.youtube.com/embed/B65rlCV60TM"
-                    frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </section>
-
-<!-- 劇的な変化 -->
-    <section id="sec-voice">
-        <div class="container">
-            <h2 class="section-title">劇的な変化を実感</h2>
-            <div class="voice-grid">
-                <!-- Person 1 -->
-                <div class="voice-card">
-                    <div class="voice-card-heading">たった<span>3ヶ月</span>でこの変化！</div>
-                    <div class="voice-card-body">
-                        <div class="voice-profile">
-                            <img src="student_a.png" alt="受講生A" style="object-fit: cover;">
-                            <p>受講生Aさん</p>
-                        </div>
-                        <div class="voice-players">
-                            <div class="player-box">
-                                <div class="player-label">⏳ 1ヶ月目 (Before)</div>
-                                <audio controls src="assets/audio/student-a-before.m4a"></audio>
-                            </div>
-                            <div class="player-box">
-                                <div class="player-label">✨ 3ヶ月目 (After)</div>
-                                <audio controls src="assets/audio/student-a-after.m4a"></audio>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Person 2 -->
-                <div class="voice-card">
-                    <div class="voice-card-heading">たった<span>3ヶ月</span>でこの変化！</div>
-                    <div class="voice-card-body">
-                        <div class="voice-profile">
-                            <img src="student_b.png" alt="受講生B" style="object-fit: cover;">
-                            <p>受講生Bさん</p>
-                        </div>
-                        <div class="voice-players">
-                            <div class="player-box">
-                                <div class="player-label">⏳ 1ヶ月目 (Before)</div>
-                                <audio controls src="assets/audio/student-b-before.wav"></audio>
-                            </div>
-                            <div class="player-box">
-                                <div class="player-label">✨ 3ヶ月目 (After)</div>
-                                <audio controls src="assets/audio/student-b-after.wav"></audio>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<!-- なぜイングリードが選ばれるのか（他社比較） -->
-    <section id="sec-compare">
-        <div class="container">
-            <h2 class="section-title">なぜイングリードが選ばれるのか</h2>
-            <div class="comparison-table-wrapper">
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th class="highlight">イングリード</th>
-                            <th>一般的なスクール</th>
-                            <th>アプリ学習</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>学習スタイル</th>
-                            <td class="highlight">専属コーチとの二人三脚</td>
-                            <td>週1〜2回の通学</td>
-                            <td>自己管理での独学</td>
-                        </tr>
-                        <tr>
-                            <th>カリキュラム</th>
-                            <td class="highlight">完全オーダーメイド</td>
-                            <td>決まった教材</td>
-                            <td>一律の内容</td>
-                        </tr>
-                        <tr>
-                            <th>サポート体制</th>
-                            <td class="highlight">毎日のチャットサポート</td>
-                            <td>レッスン時のみ</td>
-                            <td>基本的になし</td>
-                        </tr>
-                        <tr>
-                            <th>成果の出やすさ</th>
-                            <td class="highlight">◎ 全体的な底上げ</td>
-                            <td>△ 継続のハードルあり</td>
-                            <td>△ 疑問が解消しづらい</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-<!-- コーチ紹介 -->
-    <section id="sec-coach">
-        <div class="container">
-            <h2 class="section-title">イングリードコーチ陣</h2>
-            <div class="swiper coach-swiper">
-                <div class="swiper-wrapper">
-                    <!-- Coach 1 (coach1.jpg) -->
-                    <div class="swiper-slide">
-                        <div class="coach-card" data-name="田中 健太" data-spec="ビジネス英会話・発音"
-                            data-history="【経歴】外資系IT企業にて約8年勤務後、語学教育の世界へ。北米への留学経験と現場での叩き上げのビジネス英語を武器に、実践的な英語コミュニケーションを指導。"
-                            data-desc="「発音は筋肉のトレーニングと同じ」がモットー。どんなレベルの方でもネイティブに伝わるキレイな発音へ導きます。論理的かつ熱い指導に定評があります。"
-                            data-img="coach1.jpg">
-                            <div class="coach-img-wrapper">
-                                <!-- onerror で画像がない場合もデザインが崩れないように対応 -->
-                                <img src="coach1.jpg" alt="田中 健太" class="coach-img"
-                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/004098/FFFFFF?text=No+Image';">
-                            </div>
-                            <div class="coach-info">
-                                <div class="coach-name">田中 健太</div>
-                                <div class="coach-spec">ビジネス英会話・発音</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Coach 2 (coach2.jpg) -->
-                    <div class="swiper-slide">
-                        <div class="coach-card" data-name="佐藤 理恵" data-spec="TOEIC®・文法基礎"
-                            data-history="【経歴】大手英会話スクールにて5年連続で指導実績トップ。その後、フリーランスの英語講師としてTOEICのスコアアップ請負人として活動。TOEIC 990点（満点）保持。"
-                            data-desc="日本人がなぜ特定の文法でつまずくのか、その「なぜ」を分かりやすく言語化します。スコアの壁にぶつかっている方のブレイクスルーを全面サポートします。"
-                            data-img="coach2.jpg">
-                            <div class="coach-img-wrapper">
-                                <img src="coach2.jpg" alt="佐藤 理恵" class="coach-img"
-                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/00b0f0/FFFFFF?text=No+Image';">
-                            </div>
-                            <div class="coach-info">
-                                <div class="coach-name">佐藤 理恵</div>
-                                <div class="coach-spec">TOEIC®・文法基礎</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Coach 3 (coach3.jpg) -->
-                    <div class="swiper-slide">
-                        <div class="coach-card" data-name="Mike Smith" data-spec="ネイティブ表現・議論"
-                            data-history="【経歴】アメリカ・カリフォルニア州出身。日本の大学院で言語学を専攻し、バイリンガル教育の研究に従事。企業向けの異文化コミュニケーション研修講師の経験も多数。"
-                            data-desc="教科書には載っていない「自然な言い回し」や、ビジネス会議で相手を納得させる「ロジックの組み立て方」の指導を得意としています。"
-                            data-img="coach3.jpg">
-                            <div class="coach-img-wrapper">
-                                <img src="coach3.jpg" alt="Mike Smith" class="coach-img"
-                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/f39200/FFFFFF?text=No+Image';">
-                            </div>
-                            <div class="coach-info">
-                                <div class="coach-name">Mike Smith</div>
-                                <div class="coach-spec">ネイティブ表現・議論</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Coach 4 (coach4.jpg) -->
-                    <div class="swiper-slide">
-                        <div class="coach-card" data-name="鈴木 ゆかり" data-spec="初心者脱却・マインド"
-                            data-history="【経歴】心理カウンセラーの資格を持ち、英語学習における「メンタルブロック」の解除に特化した独自メソッドを開発。初心者〜中級者へのステップアップ指導の実績多数。"
-                            data-desc="「どうしても英語に苦手意識がある」「いつも三日坊主で終わってしまう」という方の味方です。学習を歯磨きレベルの習慣に落とし込むコーチングを行います。"
-                            data-img="coach4.jpg">
-                            <div class="coach-img-wrapper">
-                                <img src="coach4.jpg" alt="鈴木 ゆかり" class="coach-img"
-                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/004098/FFFFFF?text=No+Image';">
-                            </div>
-                            <div class="coach-info">
-                                <div class="coach-name">鈴木 ゆかり</div>
-                                <div class="coach-spec">初心者脱却・マインド</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- (Clone) Coach 1 (coach1.jpg) -->
-                    <div class="swiper-slide">
-                        <div class="coach-card" data-name="田中 健太" data-spec="ビジネス英会話・発音"
-                            data-history="【経歴】外資系IT企業にて約8年勤務後、語学教育の世界へ。北米への留学経験と現場での叩き上げのビジネス英語を武器に、実践的な英語コミュニケーションを指導。"
-                            data-desc="「発音は筋肉のトレーニングと同じ」がモットー。どんなレベルの方でもネイティブに伝わるキレイな発音へ導きます。論理的かつ熱い指導に定評があります。"
-                            data-img="coach1.jpg">
-                            <div class="coach-img-wrapper">
-                                <!-- onerror で画像がない場合もデザインが崩れないように対応 -->
-                                <img src="coach1.jpg" alt="田中 健太" class="coach-img"
-                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/004098/FFFFFF?text=No+Image';">
-                            </div>
-                            <div class="coach-info">
-                                <div class="coach-name">田中 健太</div>
-                                <div class="coach-spec">ビジネス英会話・発音</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- (Clone) Coach 2 (coach2.jpg) -->
-                    <div class="swiper-slide">
-                        <div class="coach-card" data-name="佐藤 理恵" data-spec="TOEIC®・文法基礎"
-                            data-history="【経歴】大手英会話スクールにて5年連続で指導実績トップ。その後、フリーランスの英語講師としてTOEICのスコアアップ請負人として活動。TOEIC 990点（満点）保持。"
-                            data-desc="日本人がなぜ特定の文法でつまずくのか、その「なぜ」を分かりやすく言語化します。スコアの壁にぶつかっている方のブレイクスルーを全面サポートします。"
-                            data-img="coach2.jpg">
-                            <div class="coach-img-wrapper">
-                                <img src="coach2.jpg" alt="佐藤 理恵" class="coach-img"
-                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/00b0f0/FFFFFF?text=No+Image';">
-                            </div>
-                            <div class="coach-info">
-                                <div class="coach-name">佐藤 理恵</div>
-                                <div class="coach-spec">TOEIC®・文法基礎</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- (Clone) Coach 3 (coach3.jpg) -->
-                    <div class="swiper-slide">
-                        <div class="coach-card" data-name="Mike Smith" data-spec="ネイティブ表現・議論"
-                            data-history="【経歴】アメリカ・カリフォルニア州出身。日本の大学院で言語学を専攻し、バイリンガル教育の研究に従事。企業向けの異文化コミュニケーション研修講師の経験も多数。"
-                            data-desc="教科書には載っていない「自然な言い回し」や、ビジネス会議で相手を納得させる「ロジックの組み立て方」の指導を得意としています。"
-                            data-img="coach3.jpg">
-                            <div class="coach-img-wrapper">
-                                <img src="coach3.jpg" alt="Mike Smith" class="coach-img"
-                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/f39200/FFFFFF?text=No+Image';">
-                            </div>
-                            <div class="coach-info">
-                                <div class="coach-name">Mike Smith</div>
-                                <div class="coach-spec">ネイティブ表現・議論</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- (Clone) Coach 4 (coach4.jpg) -->
-                    <div class="swiper-slide">
-                        <div class="coach-card" data-name="鈴木 ゆかり" data-spec="初心者脱却・マインド"
-                            data-history="【経歴】心理カウンセラーの資格を持ち、英語学習における「メンタルブロック」の解除に特化した独自メソッドを開発。初心者〜中級者へのステップアップ指導の実績多数。"
-                            data-desc="「どうしても英語に苦手意識がある」「いつも三日坊主で終わってしまう」という方の味方です。学習を歯磨きレベルの習慣に落とし込むコーチングを行います。"
-                            data-img="coach4.jpg">
-                            <div class="coach-img-wrapper">
-                                <img src="coach4.jpg" alt="鈴木 ゆかり" class="coach-img"
-                                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x800/004098/FFFFFF?text=No+Image';">
-                            </div>
-                            <div class="coach-info">
-                                <div class="coach-name">鈴木 ゆかり</div>
-                                <div class="coach-spec">初心者脱却・マインド</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Pagination -->
-                <div class="swiper-pagination" style="bottom: 0;"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 【新規追加】コンサルタント紹介セクション -->
-    <section id="consultant-intro">
-        <!-- コンサルタント紹介枠 -->
-    </section>
-
-<!-- FAQ -->
-    <section id="sec-faq">
-        <div class="container">
-            <h2 class="section-title">よくあるご質問</h2>
-            <div class="faq-list">
-                <details>
-                    <summary>英語が全く話せない初心者でも大丈夫ですか？</summary>
-                    <div class="faq-answer">
-                        はい、全く問題ありません。現在のレベルに合わせて基礎の基礎からカリキュラムを構築し、専属コーチが丁寧に解説・サポートいたします。実際に受講生の多くが初心者からのスタートです。
-                    </div>
-                </details>
-                <details>
-                    <summary>毎日どれくらいの学習時間が必要ですか？</summary>
-                    <div class="faq-answer">
-                        基本的には1日1〜2時間を推奨していますが、お仕事の都合等に合わせて柔軟に調整可能です。通勤時間やスキマ時間の効果的な活用方法もコーチがアドバイスいたします。
-                    </div>
-                </details>
-                <details>
-                    <summary>パソコンを持っていないのですが受講できますか？</summary>
-                    <div class="faq-answer">
-                        スマートフォンのアプリだけでも受講および学習報告が可能ですが、一部の資料閲覧等でパソコンやタブレットがあった方が便利な場合がございます。
-                    </div>
-                </details>
+            <h2 class="section-title">入会までの流れ</h2>
+            <div class="flow-container">
+                <div class="flow-step">STEP 1</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">STEP 2</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">STEP 3</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">STEP 4</div>
             </div>
         </div>
     </section>
@@ -1937,6 +1674,15 @@
         </div>
     </div>
 
+    <!-- Service Modal Template -->
+    <div class="modal-overlay" id="serviceModal" aria-hidden="true" role="dialog">
+        <div class="modal-content" style="max-width: 500px; padding: 40px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div class="modal-close" id="serviceModalClose" aria-label="Close modal">&times;</div>
+            <h3 class="modal-name" id="serviceModalTitle" style="margin-bottom: 20px; font-size: 24px; color: var(--primary-blue);">Title</h3>
+            <p class="modal-desc" style="font-size: 16px; color: var(--text-muted);">準備中</p>
+        </div>
+    </div>
+
     <!-- Floating TOC -->
     <div class="toc-btn" id="tocBtn" aria-label="目次を開く">
         <div class="toc-icon">
@@ -1948,13 +1694,8 @@
     <div class="toc-menu" id="tocMenu">
         <div class="toc-title">目次</div>
         <ul class="toc-list">
-            <li><a href="#sec-schedule">受講生の1日</a></li>
-            <li><a href="#sec-line">毎日のLINEサポート</a></li>
-            <li><a href="#sec-video">カウンセリング映像</a></li>
-            <li><a href="#sec-voice">実際の音声 (Before/After)</a></li>
-            <li><a href="#sec-compare">他社比較表</a></li>
-            <li><a href="#sec-coach">コーチ紹介</a></li>
-            <li><a href="#sec-faq">よくあるご質問</a></li>
+            <li><a href="#sec-service">サービス内容</a></li>
+            <li><a href="#sec-flow">入会までの流れ</a></li>
         </ul>
     </div>
 
@@ -2047,10 +1788,43 @@
                 }
             });
 
+            // Service Modal
+            const serviceCards = document.querySelectorAll('.service-item');
+            const serviceModal = document.getElementById('serviceModal');
+            const serviceModalClose = document.getElementById('serviceModalClose');
+            const serviceModalTitle = document.getElementById('serviceModalTitle');
+
+            const closeServiceModal = () => {
+                if(serviceModal) {
+                    serviceModal.classList.remove('active');
+                    serviceModal.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                    document.documentElement.style.overflow = '';
+                }
+            };
+
+            if (serviceCards && serviceModal) {
+                serviceCards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        if(serviceModalTitle) serviceModalTitle.textContent = card.getAttribute('data-title');
+                        serviceModal.classList.add('active');
+                        serviceModal.setAttribute('aria-hidden', 'false');
+                        document.body.style.overflow = 'hidden';
+                        document.documentElement.style.overflow = 'hidden';
+                    });
+                });
+
+                if (serviceModalClose) serviceModalClose.addEventListener('click', closeServiceModal);
+                serviceModal.addEventListener('click', (e) => {
+                    if (e.target === serviceModal) closeServiceModal();
+                });
+            }
+
             // ESCキーでも閉じる
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeModal();
+                if (e.key === 'Escape') {
+                    if (modal && modal.classList.contains('active')) closeModal();
+                    if (serviceModal && serviceModal.classList.contains('active')) closeServiceModal();
                 }
             });
 
@@ -2081,10 +1855,10 @@
             }
 
             // --- Sticky LINE CTA: 表示/非表示ロジック（2 Observer方式） ---
-            // #sec-cta と #sec-faq の可視状態をそれぞれ管理する
+            // #sec-cta と #sec-flow の可視状態をそれぞれ管理する
             const stickyLineCta = document.getElementById('stickyLineCta');
             const secCta = document.getElementById('sec-cta');
-            const secFaq = document.getElementById('sec-faq');
+            const secFaq = document.getElementById('sec-flow');
 
             if (stickyLineCta && secCta && secFaq) {
                 let ctaVisible = false;
