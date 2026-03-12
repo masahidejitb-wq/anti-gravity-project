@@ -1364,11 +1364,12 @@
         }
 
         .service-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: var(--primary-blue);
             word-break: keep-all;
-            white-space: nowrap;
+            overflow-wrap: anywhere;
+            text-align: center;
         }
 
         /* -------------------------------------------
@@ -1380,24 +1381,87 @@
             justify-content: space-between;
             width: 100%;
             gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .flow-step-wrapper {
+            display: flex;
+            align-items: center;
+            flex: 1;
         }
 
         .flow-step {
             flex: 1;
-            background: var(--white);
-            border: 2px solid var(--primary-blue);
-            border-radius: 8px;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
+            position: relative;
+        }
+
+        .flow-icon-box {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--white);
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .flow-step.start .flow-icon-box {
+            width: 100px;
+            height: 100px;
+            background-color: var(--sub-blue);
+            font-size: 40px;
+        }
+
+        .flow-step.step1 .flow-icon-box {
+            background-color: #3bbbf5;
+        }
+
+        .flow-step.step2 .flow-icon-box {
+            background-color: #65a6ea;
+        }
+
+        .flow-step.step3 .flow-icon-box {
+            background-color: #0073cc;
+        }
+
+        .flow-step.step4 .flow-icon-box {
+            background-color: var(--primary-blue);
+        }
+
+        .flow-label {
+            font-size: 16px;
             font-weight: 700;
             color: var(--primary-blue);
-            position: relative;
+            margin-bottom: 5px;
+            word-break: keep-all;
+        }
+
+        .flow-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.4;
         }
 
         .flow-arrow {
             color: var(--accent-orange);
             font-size: 24px;
             font-weight: 900;
+            flex-shrink: 0;
+            padding: 0 10px;
+        }
+
+        .flow-notes {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
         }
 
         @media (max-width: 768px) {
@@ -1405,8 +1469,13 @@
                 flex-direction: column;
                 gap: 20px;
             }
+            .flow-step-wrapper {
+                flex-direction: column;
+                width: 100%;
+            }
             .flow-arrow {
                 transform: rotate(90deg);
+                padding: 10px 0;
             }
         }
 
@@ -1563,7 +1632,7 @@
 <!-- サービス内容 -->
     <section id="sec-service">
         <div class="container">
-            <h2 class="section-title">イングリードのサービス内容</h2>
+            <h2 class="section-title">あなたの英語力を伸ばす、イングリードの中身</h2>
             <div class="service-grid">
                 <div class="service-item" data-title="カリキュラム作成">
                     <div class="service-icon">📋</div>
@@ -1580,10 +1649,6 @@
                 <div class="service-item" data-title="学習素材・シャドーイング">
                     <div class="service-icon">🎧</div>
                     <h3 class="service-title">学習素材・シャドーイング</h3>
-                </div>
-                <div class="service-item" data-title="週ごとの振り返り">
-                    <div class="service-icon">🔄</div>
-                    <h3 class="service-title">週ごとの振り返り</h3>
                 </div>
                 <div class="service-item" data-title="1日の流れ">
                     <div class="service-icon">🕐</div>
@@ -1610,13 +1675,49 @@
         <div class="container">
             <h2 class="section-title">入会までの流れ</h2>
             <div class="flow-container">
-                <div class="flow-step">STEP 1</div>
+                <div class="flow-step-wrapper">
+                    <div class="flow-step start">
+                        <div class="flow-icon-box">⭐</div>
+                        <div class="flow-label">カウンセリング完了</div>
+                        <div class="flow-sub">今ここ！</div>
+                    </div>
+                </div>
                 <div class="flow-arrow">→</div>
-                <div class="flow-step">STEP 2</div>
+                <div class="flow-step-wrapper">
+                    <div class="flow-step step1">
+                        <div class="flow-icon-box">📋</div>
+                        <div class="flow-label">ご入会手続き</div>
+                        <div class="flow-sub">入会フォームに入力</div>
+                    </div>
+                </div>
                 <div class="flow-arrow">→</div>
-                <div class="flow-step">STEP 3</div>
+                <div class="flow-step-wrapper">
+                    <div class="flow-step step2">
+                        <div class="flow-icon-box">🎯</div>
+                        <div class="flow-label">オリエンテーション</div>
+                        <div class="flow-sub">コーチとの顔合わせ・方針確認</div>
+                    </div>
+                </div>
                 <div class="flow-arrow">→</div>
-                <div class="flow-step">STEP 4</div>
+                <div class="flow-step-wrapper">
+                    <div class="flow-step step3">
+                        <div class="flow-icon-box">📅</div>
+                        <div class="flow-label">日程調整</div>
+                        <div class="flow-sub">初回カウンセリング日を決める</div>
+                    </div>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step-wrapper">
+                    <div class="flow-step step4">
+                        <div class="flow-icon-box">🎤</div>
+                        <div class="flow-label">初回カウンセリング</div>
+                        <div class="flow-sub">コーチング開始！</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flow-notes">
+                ＊希望開始時期に合わせてのスタートも可能です<br>
+                ＊最短開始希望の場合は事前にお知らせください
             </div>
         </div>
     </section>
